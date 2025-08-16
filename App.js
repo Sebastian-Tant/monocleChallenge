@@ -1,8 +1,9 @@
 // App.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StatusBar, useColorScheme, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import WelcomeScreen from './screens/WelcomeScreen';
+import { AuthProvider, useAuth } from './context/AuthContext';
+import LandingScreen from './screens/WelcomeScreen'; // or rename the file
 import GoalSettingScreen from './screens/GoalSettingScreen';
 import HomeScreen from './screens/HomeScreen';
 import LearnScreen from './screens/LearnScreen';
@@ -11,18 +12,47 @@ import ProfileScreen from './screens/ProfileScreen';
 import LessonDetailScreen from './screens/LessonDetailScreen';
 import BottomNavigation from './components/BottomNavigation';
 import CompoundInterestSlider from './components/CompoundInterestSlider';
-
-function App() {
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+// In your App.js, replace the existing GoogleSignin.configure with:
+GoogleSignin.configure({
+  webClientId: '665585255864-914vki4vakoqgkugmromgsicqo74vaua.apps.googleusercontent.com',
+  offlineAccess: true,
+  hostedDomain: '',
+  forceCodeForRefreshToken: true,
+  accountName: '',
+  iosClientId: '', // Add this even if empty for Android
+  googleServicePlistPath: '', // Add this even if empty for Android
+});
+const MainApp = () => {
   const isDarkMode = useColorScheme() === 'dark';
+  const { user, loading } = useAuth();
   const [currentScreen, setCurrentScreen] = useState('welcome');
   const [activeTab, setActiveTab] = useState('home');
   const [selectedGoal, setSelectedGoal] = useState(null);
   const [goalAmount, setGoalAmount] = useState('');
-  const [userName, setUserName] = useState('Alex'); // This could come from user input later
+  const [userName, setUserName] = useState('');
   const [currentLesson, setCurrentLesson] = useState(null);
 
+  // Update userName when user data is available
+  useEffect(() => {
+    if (user) {
+      setUserName(user.displayName?.split(' ')[0] || 'Friend');
+      
+      
+    } else {
+      // Reset to welcome screen if user signs out
+      setCurrentScreen('welcome');
+      setUserName('');
+      setSelectedGoal(null);
+      setGoalAmount('');
+    }
+  }, [user]);
+
   const handleGetStarted = () => {
-    setCurrentScreen('goalSetting');
+    if (user) {
+      setCurrentScreen('goalSetting');
+    }
+    // If no user, the WelcomeScreen will handle the sign-in flow
   };
 
   const handleGoalComplete = (goal, amount) => {
@@ -95,23 +125,46 @@ function App() {
       case 'profile':
         return <ProfileScreen />;
       default:
-        return <HomeScreen {...homeScreenProps} />;
+        return (
+          <HomeScreen
+            {...homeScreenProps}
+            onContinueLesson={() => {
+              console.log('Continue lesson tapped');
+              handleStartLesson('The Magic of Compounding');
+            }}
+            onViewSimulation={() => {
+              console.log('View simulation tapped');
+              setActiveTab('simulate');
+            }}
+          />
+        );
     }
   };
+
+  if (loading) {
+    return (
+      <SafeAreaProvider>
+        <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          {/* You can create a custom loading screen component here */}
+        </View>
+      </SafeAreaProvider>
+    );
+  }
 
   return (
     <SafeAreaProvider>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
 
       {currentScreen === 'welcome' && (
-        <WelcomeScreen onGetStarted={handleGetStarted} />
+        <LandingScreen onGetStarted={handleGetStarted} />
       )}
 
-      {currentScreen === 'goalSetting' && (
+      {currentScreen === 'goalSetting' && user && (
         <GoalSettingScreen onGoalComplete={handleGoalComplete} />
       )}
 
-      {currentScreen === 'lessonDetail' && (
+      {currentScreen === 'lessonDetail' && user && (
         <LessonDetailScreen
           lessonTitle={currentLesson}
           onComplete={handleCompleteLesson}
@@ -119,7 +172,7 @@ function App() {
         />
       )}
 
-      {currentScreen === 'mainApp' && (
+      {currentScreen === 'mainApp' && user && (
         <View style={{ flex: 1 }}>
           {renderMainAppContent()}
           <BottomNavigation activeTab={activeTab} onTabPress={handleTabPress} />
@@ -127,6 +180,15 @@ function App() {
       )}
     </SafeAreaProvider>
   );
-}
+};
+
+// Root App Component with AuthProvider
+const App = () => {
+  return (
+    <AuthProvider>
+      <MainApp />
+    </AuthProvider>
+  );
+};
 
 export default App;
