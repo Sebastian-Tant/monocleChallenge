@@ -19,6 +19,7 @@ const CompoundInterestSlider = () => {
   const [compoundInterest, setCompoundInterest] = useState(10800);
   
   const translateX = useRef(new Animated.Value(0)).current;
+  const dragStartXRef =useRef(0);
   const scaleAnim = useRef(new Animated.Value(1)).current;
   const differenceAnim = useRef(new Animated.Value(0)).current;
 
@@ -44,12 +45,12 @@ const CompoundInterestSlider = () => {
       Animated.timing(differenceAnim, {
         toValue: 1.1,
         duration: 200,
-        useNativeDriver: true,
+        useNativeDriver: false,
       }),
       Animated.timing(differenceAnim, {
         toValue: 1,
         duration: 200,
-        useNativeDriver: true,
+        useNativeDriver: false,
       }),
     ]).start();
   }, [years]);
@@ -61,7 +62,12 @@ const CompoundInterestSlider = () => {
     onPanResponderGrant: () => {
       Animated.spring(scaleAnim, {
         toValue: 1.3,
-        useNativeDriver: true,
+        useNativeDriver: false,
+      }).start();
+      dragStartXRef.current = translateX.__getValue();
+      Animated.spring(scaleAnim, {\
+        toValue:1.3,
+        useNativeDriver: false;
       }).start();
     },
 
@@ -78,11 +84,13 @@ const CompoundInterestSlider = () => {
     onPanResponderRelease: (evt, gestureState) => {
       const newPosition = Math.max(0, Math.min(SLIDER_WIDTH - THUMB_SIZE, gestureState.dx));
       const newYear = Math.round((newPosition / (SLIDER_WIDTH - THUMB_SIZE)) * 19) + 1;
+      const max = SLIDER_WIDTH - THUMB_SIZE;
+      
       
       setYears(newYear);
       
       // Snap to the correct position
-      const finalPosition = ((newYear - 1) / 19) * (SLIDER_WIDTH - THUMB_SIZE);
+      const finalPosition = ((newYear-1)/19)*max;
       
       Animated.spring(translateX, {
         toValue: finalPosition,
@@ -93,7 +101,7 @@ const CompoundInterestSlider = () => {
       
       Animated.spring(scaleAnim, {
         toValue: 1,
-        useNativeDriver: true,
+        useNativeDriver: false,
       }).start();
     },
   });
