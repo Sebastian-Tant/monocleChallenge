@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "665585255864",
+    "project_id": "monocool-bc625",
+    "storage_bucket": "monocool-bc625.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:665585255864:android:bbf6c4954cad4c6141fb4d",
+        "android_client_info": {
+          "package_name": "com.monocle"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "665585255864-nq4l6eoqv77rhk6mq4cfsnhffg2urc08.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.monocle",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "665585255864-914vki4vakoqgkugmromgsicqo74vaua.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqx3DpmZb6xuOMyR1dQY0xCPfZ8bVTZM8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "665585255864-914vki4vakoqgkugmromgsicqo74vaua.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

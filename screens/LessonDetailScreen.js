@@ -1,79 +1,48 @@
 // screens/LessonDetailScreen.js
 import React, { useState, useRef, useEffect } from 'react';
 import {
-  View,
-  Text,
-  StyleSheet,
-  Dimensions,
-  TouchableOpacity,
-  Animated,
-  PanGestureHandler,
-  Platform,
+  View, Text, StyleSheet, Dimensions, TouchableOpacity, Animated, Platform,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import LessonPage from '../components/LessonPage';
 import ProgressIndicator from '../components/ProgressIndicator';
+import { getLessonById } from './data/index'; // <-- NEW
 
-const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
+const { width: screenWidth } = Dimensions.get('window');
 
-const LessonDetailScreen = ({ 
-  lessonTitle = "The Magic of Compounding",
+const LessonDetailScreen = ({
+  lessonTitle = 'The Magic of Compounding',
   onComplete,
-  onBack 
+  onBack,
+  route,
 }) => {
   const insets = useSafeAreaInsets();
+
+  // resolve lesson
+  const lessonId = route?.params?.lessonId;
+  const lesson = getLessonById(lessonId);
+  const lessonPages = lesson?.pages || [];
+  const title = lesson?.title || lessonTitle;
+
   const [currentPage, setCurrentPage] = useState(0);
   const [quizAnswer, setQuizAnswer] = useState(null);
   const [lessonCompleted, setLessonCompleted] = useState(false);
-  
+
   const scrollX = useRef(new Animated.Value(0)).current;
   const flatListRef = useRef(null);
 
-  // Lesson content data
-  const lessonPages = [
-    {
-      id: 'concept',
-      type: 'story',
-      title: 'The Concept',
-      content: "Imagine you have a money tree. Compound interest is like planting the seeds that fall from your tree, so they grow into new money trees.",
-      graphic: '🌳',
-      backgroundColor: '#f0f9ff',
-    },
-    {
-      id: 'core-idea',
-      type: 'story',
-      title: 'The Core Idea',
-      content: "You earn interest on your money. Then, you earn *interest on your interest*. That's the magic.",
-      graphic: '✨',
-      backgroundColor: '#fefce8',
-    },
-    {
-      id: 'interactive',
-      type: 'interactive',
-      title: 'See It In Action',
-      content: "Let's see it in action. Drag the slider to see how a R10,000 investment grows at 8% interest.",
-      backgroundColor: '#f0fdf4',
-    },
-    {
-      id: 'quiz',
-      type: 'quiz',
-      title: 'Quick Question',
-      question: 'Which is more powerful for compounding?',
-      options: [
-        { id: 'A', text: 'A high starting amount', correct: false },
-        { id: 'B', text: 'Starting as early as possible', correct: true }
-      ],
-      backgroundColor: '#fdf2f8',
-    },
-  ];
+  // reset when lesson changes
+  useEffect(() => {
+    setCurrentPage(0);
+    setQuizAnswer(null);
+    setLessonCompleted(false);
+    flatListRef.current?.scrollToOffset?.({ offset: 0, animated: false });
+  }, [lessonId]);
 
   const handlePageChange = (pageIndex) => {
     setCurrentPage(pageIndex);
     if (pageIndex === lessonPages.length - 1 && !lessonCompleted) {
-      // User reached the last page
-      setTimeout(() => {
-        setLessonCompleted(true);
-      }, 1000);
+      setTimeout(() => setLessonCompleted(true), 1000);
     }
   };
 
@@ -84,7 +53,7 @@ const LessonDetailScreen = ({
       flatListRef.current?.scrollToIndex({ index: nextPage, animated: true });
       handlePageChange(nextPage);
     } else if (lessonCompleted) {
-      onComplete?.();
+      onComplete?.(lessonId || title);
     }
   };
 
@@ -98,13 +67,12 @@ const LessonDetailScreen = ({
 
   const handleQuizAnswer = (answerId) => {
     setQuizAnswer(answerId);
-    const isCorrect = lessonPages[3].options.find(opt => opt.id === answerId)?.correct;
-    
-    // Auto-advance after answering
+    // correctness if you need it:
+    // const page = lessonPages[currentPage];
+    // const isCorrect = page?.options?.find(o => o.id === answerId)?.correct;
+
     setTimeout(() => {
-      if (currentPage === lessonPages.length - 1) {
-        setLessonCompleted(true);
-      }
+      if (currentPage === lessonPages.length - 1) setLessonCompleted(true);
     }, 1500);
   };
 
@@ -119,46 +87,48 @@ const LessonDetailScreen = ({
 
   const handleScroll = Animated.event(
     [{ nativeEvent: { contentOffset: { x: scrollX } } }],
-    { 
+    {
       useNativeDriver: false,
-      listener: (event) => {
-        const pageIndex = Math.round(event.nativeEvent.contentOffset.x / screenWidth);
+      listener: (e) => {
+        const pageIndex = Math.round(e.nativeEvent.contentOffset.x / screenWidth);
         if (pageIndex !== currentPage) {
           setCurrentPage(pageIndex);
           handlePageChange(pageIndex);
+          setQuizAnswer(null);
         }
-      }
+      },
     }
   );
 
   const canProceed = () => {
-    if (currentPage === 3) { // Quiz page
-      return quizAnswer !== null;
-    }
-    return true;
+    const page = lessonPages[currentPage];
+    return page?.type === 'quiz' ? quizAnswer !== null : true;
   };
+
+  if (!lesson && lessonId) {
+    return (
+      <View style={[styles.container, { paddingTop: insets.top, alignItems: 'center', justifyContent: 'center' }]}>
+        <Text>Lesson not found for id: {String(lessonId)}</Text>
+        <TouchableOpacity onPress={onBack} style={{ marginTop: 12 }}>
+          <Text style={{ color: '#667eea', fontWeight: '600' }}>← Back</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
 
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity 
-          style={styles.backButton} 
-          onPress={onBack}
-          activeOpacity={0.7}
-        >
+        <TouchableOpacity style={styles.backButton} onPress={onBack} activeOpacity={0.7}>
           <Text style={styles.backButtonText}>← Back</Text>
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Lesson: {lessonTitle}</Text>
+        <Text style={styles.headerTitle}>Lesson: {title}</Text>
         <View style={styles.headerRight} />
       </View>
 
       {/* Progress Indicator */}
-      <ProgressIndicator 
-        currentPage={currentPage}
-        totalPages={lessonPages.length}
-        scrollX={scrollX}
-      />
+      <ProgressIndicator currentPage={currentPage} totalPages={lessonPages.length} scrollX={scrollX} />
 
       {/* Lesson Content */}
       <Animated.FlatList
@@ -171,11 +141,7 @@ const LessonDetailScreen = ({
         showsHorizontalScrollIndicator={false}
         onScroll={handleScroll}
         scrollEventThrottle={16}
-        getItemLayout={(data, index) => ({
-          length: screenWidth,
-          offset: screenWidth * index,
-          index,
-        })}
+        getItemLayout={(_, index) => ({ length: screenWidth, offset: screenWidth * index, index })}
       />
 
       {/* Navigation Controls */}
@@ -186,9 +152,7 @@ const LessonDetailScreen = ({
           disabled={currentPage === 0}
           activeOpacity={0.7}
         >
-          <Text style={[styles.navButtonText, currentPage === 0 && styles.disabledText]}>
-            Previous
-          </Text>
+          <Text style={[styles.navButtonText, currentPage === 0 && styles.disabledText]}>Previous</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -201,14 +165,8 @@ const LessonDetailScreen = ({
           disabled={!canProceed()}
           activeOpacity={0.8}
         >
-          <Text style={[
-            styles.nextButtonText,
-            !canProceed() && styles.disabledText,
-          ]}>
-            {currentPage === lessonPages.length - 1 
-              ? (lessonCompleted ? 'Complete Lesson' : 'Finish') 
-              : 'Next'
-            }
+          <Text style={[styles.nextButtonText, !canProceed() && styles.disabledText]}>
+            {currentPage === lessonPages.length - 1 ? (lessonCompleted ? 'Complete Lesson' : 'Finish') : 'Next'}
           </Text>
         </TouchableOpacity>
       </View>
