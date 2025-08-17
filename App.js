@@ -68,8 +68,8 @@ const MainApp = () => {
     setActiveTab(tabId);
   };
 
-  const handleStartLesson = lessonTitle => {
-    setCurrentLesson(lessonTitle);
+  const handleStartLesson = (lessonId) => {
+    setCurrentLesson(lessonId);
     setCurrentScreen('lessonDetail');
   };
 
@@ -166,7 +166,9 @@ const MainApp = () => {
 
       {currentScreen === 'lessonDetail' && user && (
         <LessonDetailScreen
-          lessonTitle={currentLesson}
+          key={currentLesson || 'none'}                     
+          lessonTitle={'The Magic of Compounding'}         
+          route={{ params: { lessonId: currentLesson } }}   
           onComplete={handleCompleteLesson}
           onBack={handleBackFromLesson}
         />
