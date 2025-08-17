@@ -1,6 +1,7 @@
 // context/AuthContext.js
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 const AuthContext = createContext({});
@@ -17,6 +18,99 @@ export const AuthProvider = ({ children }) => {
 
     return unsubscribe;
   }, []);
+
+  // Function to create or update user document in Firestore
+  const createUserDocument = async (firebaseUser) => {
+    if (!firebaseUser) {
+      console.log('No firebase user provided to createUserDocument');
+      return;
+    }
+    
+    console.log('Creating/updating user document for:', firebaseUser.uid);
+    
+    try {
+      const userRef = firestore().collection('users').doc(firebaseUser.uid);
+      console.log('User ref created, checking if document exists...');
+      
+      // Use a more robust way to check if document exists
+      let userDoc;
+      try {
+        userDoc = await userRef.get();
+        console.log('Document exists:', userDoc.exists);
+      } catch (getError) {
+        console.log('Error getting document (likely doesnt exist):', getError.message);
+        // If we can't get the doc, assume it doesn't exist and create it
+        userDoc = { exists: false };
+      }
+      
+      const userData = {
+        uid: firebaseUser.uid,
+        email: firebaseUser.email || '',
+        displayName: firebaseUser.displayName || '',
+        photoURL: firebaseUser.photoURL || '',
+        lastSignIn: firestore.FieldValue.serverTimestamp(),
+        updatedAt: firestore.FieldValue.serverTimestamp(),
+      };
+
+      if (!userDoc.exists) {
+        // New user - create document with all initial data
+        console.log('Creating new user document...');
+        const newUserData = {
+          ...userData,
+          createdAt: firestore.FieldValue.serverTimestamp(),
+          // Add any other initial user data you want to store
+          goals: [],
+          totalSavings: 0,
+          lessonsCompleted: [],
+          preferences: {
+            notifications: true,
+            darkMode: false,
+          }
+        };
+        
+        await userRef.set(newUserData);
+        console.log('✅ New user document created for:', firebaseUser.email);
+      } else {
+        // Existing user - update their info and last sign in time
+        console.log('Updating existing user document...');
+        await userRef.update(userData);
+        console.log('✅ User document updated for:', firebaseUser.email);
+      }
+    } catch (error) {
+      console.error('❌ Error creating/updating user document:', {
+        code: error.code,
+        message: error.message,
+        uid: firebaseUser.uid,
+        email: firebaseUser.email
+      });
+      
+      // Try a fallback approach - just create the document
+      try {
+        console.log('Trying fallback approach - forcing document creation...');
+        const userRef = firestore().collection('users').doc(firebaseUser.uid);
+        await userRef.set({
+          uid: firebaseUser.uid,
+          email: firebaseUser.email || '',
+          displayName: firebaseUser.displayName || '',
+          photoURL: firebaseUser.photoURL || '',
+          createdAt: firestore.FieldValue.serverTimestamp(),
+          lastSignIn: firestore.FieldValue.serverTimestamp(),
+          updatedAt: firestore.FieldValue.serverTimestamp(),
+          goals: [],
+          totalSavings: 0,
+          lessonsCompleted: [],
+          preferences: {
+            notifications: true,
+            darkMode: false,
+          }
+        }, { merge: true }); // Use merge to avoid overwriting if it exists
+        
+        console.log('✅ Fallback user document creation successful');
+      } catch (fallbackError) {
+        console.error('❌ Fallback approach also failed:', fallbackError);
+      }
+    }
+  };
 
   const signInWithGoogle = async () => {
     try {
@@ -61,6 +155,9 @@ export const AuthProvider = ({ children }) => {
       // Sign-in the user with the credential
       const result = await auth().signInWithCredential(googleCredential);
       console.log('Firebase auth result:', result.user?.email);
+      
+      // Create or update user document in Firestore
+      await createUserDocument(result.user);
       
       setLoading(false);
       return result;
@@ -108,6 +205,41 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Helper function to update user data in Firestore
+  const updateUserData = async (updates) => {
+    if (!user) return;
+    
+    try {
+      const userRef = firestore().collection('users').doc(user.uid);
+      await userRef.update({
+        ...updates,
+        updatedAt: firestore.FieldValue.serverTimestamp(),
+      });
+      console.log('User data updated successfully');
+    } catch (error) {
+      console.error('Error updating user data:', error);
+      throw error;
+    }
+  };
+
+  // Helper function to get user data from Firestore
+  const getUserData = async () => {
+    if (!user) return null;
+    
+    try {
+      const userRef = firestore().collection('users').doc(user.uid);
+      const userDoc = await userRef.get();
+      
+      if (userDoc.exists) {
+        return userDoc.data();
+      }
+      return null;
+    } catch (error) {
+      console.error('Error getting user data:', error);
+      throw error;
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -115,6 +247,8 @@ export const AuthProvider = ({ children }) => {
         loading,
         signInWithGoogle,
         signOut,
+        updateUserData,
+        getUserData,
       }}
     >
       {children}
