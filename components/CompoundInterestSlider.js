@@ -65,9 +65,9 @@ const CompoundInterestSlider = () => {
         useNativeDriver: false,
       }).start();
       dragStartXRef.current = translateX.__getValue();
-      Animated.spring(scaleAnim, {\
+      Animated.spring(scaleAnim, {
         toValue:1.3,
-        useNativeDriver: false;
+        useNativeDriver: false,
       }).start();
     },
 
