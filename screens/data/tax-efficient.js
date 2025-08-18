@@ -14,7 +14,7 @@ export default {
       type: 'story',
       title: 'Use the Wrapper',
       content:
-        'Tax-advantaged accounts (like TFSA/ISA/401k/RA equivalents in your region) shield growth/dividends from some taxes.',
+        'Tax-advantaged accounts like an RA, shield growth/dividends from some taxes.',
       graphic: '📦💸',
       backgroundColor: '#f0f9ff',
     },
