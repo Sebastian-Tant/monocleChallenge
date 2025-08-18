@@ -1,4 +1,5 @@
 // App.js
+
 import React, { useState, useEffect } from 'react';
 import { StatusBar, useColorScheme, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -10,9 +11,12 @@ import LearnScreen from './screens/LearnScreen';
 import SimulateScreen from './screens/SimulateScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import LessonDetailScreen from './screens/LessonDetailScreen';
+import LanguageSelectorScreen from './screens/LanguageSelectorScreen';
 import BottomNavigation from './components/BottomNavigation';
 import CompoundInterestSlider from './components/CompoundInterestSlider';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import './src/locales/i18n';
+
 // In your App.js, replace the existing GoogleSignin.configure with:
 GoogleSignin.configure({
   webClientId: '665585255864-914vki4vakoqgkugmromgsicqo74vaua.apps.googleusercontent.com',
@@ -23,6 +27,7 @@ GoogleSignin.configure({
   iosClientId: '', // Add this even if empty for Android
   googleServicePlistPath: '', // Add this even if empty for Android
 });
+
 const MainApp = () => {
   const isDarkMode = useColorScheme() === 'dark';
   const { user, loading } = useAuth();
@@ -32,27 +37,37 @@ const MainApp = () => {
   const [goalAmount, setGoalAmount] = useState('');
   const [userName, setUserName] = useState('');
   const [currentLesson, setCurrentLesson] = useState(null);
+  const [hasSelectedLanguage, setHasSelectedLanguage] = useState(false);
 
   // Update userName when user data is available
   useEffect(() => {
     if (user) {
       setUserName(user.displayName?.split(' ')[0] || 'Friend');
-      
-      
     } else {
       // Reset to welcome screen if user signs out
       setCurrentScreen('welcome');
       setUserName('');
       setSelectedGoal(null);
       setGoalAmount('');
+      setHasSelectedLanguage(false);
     }
   }, [user]);
 
   const handleGetStarted = () => {
     if (user) {
-      setCurrentScreen('goalSetting');
+      // Check if user has already selected a language
+      if (!hasSelectedLanguage) {
+        setCurrentScreen('languageSelector');
+      } else {
+        setCurrentScreen('goalSetting');
+      }
     }
     // If no user, the WelcomeScreen will handle the sign-in flow
+  };
+
+  const handleLanguageSelected = () => {
+    setHasSelectedLanguage(true);
+    setCurrentScreen('goalSetting');
   };
 
   const handleGoalComplete = (goal, amount) => {
@@ -160,15 +175,19 @@ const MainApp = () => {
         <LandingScreen onGetStarted={handleGetStarted} />
       )}
 
+      {currentScreen === 'languageSelector' && user && (
+        <LanguageSelectorScreen onLanguageSelected={handleLanguageSelected} />
+      )}
+
       {currentScreen === 'goalSetting' && user && (
         <GoalSettingScreen onGoalComplete={handleGoalComplete} />
       )}
 
       {currentScreen === 'lessonDetail' && user && (
         <LessonDetailScreen
-          key={currentLesson || 'none'}                     
-          lessonTitle={'The Magic of Compounding'}         
-          route={{ params: { lessonId: currentLesson } }}   
+          key={currentLesson || 'none'}                    
+          lessonTitle={'The Magic of Compounding'}        
+          route={{ params: { lessonId: currentLesson } }}  
           onComplete={handleCompleteLesson}
           onBack={handleBackFromLesson}
         />

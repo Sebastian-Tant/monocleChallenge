@@ -13,24 +13,27 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import LinearGradient from 'react-native-linear-gradient';
-
-const GOALS = [
-  { id: 'car', icon: '🚗', title: 'Save for a Car', defaultAmount: 'R 250,000' },
-  { id: 'home', icon: '🏠', title: 'Save for a Home Deposit', defaultAmount: 'R 500,000' },
-  { id: 'holiday', icon: '🎒', title: 'Save for a Dream Holiday', defaultAmount: 'R 50,000' },
-  { id: 'emergency', icon: '🛡️', title: 'Build an Emergency Fund', defaultAmount: 'R 100,000' },
-  { id: 'retirement', icon: '🌴', title: 'Start My Retirement Fund', defaultAmount: 'R 1,000,000' },
-  { id: 'custom', icon: '➕', title: 'Create a Custom Goal...', defaultAmount: '' },
-];
+import { useTranslation } from 'react-i18next';
 
 const GoalSettingScreen = ({ onGoalComplete }) => {
+  const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const [selectedGoal, setSelectedGoal] = useState(null);
   const [amount, setAmount] = useState('');
   const [showAmountInput, setShowAmountInput] = useState(false);
   
   const amountInputAnimation = useRef(new Animated.Value(0)).current;
-  const cardAnimations = useRef(GOALS.map(() => new Animated.Value(0))).current;
+  const cardAnimations = useRef(Array(6).fill(0).map(() => new Animated.Value(0))).current;
+
+  // Goals array using translations
+  const GOALS = [
+    { id: 'car', icon: '🚗', title: t('goals.car'), defaultAmount: t('goals.carAmount') },
+    { id: 'home', icon: '🏠', title: t('goals.home'), defaultAmount: t('goals.homeAmount') },
+    { id: 'holiday', icon: '🎒', title: t('goals.holiday'), defaultAmount: t('goals.holidayAmount') },
+    { id: 'emergency', icon: '🛡️', title: t('goals.emergency'), defaultAmount: t('goals.emergencyAmount') },
+    { id: 'retirement', icon: '🌴', title: t('goals.retirement'), defaultAmount: t('goals.retirementAmount') },
+    { id: 'custom', icon: '➕', title: t('goals.custom'), defaultAmount: '' },
+  ];
 
   const handleGoalSelect = (goal, index) => {
     setSelectedGoal(goal);
@@ -69,11 +72,11 @@ const GoalSettingScreen = ({ onGoalComplete }) => {
     if (selectedGoal && amount.trim()) {
       // Show success animation/feedback
       Alert.alert(
-        'Goal Set! 🎉',
-        `Great! You've set your goal to ${amount} for ${selectedGoal.title.toLowerCase()}. Let's start learning about compound interest!`,
+        t('goalSet.title'),
+        t('goalSet.message', { amount: amount, goalTitle: selectedGoal.title.toLowerCase() }),
         [
           {
-            text: 'Continue',
+            text: t('goalSet.continue'),
             onPress: () => onGoalComplete(selectedGoal, amount),
           },
         ]
@@ -87,12 +90,12 @@ const GoalSettingScreen = ({ onGoalComplete }) => {
     <View style={[styles.container, { paddingTop: insets.top }]}>
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
-          <Text style={styles.headerTitle}>Set Your First Goal</Text>
+          <Text style={styles.headerTitle}>{t('goalSetting.title')}</Text>
           <Text style={styles.mainQuestion}>
-            Every journey needs a destination. What's your first major financial goal?
+            {t('goalSetting.mainQuestion')}
           </Text>
           <Text style={styles.instruction}>
-            Pick one to start. You can change this later.
+            {t('goalSetting.instruction')}
           </Text>
         </View>
 
@@ -165,12 +168,12 @@ const GoalSettingScreen = ({ onGoalComplete }) => {
               },
             ]}
           >
-            <Text style={styles.amountLabel}>How much do you need to save?</Text>
+            <Text style={styles.amountLabel}>{t('goalSetting.amountLabel')}</Text>
             <TextInput
               style={styles.amountInput}
               value={amount}
               onChangeText={setAmount}
-              placeholder={selectedGoal?.id === 'custom' ? 'Enter your goal amount' : 'R 50,000'}
+              placeholder={selectedGoal?.id === 'custom' ? t('goalSetting.customPlaceholder') : t('goalSetting.defaultPlaceholder')}
               keyboardType="default"
               returnKeyType="done"
             />
@@ -196,7 +199,7 @@ const GoalSettingScreen = ({ onGoalComplete }) => {
               styles.nextButtonText,
               !isNextButtonEnabled && styles.nextButtonTextDisabled,
             ]}>
-              Next
+              {t('common.next')}
             </Text>
           </LinearGradient>
         </TouchableOpacity>
