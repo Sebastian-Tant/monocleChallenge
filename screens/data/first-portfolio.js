@@ -27,13 +27,6 @@ const getFirstPortfolioData = () => ({
       backgroundColor: '#fefce8',
     },
     {
-      id: 'interactive',
-      type: 'interactive',
-      title: t('firstPortfolio.pages.interactive.title'),
-      content: t('firstPortfolio.pages.interactive.content'),
-      backgroundColor: '#f0fdf4',
-    },
-    {
       id: 'quiz',
       type: 'quiz',
       title: t('firstPortfolio.pages.quiz.title'),

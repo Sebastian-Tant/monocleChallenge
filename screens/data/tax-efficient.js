@@ -27,13 +27,6 @@ const getTaxEfficientData = () => ({
       backgroundColor: '#fefce8',
     },
     {
-      id: 'interactive',
-      type: 'interactive',
-      title: t('taxEfficient.pages.interactive.title'),
-      content: t('taxEfficient.pages.interactive.content'),
-      backgroundColor: '#f0fdf4',
-    },
-    {
       id: 'quiz',
       type: 'quiz',
       title: t('taxEfficient.pages.quiz.title'),

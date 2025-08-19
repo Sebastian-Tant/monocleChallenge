@@ -191,7 +191,7 @@ const HomeScreen = ({
           >
             <Text style={styles.nextStepActionTitle}>Continue Lesson</Text>
             <Text style={styles.nextStepActionSubtitle}>
-              The Power of Compounding: Part 2
+              The Power of Compounding
             </Text>
             <View style={styles.nextStepArrow}>
               <Text style={styles.arrowText}>→</Text>

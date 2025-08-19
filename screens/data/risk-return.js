@@ -27,13 +27,6 @@ const getRiskReturnData = () => ({
       backgroundColor: '#fefce8',
     },
     {
-      id: 'interactive',
-      type: 'interactive',
-      title: t('riskReturn.pages.interactive.title'),
-      content: t('riskReturn.pages.interactive.content'),
-      backgroundColor: '#f0fdf4',
-    },
-    {
       id: 'quiz',
       type: 'quiz',
       title: t('riskReturn.pages.quiz.title'),
