@@ -113,5 +113,195 @@
     "scenarioDisclaimer": "Actual returns vary; this is not a guarantee. Use it to feel how rate and time change outcomes.",
     "strategyExplanation": "{{name}}:\nBaseline payment {{basePmt}} → New payment {{newPmt}}.\nMonths: {{months}} → {{variantMonths}} (saved {{monthsSaved}}).\nInterest saved: {{interestSaved}}.\n\nWhy it works: paying a little extra reduces principal sooner, so less interest accrues next month — the effect compounds.",
     "strategyExplanationError": "Enter a valid payment or term first to see strategy impact."
+  },"compounding": {
+    "title": "The Magic of Compounding",
+    "description": "Learn how your money can grow exponentially over time through the power of compound interest.",
+    "duration": "5 min",
+    "difficulty": "Beginner",
+    "pages": {
+      "concept": {
+        "title": "The Concept",
+        "content": "Imagine you have a money tree. Compound interest is like planting the seeds that fall from your tree, so they grow into new money trees."
+      },
+      "coreIdea": {
+        "title": "The Core Idea",
+        "content": "You earn interest on your money. Then, you earn *interest on your interest*. That's the magic."
+      },
+      "interactive": {
+        "title": "See It In Action",
+        "content": "Let's see it in action. Drag the slider to see how a R10,000 investment grows at 8% interest."
+      },
+      "quiz": {
+        "title": "Quick Question",
+        "question": "Which is more powerful for compounding?",
+        "options": {
+          "highAmount": "A high starting amount",
+          "startEarly": "Starting as early as possible"
+        }
+      }
+    }
+  },"emergencyFund": {
+    "title": "Emergency Funds Explained",
+    "description": "Why you need an emergency fund and how much to save before investing.",
+    "duration": "6 min",
+    "difficulty": "Beginner",
+    "pages": {
+      "why": {
+        "title": "Why Bother?",
+        "content": "Life happens—job loss, car repairs, medical bills. An emergency fund keeps you from going into debt (or selling investments at the worst time)."
+      },
+      "howMuch": {
+        "title": "How Much?",
+        "content": "Common rule: 3–6 months of essential expenses. Start with a mini-goal (R5,000–R10,000), then build up."
+      },
+      "interactive": {
+        "title": "Your Target",
+        "content": "Drag to set monthly essentials (rent, food, transport). We'll show you a 3–6 month emergency target."
+      },
+      "quiz": {
+        "title": "Quick Check",
+        "question": "Where should an emergency fund be kept?",
+        "options": {
+          "volatileStock": "In a volatile stock ETF",
+          "safeAccount": "In a safe, easy-access account"
+        }
+      }
+    }
+  },"firstPortfolio": {
+    "title": "Building Your First Portfolio",
+    "description": "Create a diversified investment portfolio that matches your goals and risk tolerance.",
+    "duration": "10 min",
+    "difficulty": "Intermediate",
+    "pages": {
+      "goals": {
+        "title": "Start With Goals",
+        "content": "Timeline + purpose = allocation. Short-term goals → safer assets. Long-term goals → more growth assets."
+      },
+      "diversify": {
+        "title": "Diversification",
+        "content": "Mix asset classes (stocks, bonds, cash) and geographies so one loser doesn't sink the whole ship."
+      },
+      "interactive": {
+        "title": "Try an Allocation",
+        "content": "Move sliders for stocks/bonds/cash. See simulated volatility and long-term return change in real time."
+      },
+      "quiz": {
+        "title": "Quick Check",
+        "question": "What's the main benefit of diversification?",
+        "options": {
+          "maximizeGains": "Maximizes short-term gains",
+          "reduceRisk": "Reduces risk from any single investment"
+        }
+      }
+    }
+  },"riskReturn": {
+    "title": "Understanding Risk and Return",
+    "description": "Discover the relationship between risk and potential rewards in investing.",
+    "duration": "7 min",
+    "difficulty": "Beginner",
+    "pages": {
+      "intro": {
+        "title": "What is Risk?",
+        "content": "Risk is how much your investment can go up or down. Higher risk can mean higher gains — but also bigger drops."
+      },
+      "tradeoff": {
+        "title": "The Trade-off",
+        "content": "Safer assets (like cash) have lower returns. Riskier assets (like stocks) can grow more over time but swing more."
+      },
+      "interactive": {
+        "title": "Pick Your Path",
+        "content": "Move the slider between \"safe\" and \"risky\" to see how volatility and long-term return might change."
+      },
+      "quiz": {
+        "title": "Quick Check",
+        "question": "Which statement is most accurate?",
+        "options": {
+          "A": "Higher returns always mean less risk",
+          "B": "Higher potential returns usually come with higher risk"
+        }
+      }
+    }
+  }, "taxEfficient": {
+    "title": "Tax-Efficient Investing",
+    "description": "Learn about tax-free / tax-advantaged accounts and smart placement to keep more of your returns.",
+    "duration": "8 min",
+    "difficulty": "Intermediate",
+    "pages": {
+      "wrappers": {
+        "title": "Use the Wrapper",
+        "content": "Tax-advantaged accounts like an RA, shield growth/dividends from some taxes."
+      },
+      "placement": {
+        "title": "Asset Location",
+        "content": "Place tax-inefficient assets (e.g., bond funds, high dividend payers) in tax-sheltered accounts first."
+      },
+      "interactive": {
+        "title": "Smart Placement",
+        "content": "Drag funds into \"Taxable\" vs \"Tax-Advantaged\" buckets. See the estimated after-tax return improve."
+      },
+      "quiz": {
+        "title": "Quick Check",
+        "question": "Which move is generally MORE tax-efficient?",
+        "options": {
+          "A": "Holding bond funds in a tax-advantaged account",
+          "B": "Holding bond funds in a taxable brokerage account"
+        }
+      }
+    }
+  },"learnScreen": {
+    "sections": {
+      "availableLessons": "Available Lessons",
+      "achievements": "Achievements",
+      "learningTips": "Learning Tips"
+    },
+    "lesson": {
+      "completed": "✓ Completed",
+      "complete": "complete",
+      "startLesson": "Start Lesson"
+    },
+    "achievements": {
+      "firstLesson": {
+        "title": "First Lesson",
+        "description": "Complete your first lesson"
+      },
+      "quizMaster": {
+        "title": "Quiz Master",
+        "description": "Complete an intermediate quiz"
+      },
+      "knowledgeSeeker": {
+        "title": "Knowledge Seeker",
+        "description": "Complete 5 lessons"
+      }
+    },
+    "reward": {
+      "collectReward": "Collect Reward",
+      "collected": "Reward Collected",
+      "collectedMessage": "You've earned 500MB of data! Enjoy!",
+      "alreadyCollected": "Reward Already Collected",
+      "alreadyCollectedMessage": "You've already claimed your 500MB reward!",
+      "notEligible": "Not Eligible",
+      "notEligibleMessage": "Complete all achievements to collect your reward!"
+    },
+    "tips": {
+      "takeYourTime": {
+        "title": "Take Your Time",
+        "description": "Don't rush through lessons. Take time to understand each concept."
+      },
+      "practiceMakesPerfect": {
+        "title": "Practice Makes Perfect",
+        "description": "Revisit lessons and try the interactive elements multiple times."
+      },
+      "learnDaily": {
+        "title": "Learn Daily",
+        "description": "Spend just 5-10 minutes daily to build your financial knowledge."
+      }
+    },
+    "errors": {
+      "error": "Error",
+      "noUserSignedIn": "No user signed in",
+      "userDocumentNotFound": "User document not found",
+      "failedToUpdateProgress": "Failed to update progress",
+      "failedToCollectReward": "Failed to collect reward"
+    }
   }
 }

@@ -113,5 +113,195 @@
     "scenarioDisclaimer": "Werklike opbrengste verskil; dit is nie 'n waarborg nie. Gebruik dit om te voel hoe koers en tyd uitkomste verander.",
     "strategyExplanation": "{{name}}:\nBasiese betaling {{basePmt}} → Nuwe betaling {{newPmt}}.\nMaande: {{months}} → {{variantMonths}} (spaar {{monthsSaved}}).\nRente gespaar: {{interestSaved}}.\n\nHoekom dit werk: deur 'n bietjie ekstra te betaal, word die kapitaal vinniger verminder en so word minder rente volgende maand gehef — die effek vermeerder.",
     "strategyExplanationError": "Voer eers 'n geldige betaling of termyn in om die strategie se uitwerking te sien."
+  },"compounding": {
+    "title": "Die Towerwerk van Saamgestelde Rente",
+    "description": "Leer hoe jou geld eksponensieel kan groei oor tyd deur die krag van saamgestelde rente.",
+    "duration": "5 min",
+    "difficulty": "Beginner",
+    "pages": {
+      "concept": {
+        "title": "Die Konsep",
+        "content": "Stel jou voor jy het 'n geldboom. Saamgestelde rente is soos om die sade wat van jou boom val te plant, sodat hulle in nuwe geldbome kan groei."
+      },
+      "coreIdea": {
+        "title": "Die Kernidee",
+        "content": "Jy verdien rente op jou geld. Dan verdien jy *rente op jou rente*. Dit is die towerwerk."
+      },
+      "interactive": {
+        "title": "Sien Dit in Aksie",
+        "content": "Kom ons sien dit in aksie. Sleep die glyknoppie om te sien hoe 'n R10,000 belegging groei teen 8% rente."
+      },
+      "quiz": {
+        "title": "Vinnige Vraag",
+        "question": "Wat is meer kragtig vir saamgestelde rente?",
+        "options": {
+          "highAmount": "'n Hoë beginbedrag",
+          "startEarly": "Om so vroeg as moontlik te begin"
+        }
+      }
+    }
+  }, "emergencyFund": {
+    "title": "Noodfondse Verduidelik",
+    "description": "Waarom jy 'n noodfonds benodig en hoeveel om te spaar voor jy belê.",
+    "duration": "6 min",
+    "difficulty": "Beginner",
+    "pages": {
+      "why": {
+        "title": "Waarom Worry?",
+        "content": "Die lewe gebeur—werksverlies, motorherstelwerk, mediese rekeninge. 'n Noodfonds verhoed dat jy in skuld gaan (of beleggings op die slegste tyd verkoop)."
+      },
+      "howMuch": {
+        "title": "Hoeveel?",
+        "content": "Algemene reël: 3–6 maande se noodsaaklike uitgawes. Begin met 'n klein doelwit (R5,000–R10,000), bou dan op."
+      },
+      "interactive": {
+        "title": "Jou Teiken",
+        "content": "Sleep om maandelikse noodsaaklikhede in te stel (huur, kos, vervoer). Ons sal jou 'n 3–6 maande noodteiken wys."
+      },
+      "quiz": {
+        "title": "Vinnige Toets",
+        "question": "Waar moet 'n noodfonds gehou word?",
+        "options": {
+          "volatileStock": "In 'n onstabiele aandele-ETF",
+          "safeAccount": "In 'n veilige, maklik-toeganklike rekening"
+        }
+      }
+    }
+  },"firstPortfolio": {
+    "title": "Bou Jou Eerste Portefeulje",
+    "description": "Skep 'n gediversifieerde beleggingsportefeulje wat by jou doelwitte en risikotoleransie pas.",
+    "duration": "10 min",
+    "difficulty": "Gemiddeld",
+    "pages": {
+      "goals": {
+        "title": "Begin met Doelwitte",
+        "content": "Tydlyn + doel = toewysing. Korttermyn doelwitte → veiliger bates. Langtermyn doelwitte → meer groei-bates."
+      },
+      "diversify": {
+        "title": "Diversifikasie",
+        "content": "Meng bateklasse (aandele, effekte, kontant) en geografieë sodat een verlies nie die hele skip laat sink nie."
+      },
+      "interactive": {
+        "title": "Probeer 'n Toewysing",
+        "content": "Beweeg glyers vir aandele/effekte/kontant. Sien gesimuleerde volatiliteit en langtermyn opbrengs verander in reële tyd."
+      },
+      "quiz": {
+        "title": "Vinnige Toets",
+        "question": "Wat is die hoofvoordeel van diversifikasie?",
+        "options": {
+          "maximizeGains": "Maksimeer korttermyn winste",
+          "reduceRisk": "Verminder risiko van enige enkele belegging"
+        }
+      }
+    }
+  },"riskReturn": {
+    "title": "Begrip van Risiko en Opbrengs",
+    "description": "Ontdek die verhouding tussen risiko en potensiële belonings in belegging.",
+    "duration": "7 min",
+    "difficulty": "Beginner",
+    "pages": {
+      "intro": {
+        "title": "Wat is Risiko?",
+        "content": "Risiko is hoeveel jou belegging kan styg of daal. Hoër risiko kan hoër winste beteken — maar ook groter verliese."
+      },
+      "tradeoff": {
+        "title": "Die Afruiling",
+        "content": "Veiliger bates (soos kontant) het laer opbrengste. Riskante bates (soos aandele) kan meer oor tyd groei maar skommel meer."
+      },
+      "interactive": {
+        "title": "Kies Jou Pad",
+        "content": "Skuif die glyblokkie tussen \"veilig\" en \"riskant\" om te sien hoe volatiliteit en langtermyn opbrengs mag verander."
+      },
+      "quiz": {
+        "title": "Vinnige Toets",
+        "question": "Watter stelling is die mees akkurate?",
+        "options": {
+          "A": "Hoër opbrengste beteken altyd minder risiko",
+          "B": "Hoër potensiële opbrengste kom gewoonlik met hoër risiko"
+        }
+      }
+    }
+  },"taxEfficient": {
+    "title": "Belasting-Doeltreffende Belegging",
+    "description": "Leer oor belastingvrye / belasting-voordelige rekeninge en slim plasing om meer van jou opbrengste te behou.",
+    "duration": "8 min",
+    "difficulty": "Intermediêr",
+    "pages": {
+      "wrappers": {
+        "title": "Gebruik die Omhulsel",
+        "content": "Belasting-voordelige rekeninge soos 'n RA beskerm groei/dividende teen sommige belastings."
+      },
+      "placement": {
+        "title": "Bate Plasing",
+        "content": "Plaas belasting-ondoeltreffende bates (bv. obligasiefondse, hoë dividend-betalers) eers in belastingskuiling rekeninge."
+      },
+      "interactive": {
+        "title": "Slim Plasing",
+        "content": "Sleep fondse na \"Belasbaar\" vs \"Belasting-Voordelig\" emmers. Sien hoe die beraamde na-belasting opbrengs verbeter."
+      },
+      "quiz": {
+        "title": "Vinnige Toets",
+        "question": "Watter skuif is algemeen MEER belasting-doeltreffend?",
+        "options": {
+          "A": "Hou obligasiefondse in 'n belasting-voordelige rekening",
+          "B": "Hou obligasiefondse in 'n belasbare makelaar rekening"
+        }
+      }
+    }
+  },"learnScreen": {
+    "sections": {
+      "availableLessons": "Beskikbare Lesse",
+      "achievements": "Prestasies",
+      "learningTips": "Leer Wenke"
+    },
+    "lesson": {
+      "completed": "✓ Voltooi",
+      "complete": "voltooi",
+      "startLesson": "Begin Les"
+    },
+    "achievements": {
+      "firstLesson": {
+        "title": "Eerste Les",
+        "description": "Voltooi jou eerste les"
+      },
+      "quizMaster": {
+        "title": "Vasvra Meester",
+        "description": "Voltooi 'n intermediêre vasvra"
+      },
+      "knowledgeSeeker": {
+        "title": "Kennis Soeker",
+        "description": "Voltooi 5 lesse"
+      }
+    },
+    "reward": {
+      "collectReward": "Versamel Beloning",
+      "collected": "Beloning Versamel",
+      "collectedMessage": "Jy het 500MB data verdien! Geniet!",
+      "alreadyCollected": "Beloning Reeds Versamel",
+      "alreadyCollectedMessage": "Jy het reeds jou 500MB beloning geëis!",
+      "notEligible": "Nie Geskik Nie",
+      "notEligibleMessage": "Voltooi alle prestasies om jou beloning te versamel!"
+    },
+    "tips": {
+      "takeYourTime": {
+        "title": "Vat Jou Tyd",
+        "description": "Moet nie deur lesse jaag nie. Vat tyd om elke konsep te verstaan."
+      },
+      "practiceMakesPerfect": {
+        "title": "Oefening Maak Perfek",
+        "description": "Hersien lesse en probeer die interaktiewe elemente verskeie kere."
+      },
+      "learnDaily": {
+        "title": "Leer Daagliks",
+        "description": "Spandeer net 5-10 minute daagliks om jou finansiële kennis te bou."
+      }
+    },
+    "errors": {
+      "error": "Fout",
+      "noUserSignedIn": "Geen gebruiker aangemeld",
+      "userDocumentNotFound": "Gebruiker dokument nie gevind nie",
+      "failedToUpdateProgress": "Kon nie vordering opdateer nie",
+      "failedToCollectReward": "Kon nie beloning versamel nie"
+    }
   }
 }

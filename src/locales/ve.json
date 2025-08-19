@@ -111,5 +111,195 @@
     "scenarioProjection": "He {{scenarioName}} tshifhinga tshi sedzulusa mvelelo ya {{returnRate}}% nga mvula yo kuvhanganywaho nga mwedzi. Nga maipfi aṋu nga {{years}} {{yearUnit}}, mvelelo yaṋu yo sedzuluswa i nga vha {{total}} ine {{growth}} i tshanduko ya tshifhinga.",
     "scenarioImplication": "Zwi amba uri: Maitele a {{scenarioName}} ane a sedzuluswa a vha na mvelelo ya {{returnRate}}% nga mvula nga tshifhinga tsho leluwa, u tevhedza {{volatility}} tshifhinga tsha u shanduka.",
     "scenarioDisclaimer": "Mvelelo dza khathihi dza fhambana; heyi a i sumbedzi mvelelo. Shumisa zwi u pfa uri tshifhinga na nḓila zwi shanduka mvelelo."
+  },"compounding": {
+    "title": "Zwivhuya zwa u Khula ha Mali",
+    "description": "Gudi uri mali avho a nga khula hani nga zwivhuya nga tshifhinga nga maanda a tshiphikwa tshine tsha u phindwa.",
+    "duration": "5 miniti",
+    "difficulty": "Vhuthomedi",
+    "pages": {
+      "concept": {
+        "title": "Mihumbulo",
+        "content": "Humbulani uri ni na na muri wa mali. Tshiphikwa tshine tsha u phindwa tshi fana na u lima mbeu dzine dza wela muriṅi wavho, uri dzi khule dzi vhe miri miswa ya mali."
+      },
+      "coreIdea": {
+        "title": "Mihumbulo ya Ndeme",
+        "content": "Ni wana tshiphikwa kha mali avho. Hune ni wana *tshiphikwa kha tshiphikwa tshavho*. Ndi zwone zwivhuya."
+      },
+      "interactive": {
+        "title": "Vhonani zwo Shuma",
+        "content": "Ri nga zwi vhona zwo shuma. Kodzani tshine tsha u thithisa u vhona uri mbuelelo ya R10,000 i khula hani nga 8% tshiphikwa."
+      },
+      "quiz": {
+        "title": "Mbudziso ya Zwinzhi",
+        "question": "Ndi zwithu zwifhio zwine zwina na maanda mahulu kha u khula ha mali?",
+        "options": {
+          "highAmount": "Mali mamvula a u thoma",
+          "startEarly": "U thoma nga u tavhanya"
+        }
+      }
+    }
+  },"emergencyFund": {
+    "title": "Mali a Zwitshitshi zwo Thalutshedziwa",
+    "description": "Uri ndi ngani ni tshi ṱoḓa mali a zwitshitshi na uri ni ṅo vha na bokae ni si kha peeletsa.",
+    "duration": "6 miniti",
+    "difficulty": "Vhuthomedi",
+    "pages": {
+      "why": {
+        "title": "Ndi ngani ni tshi Farela?",
+        "content": "Vhutshilo vhu a itea—u lala mushumo, u ḽunga koloi, mivhigo ya vhukwasha. Mali a zwitshitshi o ni thivhela u dzhena mukadimong (kana u rekisa mbuelelo nga tshifhinga tshisina)."
+      },
+      "howMuch": {
+        "title": "Ndi Vhukae?",
+        "content": "Mulayo wa zwinzhi: miṅwedzi 3–6 ya zwitshinyegelo zwa ndeme. Thomani nga ndivho nnyanyana (R5,000–R10,000), ni ḓo fhaṱa."
+      },
+      "interactive": {
+        "title": "Ndivho yavho",
+        "content": "Kodzani u vhea zwa ndeme zwa ṅwedzi (rente, zwiliwa, zwa vhuendo). Ri ḓo ni bontsha ndivho ya zwitshitshi ya miṅwedzi 3–6."
+      },
+      "quiz": {
+        "title": "Ṱhoḓisiso ya Zwinzhi",
+        "question": "Mali a zwitshitshi a tea a vhewa ngafhi?",
+        "options": {
+          "volatileStock": "Kha ETF ya masheya a shandukaho",
+          "safeAccount": "Kha akhaonto i pfumelelaho, i no konaho u i swika"
+        }
+      }
+    }
+  },"firstPortfolio": {
+    "title": "U Fhaṱa Pothifolio yavho ya u Thoma",
+    "description": "Itani pothifolio ya mbuelelo ye i fhambananaho yo e tshimbidzanaho na ndivho dzavho na u amogela khaedu.",
+    "duration": "10 miniti",
+    "difficulty": "Vhukati",
+    "pages": {
+      "goals": {
+        "title": "Thomani nga Ndivho",
+        "content": "Tshifhinga + ndivho = u aba. Ndivho dza tshifhinga tshine → zwithu zwe zwa pfumela. Ndivho dza tshifhinga tshilapfu → zwithu zwa u khula ho fhiraho."
+      },
+      "diversify": {
+        "title": "U Fhambanya",
+        "content": "Tanganyani mithando ya zwithu (masheya, dipanka, mali) na fhethu uri a thi muthihi a sa athu a tou ntshitsha mukumba woṱhe."
+      },
+      "interactive": {
+        "title": "Lingelani u Aba",
+        "content": "Kodzani zwilaedara zwa masheya/dipanka/mali. Vhonani tshanduko i rengwaho na mbuelelo wa tshifhinga tshilapfu zwi tshi shanduka nga tshifhinga tsha vhukuma."
+      },
+      "quiz": {
+        "title": "Ṱhoḓisiso ya Zwinzhi",
+        "question": "Ndi zwifhio zwiko zwa ndeme zwa u fhambanya?",
+        "options": {
+          "maximizeGains": "U fhatedza mbuelelo wa tshifhinga tshine",
+          "reduceRisk": "U fhungudza khaedu u bva kha mbuelelo muthihi"
+        }
+      }
+    }
+  },"riskReturn": {
+    "title": "U Pfesesa Khombo na Mbuelelo",
+    "description": "Wanani vhukati vhukati ha khombo na zwikongolose zwa mbuelelo kha u bvisela.",
+    "duration": "7 min",
+    "difficulty": "Mutevheli",
+    "pages": {
+      "intro": {
+        "title": "Khombo ndi Mini?",
+        "content": "Khombo ndi uri tshumelo yanu ya u bvisela i nga kona u vhofha kana ya wa. Khombo yo khulwanesa wo nga amba mbuelelo yo khulwanesa — fhedzi hafhu na u wa ho khulwanesa."
+      },
+      "tradeoff": {
+        "title": "U Tshintshana",
+        "content": "Zwiṅwe zwo dzudzanywaho (sa cash) zwi na mbuelelo yo fhungufhala. Zwiṅwe zwine khombo (sa stocks) zwi nga khula nga ha u fhira kana tshifhinga zwi tshi dzinginywa nga maanda."
+      },
+      "interactive": {
+        "title": "Nangani Ndila Yanu",
+        "content": "Fhatutshedza slider vhukati vhukati ha \"vhukhulelwa\" na \"khombo\" u vhona uri u tshinyala na mbuelelo ya tshifhinga tshilapfu zwi nga shanduka hani."
+      },
+      "quiz": {
+        "title": "Sedza nga u Tavhanya",
+        "question": "Ndi iṅwe iṅwe ya maipfi yo teaho?",
+        "options": {
+          "A": "Mbuelelo yo khulwanesa yo ralo u amba khombo wo fhungufhala",
+          "B": "Mbuelelo yo khulwanesa wo nga vha hone yo ralo u da na khombo wo khulwanesa"
+        }
+      }
+    }
+  },"taxEfficient": {
+    "title": "U Bvisela kha Ndila yo Shuma nga Muelo",
+    "description": "Gadzeni nga diakaunto dzo songo lifa muelo / dzine matuelo a muelo na u vhea nga vhuhlakanyi u tshimbidza zwi fhiraho zwa u vhuya zwanu.",
+    "duration": "8 min",
+    "difficulty": "Vhukati",
+    "pages": {
+      "wrappers": {
+        "title": "Shumisani Tshikhumbelo",
+        "content": "Diakaunto dzine matuelo a muelo sa RA, dzi khusela u khula/zwiavhelo kha muelo muthihi."
+      },
+      "placement": {
+        "title": "Fhethu ha Zwiko",
+        "content": "Vheani zwiko zwi sa shumi zwavhudi nga muelo (sa, bond funds, vhaholi vha zwiavhelo zwo ralo) kha diakaunto dzo dzudzanywaho nga muelo u thoma."
+      },
+      "interactive": {
+        "title": "U Vhea nga Vhuhlakanyi",
+        "content": "Kokani ma-funds kha \"Zwine Muelo\" kha \"Zwine Matuelo a Muelo\" ma-bakiti. Vonani ndila yo linganywaho ya nga murahu ha muelo i khwiniselaho."
+      },
+      "quiz": {
+        "title": "Sedza nga u Tavhanya",
+        "question": "Ndi ipi nyito yo rendre i SHUMA KHAKHULU nga muelo?",
+        "options": {
+          "A": "U fara bond funds kha akaunto ine matuelo a muelo",
+          "B": "U fara bond funds kha akaunto ya brokerage ine muelo"
+        }
+      }
+    }
+  },"learnScreen": {
+    "sections": {
+      "availableLessons": "Ngudo dzi re hone",
+      "achievements": "Zwe zwa swikelelwa",
+      "learningTips": "Ngafhiwa dza u Guda"
+    },
+    "lesson": {
+      "completed": "✓ Zwo fhedzwa",
+      "complete": "fhedza",
+      "startLesson": "Thoma Ngudo"
+    },
+    "achievements": {
+      "firstLesson": {
+        "title": "Ngudo ya U Thoma",
+        "description": "Fhedza ngudo yaṋu ya u thoma"
+      },
+      "quizMaster": {
+        "title": "Mphei wa Mbudziso",
+        "description": "Fhedza mbudziso dza vhukati"
+      },
+      "knowledgeSeeker": {
+        "title": "Muṱoḓi wa Nḓivho",
+        "description": "Fhedza ngudo dza 5"
+      }
+    },
+    "reward": {
+      "collectReward": "Dzhia Phfufho",
+      "collected": "Phfufho yo Dzhia",
+      "collectedMessage": "No wana data ya 500MB! I ḓiphineni!",
+      "alreadyCollected": "Phfufho yo no Dzhia",
+      "alreadyCollectedMessage": "No no dzhia phfufho yaṋu ya 500MB!",
+      "notEligible": "A ni Tanganedzei",
+      "notEligibleMessage": "Fhedzani zwoṱhe zwe zwa swikelelwa u itela u dzhia phfufho yaṋu!"
+    },
+    "tips": {
+      "takeYourTime": {
+        "title": "Ḓiṋeeni Tshifhinga",
+        "description": "Ni songo gidima na ngudo. Ḓiṋeeni tshifhinga u itela u pfesesa muhumbulo muṅwe na muṅwe."
+      },
+      "practiceMakesPerfect": {
+        "title": "U Guda misi yoṱhe zwi a Vhusa",
+        "description": "Vhuyelelani kha ngudo ni linge zwipiḓa zwi shumisanaho lunzhi."
+      },
+      "learnDaily": {
+        "title": "Gudani Ḓuvha ḽiṅwe na ḽiṅwe",
+        "description": "Fhedzani minete ya 5-10 fhedzi ḓuvha ḽiṅwe na ḽiṅwe u itela u fhaṱa nḓivho yaṋu ya zwa masheleni."
+      }
+    },
+    "errors": {
+      "error": "Khakhathi",
+      "noUserSignedIn": "A hu na mushumisi o dzhenaho",
+      "userDocumentNotFound": "Dokumente ya mushumisi a i wanali",
+      "failedToUpdateProgress": "Zwo kundwa u vusuludza mvelaphanḓa",
+      "failedToCollectReward": "Zwo kundwa u dzhia phfufho"
+    }
   }
 }

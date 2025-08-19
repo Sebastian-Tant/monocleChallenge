@@ -1,50 +1,59 @@
 // screens/data/compounding.js
-export default {
+import { t } from 'i18next';
+
+// Change the export to a function that returns the object
+const getCompoundingData = () => ({
   id: 'compounding',
-  title: 'The Magic of Compounding',
-  description:
-    'Learn how your money can grow exponentially over time through the power of compound interest.',
-  duration: '5 min',
-  difficulty: 'Beginner',
+  title: t('compounding.title'),
+  description: t('compounding.description'),
+  duration: t('compounding.duration'),
+  difficulty: t('compounding.difficulty'),
   completed: false,
   progress: 0,
   pages: [
     {
       id: 'concept',
       type: 'story',
-      title: 'The Concept',
-      content:
-        "Imagine you have a money tree. Compound interest is like planting the seeds that fall from your tree, so they grow into new money trees.",
+      title: t('compounding.pages.concept.title'),
+      content: t('compounding.pages.concept.content'),
       graphic: '🌳',
       backgroundColor: '#f0f9ff',
     },
     {
       id: 'core-idea',
       type: 'story',
-      title: 'The Core Idea',
-      content:
-        "You earn interest on your money. Then, you earn *interest on your interest*. That's the magic.",
+      title: t('compounding.pages.coreIdea.title'),
+      content: t('compounding.pages.coreIdea.content'),
       graphic: '✨',
       backgroundColor: '#fefce8',
     },
     {
       id: 'interactive',
       type: 'interactive',
-      title: 'See It In Action',
-      content:
-        "Let's see it in action. Drag the slider to see how a R10,000 investment grows at 8% interest.",
+      title: t('compounding.pages.interactive.title'),
+      content: t('compounding.pages.interactive.content'),
       backgroundColor: '#f0fdf4',
     },
     {
       id: 'quiz',
       type: 'quiz',
-      title: 'Quick Question',
-      question: 'Which is more powerful for compounding?',
+      title: t('compounding.pages.quiz.title'),
+      question: t('compounding.pages.quiz.question'),
       options: [
-        { id: 'A', text: 'A high starting amount', correct: false },
-        { id: 'B', text: 'Starting as early as possible', correct: true },
+        { 
+          id: 'A', 
+          text: t('compounding.pages.quiz.options.highAmount'), 
+          correct: false 
+        },
+        { 
+          id: 'B', 
+          text: t('compounding.pages.quiz.options.startEarly'), 
+          correct: true 
+        },
       ],
       backgroundColor: '#fdf2f8',
     },
   ],
-};
+});
+
+export default getCompoundingData;

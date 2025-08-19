@@ -111,5 +111,195 @@
     "scenarioProjection": "Leswi {{scenarioName}} swi kombisa mbuyelo wa {{returnRate}}% hi lembe lowu hlengeletaneke hi n'weti. Hi swipimelo swa wena hi {{years}} {{yearUnit}}, mbuyelo wa wena wu nga ri {{total}} lowu {{growth}} a ku ri ku kula ka nkatsakanyo wa ribye.",
     "scenarioImplication": "Swi vula yini: Maendlelo ya {{scenarioName}} ya ku hlayisa yi lomba ku vuya ka {{returnRate}}% hi lembe eka nkarhi wo leha, u tekelexa {{volatility}} ku cinca ka mbuyelo.",
     "scenarioDisclaimer": "Mbuyelo wa kwalaho wu hambana; leswi a swi veki mbuyelo. Tirhisa swi ku twisisa loko xipimo na nkarhi swi cinca mbuyelo."
+  },"compounding": {
+    "title": "Vutshila bya ku Kula ka Mali",
+    "description": "Dyondza leswaku mali ya wena yi nga kula njhani hi rivilo leri kulu hi nkarhi hi matimba ya nsimu lowu phindaphindiwaka.",
+    "duration": "5 timinete",
+    "difficulty": "Rhiwuluri",
+    "pages": {
+      "concept": {
+        "title": "Miehleketo",
+        "content": "Anakanyisisa leswaku u na le nsinya wa mali. Nsimu lowu phindaphindiwaka wu fana na ku byala swa mbewu leswi welaka ensinyeni wa wena, leswaku swi kula swi va tinsinya letintshwa ta mali."
+      },
+      "coreIdea": {
+        "title": "Miehleketo ya Nkoka",
+        "content": "U kuma nsimu eka mali ya wena. Kutani u kuma *nsimu eka nsimu wa wena*. Lowu i vutshila."
+      },
+      "interactive": {
+        "title": "Ku Vona Swi Tirha",
+        "content": "A hi swi vona swi tirha. Koka xirivela ku vona leswaku mbuyelo wa R10,000 wu kula njhani hi 8% nsimu."
+      },
+      "quiz": {
+        "title": "Xivutiso xa Xihatla",
+        "question": "I xihi lexi nga na matimba lamakulu eka ku kula ka mali?",
+        "options": {
+          "highAmount": "Mali yo tala ya sungulo",
+          "startEarly": "Ku sungula hi ku hatlisa"
+        }
+      }
+    }
+  },"emergencyFund": {
+    "title": "Mali ya Swiphiqo swa Tiemere swo Hlamuriwa",
+    "description": "Xivangelo xa leswaku u lava mali ya swiphiqo swa tiemere na leswaku u fanele u hlayisa bokae u nga si ka peeletsa.",
+    "duration": "6 timinete",
+    "difficulty": "Rhiwuluri",
+    "pages": {
+      "why": {
+        "title": "Hikokwalaho ka Yini?",
+        "content": "Vutomi byi a humela—ku lahlekeriwa hi ntirho, ku lunghiseriwa ka swikarro, swikweleti swa vukongomisi. Mali ya swiphiqo swa tiemere ya ku sivela ku nghenela ka eka swikweleti (kumbe ku xavisa mbuyelo hi nkarhi wo biha)."
+      },
+      "howMuch": {
+        "title": "Bokae?",
+        "content": "Nawu wo tolovelekeke: tin'hweti ta 3–6 ta swiharisi swa nkoka. Sungula hi xikongomelo lexitsongo (R5,000–R10,000), kutani u aka."
+      },
+      "interactive": {
+        "title": "Xikongomelo xa Wena",
+        "content": "Koka ku veka swilo swa nkoka swa n'hweti (rente, swakudya, swipalangwa). Hi ta ku kombisa xikongomelo xa swiphiqo swa n'hweti ta 3–6."
+      },
+      "quiz": {
+        "title": "Ku Kambisisa hi ku Hatlisa",
+        "question": "Mali ya swiphiqo swa tiemere ya fanele ku hlayisiwa kwihi?",
+        "options": {
+          "volatileStock": "Eka ETF ya swisheya leswi cincakako",
+          "safeAccount": "Eka akhawunti leyi sirhelelekeke, leyi olova ku yi fikelela"
+        }
+      }
+    }
+  },"firstPortfolio": {
+    "title": "Ku Aka Pothifoliyo ya Wena ya Sungulo",
+    "description": "Endla pothifoliyo ya mbuyelo leyi hambanateke leyi faneleke na tipakelo ta wena na ku amukela mpfiliso.",
+    "duration": "10 timinete",
+    "difficulty": "Exikarhi",
+    "pages": {
+      "goals": {
+        "title": "Sungula hi Tipakelo",
+        "content": "Nkarhi + xikongomelo = ku aba. Tipakelo ta nkarhi wo koma → swilo leswi sirhelelekeke. Tipakelo ta nkarhi wo leha → swilo swa ku kula swo tala."
+      },
+      "diversify": {
+        "title": "Ku Hambanyisa",
+        "content": "Hlanganisa minhlobo ya swilo (swisheya, tibondi, mali) na tindhawu kutsi yin'we leyi nga humeleliki yi nga ri ntshitshi vaka hinkwaro."
+      },
+      "interactive": {
+        "title": "Ringeta Ku Aba",
+        "content": "Cinisa tilaydara ta swisheya/tibondi/mali. Vona ku cinca loku ringanyetiweke na mbuyelo wa nkarhi wo leha swi cinca hi nkarhi wa vukuma."
+      },
+      "quiz": {
+        "title": "Ku Kambisisa hi ku Hatlisa",
+        "question": "I yihi mbuyelo wa nkoka wa ku hambanyisa?",
+        "options": {
+          "maximizeGains": "Ku engetela mbuyelo wa nkarhi wo koma",
+          "reduceRisk": "Ku hunguta mpfiliso lowu humaka eka mbuyelo wun'we"
+        }
+      }
+    }
+  },"riskReturn": {
+    "title": "Ku Twisisa Khombo na Vuyelo",
+    "description": "Kuma vuxaka exikarhi ka khombo na mintirho ya vuyelo eka ku chayela mali.",
+    "duration": "7 min",
+    "difficulty": "Wo sungula",
+    "pages": {
+      "intro": {
+        "title": "Khombo i Yini?",
+        "content": "Khombo i leswaku ku chayela mali ka wena swi nga hluvuka ku ringana ntsena kumbe swi wa. Khombo yo kala wu nga vula vuyelo wo kala — kambe na ku wa ko kala."
+      },
+      "tradeoff": {
+        "title": "Ku Cincana",
+        "content": "Switirhisiwa leswi hlayisekeke (xana cash) swi na vuyelo wo hansi. Switirhisiwa leswi nga khombeni (xana ti-stock) swi nga kula swinene hi ku famba ka nkarhi kambe swi cincincana swinene."
+      },
+      "interactive": {
+        "title": "Hlawula Ndlela ya Wena",
+        "content": "Fambisa silaydara exikarhi ka \"ku hlayiseka\" na \"khombo\" ku vona leswaku ku cincincana na vuyelo wa nkarhi wo leha swi nga cinca njhani."
+      },
+      "quiz": {
+        "title": "Kambela hi ku Hatlisa",
+        "question": "Hi rihi rungula leri kongomeke?",
+        "options": {
+          "A": "Vuyelo wo kala wu tshama wu vula khombo wo hansi",
+          "B": "Vuyelo wo kala lowu nga vaka kona wu tala wu ta na khombo wo kala"
+        }
+      }
+    }
+  },"taxEfficient": {
+    "title": "Ku Chayela hi Ndlela yo Tirha hi Mutelo",
+    "description": "Dyondza hi ti-akhawunti leti nga riki na mutelo / leti nga na swinyamelo swa mutelo na ku veka hi vutihakani ku hlayisa swo tala swa vuyelo bya wena.",
+    "duration": "8 min",
+    "difficulty": "Exikarhi",
+    "pages": {
+      "wrappers": {
+        "title": "Tirhisa Xiphephelo",
+        "content": "Ti-akhawunti leti nga na swinyamelo swa mutelo tani hi RA, ti sirheleta ku kula/swinyamelo eka mutelo wo karhi."
+      },
+      "placement": {
+        "title": "Ndhawu ya Switirhisiwa",
+        "content": "Veka switirhisiwa leswi nga tirhiki kahle hi mutelo (xikombiso, ti-bond funds, vahoxi va swinyamelo swa le henhla) eka ti-akhawunti leti sirheleriweke hi mutelo ku sungula."
+      },
+      "interactive": {
+        "title": "Ku Veka hi Vutihakani",
+        "content": "Kokota ti-funds eka \"Leti nga na Mutelo\" vs \"Leti nga na Swinyamelo swa Mutelo\" mabakiti. Vona ndlela ku anakanyiwa ka le hundzu ka mutelo ku antswisekaka ha kona."
+      },
+      "quiz": {
+        "title": "Kambela hi ku Hatlisa",
+        "question": "Hi rihi nghingiriko lowu tolovelekeke wu TIRHAKA SWINENE hi mutelo?",
+        "options": {
+          "A": "Ku fara ti-bond funds eka akhawunti leyi nga na swinyamelo swa mutelo",
+          "B": "Ku fara ti-bond funds eka akhawunti ya brokerage leyi nga na mutelo"
+        }
+      }
+    }
+  },"learnScreen": {
+    "sections": {
+      "availableLessons": "Tidyondzo leti kumekaka",
+      "achievements": "Leswi u swi fikeleleke",
+      "learningTips": "Switsundzuxo swo Dyondza"
+    },
+    "lesson": {
+      "completed": "✓ Swi Hetisekile",
+      "complete": "hetisa",
+      "startLesson": "Sungula Dyondzo"
+    },
+    "achievements": {
+      "firstLesson": {
+        "title": "Dyondzo yo Rhanga",
+        "description": "Hetisa dyondzo ya wena yo rhanga"
+      },
+      "quizMaster": {
+        "title": "N'wampfuna wa Swivutiso",
+        "description": "Hetisa xivutiso xa le xikarhi"
+      },
+      "knowledgeSeeker": {
+        "title": "Mulavi wa Vutivi",
+        "description": "Hetisa tidyondzo ta 5"
+      }
+    },
+    "reward": {
+      "collectReward": "Teka Hakelo",
+      "collected": "Hakelo yi Tekiwile",
+      "collectedMessage": "U kume datha ya 500MB! Yi tsakkele!",
+      "alreadyCollected": "Hakelo yi Tekiwile Khale",
+      "alreadyCollectedMessage": "U teke hakelo ya wena ya 500MB khale!",
+      "notEligible": "A wu faneleki",
+      "notEligibleMessage": "Hetisa hinkwaswo leswi u swi fikeleleke ku teka hakelo ya wena!"
+    },
+    "tips": {
+      "takeYourTime": {
+        "title": "Teka Nkarhi",
+        "description": "U nga hatliseli tidyondzo. Teka nkarhi ku twisisa miehleketo yin'wana na yin'wana."
+      },
+      "practiceMakesPerfect": {
+        "title": "Ku Titoloveta swi Endla leswinene",
+        "description": "Vuyela eka tidyondzo u ringeta swiyenge swo tirhisana minkarhi yo tala."
+      },
+      "learnDaily": {
+        "title": "Dyondza Siku na Siku",
+        "description": "Heta timinete ta 5-10 ntsena siku na siku ku aka vutivi bya wena bya timali."
+      }
+    },
+    "errors": {
+      "error": "Xihoxo",
+      "noUserSignedIn": "A ku na mutirhisi la ngheneke",
+      "userDocumentNotFound": "Dokumende ya mutirhisi a yi kumeki",
+      "failedToUpdateProgress": "Swi tsandzekile ku pfuxeta nhluvuko",
+      "failedToCollectReward": "Swi tsandzekile ku teka hakelo"
+    }
   }
 }

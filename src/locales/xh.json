@@ -111,5 +111,195 @@
     "scenarioProjection": "Le {{scenarioName}} imeko ilinganisa ukubuyiselwa kwe-{{returnRate}}% ngonyaka ophindaphindiweyo ngenyanga. Ngezinto ozifakileyo nge-{{years}} {{yearUnit}}, imali yakho elinganiselweyo iya kuba ngu-{{total}} apho {{growth}} kukukhula kwe-interest ephindaphindiweyo.",
     "scenarioImplication": "Ithetha ukuthi: Indlela ye-{{scenarioName}} ijolise ku-{{returnRate}}% ngonyaka kwixesha elide, ivuma ukutshintsha kwe-{{volatility}}.",
     "scenarioDisclaimer": "Iziphumo zokwenene ziyahluka; oku akusithembiso. Yisebenzise ukuva ukuba intlawulo nexesha zitshintsha iziphumo."
+  }, "compounding": {
+    "title": "Umlingo Wokukhula Kwemali",
+    "description": "Funda indlela imali yakho enokukhula ngayo ngokukhawuleza ngexesha ngenxa yamandla enzalo ephindaphindiweyo.",
+    "duration": "5 imiz",
+    "difficulty": "Isiqalo",
+    "pages": {
+      "concept": {
+        "title": "Ingcamango",
+        "content": "Cinga ukuba unomthi wemali. Inzalo ephindaphindiweyo ifana nokutyala imbewu ewela emthini wakho, ukuze zikhule zibe yimithi emitsha yemali."
+      },
+      "coreIdea": {
+        "title": "Ingcamango Engundoqo",
+        "content": "Ufumana inzalo kwimali yakho. Emva koko ufumana *inzalo kwi-nzalo yakho*. Lolo lumlingo."
+      },
+      "interactive": {
+        "title": "Yibona Isebenza",
+        "content": "Masiyibone isebenza. Tsala isilaydani ukuze ubone indlela utyalo-mali lwe-R10,000 lukhula ngayo ku-8% nzalo."
+      },
+      "quiz": {
+        "title": "Umbuzo Okhawulezayo",
+        "question": "Yintoni enamandla kakhulu ekukhuleni kwemali?",
+        "options": {
+          "highAmount": "Imali eninzi yokuqala",
+          "startEarly": "Ukuqala kwangoko"
+        }
+      }
+    }
+  },"emergencyFund": {
+    "title": "Ingxowa-mali Yeengxaki Icacisiwe",
+    "description": "Kutheni udinga ingxowa-mali yeengxaki nokuba kumalini ekufuneka ugcine ngaphambi kokuba utyale imali.",
+    "duration": "6 imiz",
+    "difficulty": "Isiqalo",
+    "pages": {
+      "why": {
+        "title": "Kutheni Uzikhathalele?",
+        "content": "Ubomi buyenzeka—ukuphulukana nomsebenzi, ukulungiswa kweemoto, amayeza. Ingxowa-mali yeengxaki ikuthintela ukuba ungene etyaleni (okanye uthengise utyalo-mali ngexesha elibi)."
+      },
+      "howMuch": {
+        "title": "Kumalini?",
+        "content": "Umthetho oqhelekileyo: iinyanga ezi-3–6 zeendleko ezibalulekileyo. Qala ngenjongo encinci (R5,000–R10,000), emva koko wakhe."
+      },
+      "interactive": {
+        "title": "Injongo Yakho",
+        "content": "Tsala ukumisela izinto ezibalulekileyo zenyanga (irenti, ukutya, ukuhamba). Siza kukubonisa injongo yeengxaki zeenyanga ezi-3–6."
+      },
+      "quiz": {
+        "title": "Uhlolo Olukhawulezayo",
+        "question": "Ingxowa-mali yeengxaki kufuneka igcinwe phi?",
+        "options": {
+          "volatileStock": "Kwi-ETF yamasheya aguqukayo",
+          "safeAccount": "Kwi-akhawunti ekhuselekileyo, elula ukuyifikelela"
+        }
+      }
+    }
+  },"firstPortfolio": {
+    "title": "Ukwakha iPothifoliyo Yakho Yokuqala",
+    "description": "Yenza ipothifoliyo yotyalo-mali eyahlukeneyo ehambelana neenjongo zakho nokunyamezela umngcipheko.",
+    "duration": "10 imiz",
+    "difficulty": "Phakathi",
+    "pages": {
+      "goals": {
+        "title": "Qala Ngeenjongo",
+        "content": "Ixesha + injongo = ukwabiwa. Iinjongo zexesha elifutshane → izinto ezikhuselekileyo. Iinjongo zexesha elide → izinto zokukhula okuninzi."
+      },
+      "diversify": {
+        "title": "Ukwahlula",
+        "content": "Dibanisa iindidi zezinto (amasheya, iibhondi, imali esandleni) neendawo ukuze enye engaphumelelanga ingatyibilikisi inqanawa yonke."
+      },
+      "interactive": {
+        "title": "Zama Ukwabiwa",
+        "content": "Shenxisa ii-slider zamasheya/iibhondi/imali esandleni. Bona ukuguquguquka okulinganisiweyo kunye nembuyekezo yexesha elide iguquka ngexesha lokwenyani."
+      },
+      "quiz": {
+        "title": "Uvavanyo Olukhawulezayo",
+        "question": "Yintoni eyona nzuzo inkulu yokwahlula?",
+        "options": {
+          "maximizeGains": "Yandisa inzuzo yexesha elifutshane",
+          "reduceRisk": "Yehlisa umngcipheko kutyalo-mali olunye"
+        }
+      }
+    }
+  },"riskReturn": {
+    "title": "Ukuqonda Umngcipheko Nenzuzo",
+    "description": "Fumanisa ubudlelwane phakathi komngcipheko namathuba enzuzo ekutyaleni imali.",
+    "duration": "7 min",
+    "difficulty": "Umqali",
+    "pages": {
+      "intro": {
+        "title": "Yintoni Umngcipheko?",
+        "content": "Umngcipheko kukuba ityala lakho linokunyuka kangakanani okanye liwe. Umngcipheko ophakamileyo unokuthetha inzuzo ephakamileyo — kodwa kunye nokudla okukhulu."
+      },
+      "tradeoff": {
+        "title": "Utshintshiselwano",
+        "content": "Izinto ezikhuselekileyo (njengecash) zinenzuzo esezantsi. Izinto ezinomngcipheko (njengezabelo) zinokukhula ngakumbi ekuhambeni kwexesha kodwa zinyikinyeka ngakumbi."
+      },
+      "interactive": {
+        "title": "Khetha Indlela Yakho",
+        "content": "Shenxisa isilayder phakathi \"kokukhuselekileyo\" \"noomngcipheko\" ukubona ukuba ukuguquguquka kunye nenzuzo yexesha elide kunokutshintsha njani."
+      },
+      "quiz": {
+        "title": "Uvavanyo Olukhawulezayo",
+        "question": "Yeyiphi ingxelo echanekileyo?",
+        "options": {
+          "A": "Inzuzo ephezulu ihlala ithetha umngcipheko omncinci",
+          "B": "Inzuzo ephezulu enokubakho idla ngokuja nomngcipheko ophezulu"
+        }
+      }
+    }
+  }, "taxEfficient": {
+    "title": "Utyalo-mali Olusebenzayo Ngerhafu",
+    "description": "Funda nge-akhawunti ezingenakarhafu / ezinenzuzo yerhafu nokubeka okubulumko ukugcina okuninzi kwezo ngeniso zakho.",
+    "duration": "8 min",
+    "difficulty": "Phakathi",
+    "pages": {
+      "wrappers": {
+        "title": "Sebenzisa Isigqubela",
+        "content": "I-akhawunti ezinenzuzo yerhafu ezinje nge-RA, zikhusela ukukhula/izabelo kwiirhafu ezithile."
+      },
+      "placement": {
+        "title": "Indawo ye-Asset",
+        "content": "Beka ii-asset ezingasebenzi kakuhle ngerhafu (umz. iingxowa-mali zebhondi, abahlawuli bezabelo eziphezulu) kwiinkongolo zeerhafu kuqala."
+      },
+      "interactive": {
+        "title": "Ukubeka Okubulumko",
+        "content": "Rhuqa iingxowa-mali kwi-\"Zineerhafu\" vs \"Zinenzuzo Yerhafu\" iibhakiti. Bona uqikelelo emva kwerhafu oluthuthukayo."
+      },
+      "quiz": {
+        "title": "Uhlolo Olukhawulezayo",
+        "question": "Yeyiphi intshukumo eqhele ukusebenza NGAKUMBI ngerhafu?",
+        "options": {
+          "A": "Ukubamba iingxowa-mali zebhondi kwi-akhawunti enenzuzo yerhafu",
+          "B": "Ukubamba iingxowa-mali zebhondi kwi-akhawunti ye-brokerage enerhafu"
+        }
+      }
+    }
+  },"learnScreen": {
+    "sections": {
+      "availableLessons": "Izifundo Ezikhoyo",
+      "achievements": "Impumelelo",
+      "learningTips": "Amacebiso okuFunda"
+    },
+    "lesson": {
+      "completed": "✓ Kugqityiwe",
+      "complete": "gqibezela",
+      "startLesson": "Qalisa isifundo"
+    },
+    "achievements": {
+      "firstLesson": {
+        "title": "Isifundo sokuqala",
+        "description": "Gqibezela isifundo sakho sokuqala"
+      },
+      "quizMaster": {
+        "title": "Ingcaphephe yemibuzo",
+        "description": "Gqibezela imibuzo ekwinqanaba eliphakathi"
+      },
+      "knowledgeSeeker": {
+        "title": "Umfuni woLwazi",
+        "description": "Gqibezela izifundo ezi-5"
+      }
+    },
+    "reward": {
+      "collectReward": "Qokelela iMvuzo",
+      "collected": "iMvuzo iqokelelwe",
+      "collectedMessage": "Ufumene idatha eyi-500MB! Yonwabele!",
+      "alreadyCollected": "iMvuzo sele iqokelelwe",
+      "alreadyCollectedMessage": "Sele uwubangile umvuzo wakho we-500MB!",
+      "notEligible": "Awufaneleki",
+      "notEligibleMessage": "Gqibezela zonke iimpumelelo ukuqokelela umvuzo wakho!"
+    },
+    "tips": {
+      "takeYourTime": {
+        "title": "Thatha ixesha lakho",
+        "description": "Musa ukungxama kwizifundo. Thatha ixesha lokuqonda ingqiqo nganye."
+      },
+      "practiceMakesPerfect": {
+        "title": "Ukuziqhelanisa kwenza umntu agqwese",
+        "description": "Buyela kwizifundo kwaye uzame izinto ezisebenzisanayo izihlandlo ezininzi."
+      },
+      "learnDaily": {
+        "title": "Funda Yonke imihla",
+        "description": "Chitha nje imizuzu eyi-5-10 yonke imihla ukwakha ulwazi lwakho lwezemali."
+      }
+    },
+    "errors": {
+      "error": "Impazamo",
+      "noUserSignedIn": "Akukho msebenzisi ungenileyo",
+      "userDocumentNotFound": "Uxwebhu lomsebenzisi alufumanekanga",
+      "failedToUpdateProgress": "Ayiphumelelanga ukuhlaziya inkqubela",
+      "failedToCollectReward": "Ayiphumelelanga ukuqokelela umvuzo"
+    }
   }
 }

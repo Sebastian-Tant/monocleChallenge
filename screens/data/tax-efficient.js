@@ -1,50 +1,58 @@
 // screens/data/tax-efficient.js
-export default {
+import { t } from 'i18next';
+
+const getTaxEfficientData = () => ({
   id: 'tax-efficient',
-  title: 'Tax-Efficient Investing',
-  description:
-    'Learn about tax-free / tax-advantaged accounts and smart placement to keep more of your returns.',
-  duration: '8 min',
-  difficulty: 'Intermediate',
+  title: t('taxEfficient.title'),
+  description: t('taxEfficient.description'),
+  duration: t('taxEfficient.duration'),
+  difficulty: t('taxEfficient.difficulty'),
   completed: false,
   progress: 0,
   pages: [
     {
       id: 'wrappers',
       type: 'story',
-      title: 'Use the Wrapper',
-      content:
-        'Tax-advantaged accounts like an RA, shield growth/dividends from some taxes.',
+      title: t('taxEfficient.pages.wrappers.title'),
+      content: t('taxEfficient.pages.wrappers.content'),
       graphic: '📦💸',
       backgroundColor: '#f0f9ff',
     },
     {
       id: 'placement',
       type: 'story',
-      title: 'Asset Location',
-      content:
-        'Place tax-inefficient assets (e.g., bond funds, high dividend payers) in tax-sheltered accounts first.',
+      title: t('taxEfficient.pages.placement.title'),
+      content: t('taxEfficient.pages.placement.content'),
       graphic: '🗂️',
       backgroundColor: '#fefce8',
     },
     {
       id: 'interactive',
       type: 'interactive',
-      title: 'Smart Placement',
-      content:
-        'Drag funds into “Taxable” vs “Tax-Advantaged” buckets. See the estimated after-tax return improve.',
+      title: t('taxEfficient.pages.interactive.title'),
+      content: t('taxEfficient.pages.interactive.content'),
       backgroundColor: '#f0fdf4',
     },
     {
       id: 'quiz',
       type: 'quiz',
-      title: 'Quick Check',
-      question: 'Which move is generally MORE tax-efficient?',
+      title: t('taxEfficient.pages.quiz.title'),
+      question: t('taxEfficient.pages.quiz.question'),
       options: [
-        { id: 'A', text: 'Holding bond funds in a tax-advantaged account', correct: true },
-        { id: 'B', text: 'Holding bond funds in a taxable brokerage account', correct: false },
+        { 
+          id: 'A', 
+          text: t('taxEfficient.pages.quiz.options.A'), 
+          correct: true 
+        },
+        { 
+          id: 'B', 
+          text: t('taxEfficient.pages.quiz.options.B'), 
+          correct: false 
+        },
       ],
       backgroundColor: '#fdf2f8',
     },
   ],
-};
+});
+
+export default getTaxEfficientData;

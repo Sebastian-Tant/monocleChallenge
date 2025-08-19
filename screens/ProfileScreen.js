@@ -1,4 +1,4 @@
-// screens/ProfileScreen.js - Simple Debug Version
+// screens/ProfileScreen.js
 import React from 'react';
 import {
   View,
@@ -10,18 +10,13 @@ import {
 } from 'react-native';
 import { useAuth } from '../context/AuthContext';
 
-const ProfileScreen = () => {
+// 1. Accept onChangeLanguage prop
+const ProfileScreen = ({ onChangeLanguage }) => {
   const { user, signOut } = useAuth();
 
   const handleSignOut = async () => {
     try {
-      console.log('Sign out button pressed');
-      if (signOut) {
-        await signOut();
-      } else {
-        console.log('signOut function not available');
-        Alert.alert('Error', 'Sign out function not available');
-      }
+      await signOut();
     } catch (error) {
       console.error('Sign out error:', error);
       Alert.alert('Error', 'Failed to sign out');
@@ -31,7 +26,7 @@ const ProfileScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
-        <Text style={styles.title}>Profile Screen</Text>
+        <Text style={styles.title}>Profile</Text>
         
         <Text style={styles.userInfo}>
           User: {user?.displayName || 'No name'}
@@ -41,16 +36,20 @@ const ProfileScreen = () => {
           Email: {user?.email || 'No email'}
         </Text>
 
+        {/* 2. Add the Change Language button */}
+        <TouchableOpacity
+          style={styles.languageButton}
+          onPress={onChangeLanguage}
+        >
+          <Text style={styles.buttonText}>Change Language</Text>
+        </TouchableOpacity>
+
         <TouchableOpacity
           style={styles.signOutButton}
           onPress={handleSignOut}
         >
           <Text style={styles.buttonText}>SIGN OUT</Text>
         </TouchableOpacity>
-
-        <Text style={styles.debug}>
-          Debug: signOut function {signOut ? 'available' : 'missing'}
-        </Text>
       </View>
     </SafeAreaView>
   );
@@ -78,23 +77,39 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     color: '#666',
   },
-  signOutButton: {
-    backgroundColor: '#FF4444',
-    padding: 15,
+  // 3. Add styles for the new button
+  languageButton: {
+    backgroundColor: '#007AFF', // A neutral blue color
+    paddingVertical: 15,
+    paddingHorizontal: 30,
     borderRadius: 8,
     marginTop: 30,
-    minWidth: 150,
+    width: 250, // Give buttons a consistent width
     alignItems: 'center',
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+  },
+  signOutButton: {
+    backgroundColor: '#FF4444',
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    borderRadius: 8,
+    marginTop: 20, // Add some space between the buttons
+    width: 250,
+    alignItems: 'center',
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
   },
   buttonText: {
     color: 'white',
     fontSize: 16,
     fontWeight: 'bold',
-  },
-  debug: {
-    fontSize: 12,
-    color: '#999',
-    marginTop: 20,
   },
 });
 

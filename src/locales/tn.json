@@ -111,5 +111,195 @@
     "scenarioProjection": "Tshwantshetso eno ya {{scenarioName}} e bontsha poelo ya ngwaga ya {{returnRate}}% e e kopaneng kgwedi le kgwedi. Ka ditshitshinyo tsa gago tsa jaanong mo godimo ga dingwaga tse di {{years}} {{yearUnit}}, kakaretso ya gago e e tshwantsheditsweng e tla nna {{total}} e leng {{growth}} kgolo e e kopaneng.",
     "scenarioImplication": "Se se bolelang: Mokgwa wa {{scenarioName}} o lebisitse go ka nna {{returnRate}}% ka ngwaga ka palogare mo dinakong tse di telele, o amogela phetoho ya {{volatility}}.",
     "scenarioDisclaimer": "Dipoelo tsa nnete di farologana; seno ga se tiisetso. Se dirise go utlwa kamoo sekgele le nako di fetolang dipoelo."
+  },"compounding": {
+    "title": "Molemo wa go Gola ga Madi",
+    "description": "Ithute ka fa madi a gago a ka golang ka teng ka bonako jo bogolo ka nako ka nonofo ya ditswala tse di kopantsweng.",
+    "duration": "5 metsotso",
+    "difficulty": "Mothomedi",
+    "pages": {
+      "concept": {
+        "title": "Kakanyo",
+        "content": "Akanya gore o na le setlhare sa madi. Ditswala tse di kopantsweng di tshwana le go jala dipeu tse di welang mo setlhareng sa gago, gore di gole di nne ditlhare tse dintsha tsa madi."
+      },
+      "coreIdea": {
+        "title": "Kakanyo ya Ntlha",
+        "content": "O bona tswala mo madining a gago. Moragonyana o bona *tswala mo tswaleng ya gago*. Seo ke molemo."
+      },
+      "interactive": {
+        "title": "E Bone e Bereka",
+        "content": "A re e bone e bereka. Gogela se se sutlang go bona ka fa peeletso ya R10,000 e golang ka teng ka 8% tswala."
+      },
+      "quiz": {
+        "title": "Potso e Bonako",
+        "question": "Ke eng se se nang le nonofo e kgolo mo go goleng ga madi?",
+        "options": {
+          "highAmount": "Madi a mantsi a tshimologo",
+          "startEarly": "Go simolola bonako"
+        }
+      }
+    }
+  },"emergencyFund": {
+    "title": "Madi a Maemo a Tsietso a Tlhalosiwa",
+    "description": "Lebaka leo o tlhokang madi a maemo a tsietso le gore o swanetse go boloka mang pele o ka peeletsa.",
+    "duration": "6 metsotso",
+    "difficulty": "Mothomedi",
+    "pages": {
+      "why": {
+        "title": "Goreng o Itlhakanyetse?",
+        "content": "Botshelo bo a direga—go latlhegelwa ke tiro, go baakanywa ga dikoloi, dituelo tsa kalafi. Madi a maemo a tsietso a go thibela go tsena mo dikadimong (kgotsa go rekisa dipeeletso ka nako e e maswe)."
+      },
+      "howMuch": {
+        "title": "Ke Bokae?",
+        "content": "Molao o o tlwaelesegileng: dikgwedi di le 3–6 tsa ditshenyegelo tse di botlhokwa. Simolola ka maikaelelo a mannye (R5,000–R10,000), o bo o age."
+      },
+      "interactive": {
+        "title": "Maikaelelo a Gago",
+        "content": "Gogela go beakanya dilo tse di botlhokwa tsa kgwedi (rente, dijo, dipalangwa). Re tla go bontsha maikaelelo a maemo a tsietso a dikgwedi di le 3–6."
+      },
+      "quiz": {
+        "title": "Tlhatlhobo e Bonako",
+        "question": "Madi a maemo a tsietso a swanetse go bolokwa kae?",
+        "options": {
+          "volatileStock": "Mo ETF ya masheya a a fetogang",
+          "safeAccount": "Mo akhaonteng e e sireletsehileng, e e bonolo go e fitlhelela"
+        }
+      }
+    }
+  },"firstPortfolio": {
+    "title": "Go Aga Pothifolio ya Gago ya Ntlha",
+    "description": "Tlhama pothifolio ya dipeeletso e e farologaneng e e tsamaelanang le maikaelelo a gago le go amogela kotsi.",
+    "duration": "10 metsotso",
+    "difficulty": "Mahareng",
+    "pages": {
+      "goals": {
+        "title": "Simolola ka Maikaelelo",
+        "content": "Nako + maikaelelo = kabo. Maikaelelo a nakwana → dithoto tse di sireletsehileng. Maikaelelo a nako e telele → dithoto tsa kgolo e ntsi."
+      },
+      "diversify": {
+        "title": "Go Farologanya",
+        "content": "Tsenyanya mefuta ya dithoto (masheya, dipanka, madi) le mafelo gore o mongwe yo o latlhegetseng a se ka a ntsha sekepe sotlhe."
+      },
+      "interactive": {
+        "title": "Leka Kabo",
+        "content": "Sutisa di-slider tsa masheya/dipanka/madi. Bona phetogo e e akantsweng le poelo ya nako e telele di fetoga ka nako ya boammaaruri."
+      },
+      "quiz": {
+        "title": "Tlhatlhobo e Bonako",
+        "question": "Ke molemo ofe o mogolo wa go farologanya?",
+        "options": {
+          "maximizeGains": "Go oketsa dipoelo tsa nakwana",
+          "reduceRisk": "Go fokotsa kotsi go tswa peeletšong e le nngwe"
+        }
+      }
+    }
+  },"riskReturn": {
+    "title": "Go Tlhaloganya Kotsi le Poelo",
+    "description": "Bona kamano gare ga kotsi le dikgonagalo tsa poelo mo peeletson.",
+    "duration": "7 min",
+    "difficulty": "Mothomo",
+    "pages": {
+      "intro": {
+        "title": "Kotsi ke Eng?",
+        "content": "Kotsi ke gore peeletso ya gago e ka tlhagafala kae kana e wa. Kotsi e kgolo e ka raya poelo e kgolo — fela gape le go wa go kgolo."
+      },
+      "tradeoff": {
+        "title": "Phetolo",
+        "content": "Dilo tse di sireletsegileng (jaaka madi) di na le dipoelo tse di kwa tlase. Dilo tse di kotsing (jaaka di-stock) di ka gola thata fa nako e tsamaya fela di sisinyega thata."
+      },
+      "interactive": {
+        "title": "Tlhopha Tsela ya Gago",
+        "content": "Tsamaisa selaedara gare ga \"go sireletsega\" le \"kotsi\" go bona gore go fetofetoha le poelo ya nako e telele go ka fetoga jang."
+      },
+      "quiz": {
+        "title": "Sekaseka ka Bonako",
+        "question": "Ke khakanyo efe e e nepagalang?",
+        "options": {
+          "A": "Dipoelo tse dikgolo ka nako tsotlhe di raya kotsi e nnye",
+          "B": "Dipoelo tse dikgolo tse di ka nnang gona gantsi di tla le kotsi e kgolo"
+        }
+      }
+    }
+  },"taxEfficient": {
+    "title": "Go Peeletsa ka Mokgwa o o Dirang Traka",
+    "description": "Ithute ka diakhaonto tse di se nang traka / tse di nang mehola ya traka le go baya ka bohlale go boloka go le gontsi mo dituelong tsa gago.",
+    "duration": "8 min",
+    "difficulty": "Fa gare",
+    "pages": {
+      "wrappers": {
+        "title": "Dirisa Sekoahelo",
+        "content": "Diakhaonto tse di nang mehola ya traka jaaka RA, di sireletsa kgolo/dipoelo mo trakaing e sengwe."
+      },
+      "placement": {
+        "title": "Lefelo la Dilo",
+        "content": "Baya dilo tse di sa dirang sentle mo trakeng (se kaya, di-bond funds, batefi ba dipoelo tse dikgolo) mo diakhaontong tse di sireletsegile mo trakeng pele."
+      },
+      "interactive": {
+        "title": "Go Baya ka Bohlale",
+        "content": "Goga di-funds mo \"Tse di nang Traka\" kgotsa \"Tse di nang Mehola ya Traka\" dipokete. Bona tekano ya ka morago ga traka e ntse e tokafala."
+      },
+      "quiz": {
+        "title": "Tlhatlhoba ka Bonako",
+        "question": "Ke kgato efe e e tlwaelegileng e e DIRANG THATA ka traka?",
+        "options": {
+          "A": "Go tshwara di-bond funds mo akhaontong e e nang mehola ya traka",
+          "B": "Go tshwara di-bond funds mo akhaontong ya brokerage e e nang traka"
+        }
+      }
+    }
+  },"learnScreen": {
+    "sections": {
+      "availableLessons": "Dithuto tse di leng teng",
+      "achievements": "Diphitlhelelo",
+      "learningTips": "Matlhale a go Ithuta"
+    },
+    "lesson": {
+      "completed": "✓ Go Feditse",
+      "complete": "fedisa",
+      "startLesson": "Simolola Thuto"
+    },
+    "achievements": {
+      "firstLesson": {
+        "title": "Thuto ya Ntlha",
+        "description": "Fedisa thuto ya gago ya ntlha"
+      },
+      "quizMaster": {
+        "title": "Mogaka wa Dipotso",
+        "description": "Fedisa dipotso tsa maemo a a fa gare"
+      },
+      "knowledgeSeeker": {
+        "title": "Mmatli wa Kitso",
+        "description": "Fedisa dithuto di le 5"
+      }
+    },
+    "reward": {
+      "collectReward": "Tsaya Moputso",
+      "collected": "Moputso o Tserwe",
+      "collectedMessage": "O gonne data ya 500MB! E ipelele!",
+      "alreadyCollected": "Moputso o Setse o Tserwe",
+      "alreadyCollectedMessage": "O setse o tsere moputso wa gago wa 500MB!",
+      "notEligible": "Ga o a Tshwanela",
+      "notEligibleMessage": "Fedisa diphitlhelelo tsotlhe go tsaya moputso wa gago!"
+    },
+    "tips": {
+      "takeYourTime": {
+        "title": "Tseya Nako",
+        "description": "O se ka wa potlakela dithuto. Tseya nako go tlhaloganya kgopolo nngwe le nngwe."
+      },
+      "practiceMakesPerfect": {
+        "title": "Boitireletso bo Dira Boitekanelo",
+        "description": "Boela dithutong mme o leke dikarolo tse di dirisanang makgetlho a le mantsi."
+      },
+      "learnDaily": {
+        "title": "Ithute Letsatsi le Letsatsi",
+        "description": "Dirisa metsotso e le 5-10 fela letsatsi le letsatsi go aga kitso ya gago ya tsa madi."
+      }
+    },
+    "errors": {
+      "error": "Phoso",
+      "noUserSignedIn": "Ga go na modirisi yo o tseneng",
+      "userDocumentNotFound": "Tokomane ya modirisi ga e a bonwa",
+      "failedToUpdateProgress": "Go paletswe go ntšhwafatsa tswelelopele",
+      "failedToCollectReward": "Go paletswe go tsaya moputso"
+    }
   }
 }

@@ -1,10 +1,11 @@
 // App.js
 
+// 1. Import useTranslation to access the i18n instance
 import React, { useState, useEffect } from 'react';
 import { StatusBar, useColorScheme, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { AuthProvider, useAuth } from './context/AuthContext';
-import LandingScreen from './screens/WelcomeScreen'; // or rename the file
+import LandingScreen from './screens/WelcomeScreen';
 import GoalSettingScreen from './screens/GoalSettingScreen';
 import HomeScreen from './screens/HomeScreen';
 import LearnScreen from './screens/LearnScreen';
@@ -13,19 +14,18 @@ import ProfileScreen from './screens/ProfileScreen';
 import LessonDetailScreen from './screens/LessonDetailScreen';
 import LanguageSelectorScreen from './screens/LanguageSelectorScreen';
 import BottomNavigation from './components/BottomNavigation';
-import CompoundInterestSlider from './components/CompoundInterestSlider';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { useTranslation } from 'react-i18next'; // <-- 1. IMPORT THIS
 import './src/locales/i18n';
 
-// In your App.js, replace the existing GoogleSignin.configure with:
 GoogleSignin.configure({
   webClientId: '665585255864-914vki4vakoqgkugmromgsicqo74vaua.apps.googleusercontent.com',
   offlineAccess: true,
   hostedDomain: '',
   forceCodeForRefreshToken: true,
   accountName: '',
-  iosClientId: '', // Add this even if empty for Android
-  googleServicePlistPath: '', // Add this even if empty for Android
+  iosClientId: '',
+  googleServicePlistPath: '',
 });
 
 const MainApp = () => {
@@ -38,13 +38,31 @@ const MainApp = () => {
   const [userName, setUserName] = useState('');
   const [currentLesson, setCurrentLesson] = useState(null);
   const [hasSelectedLanguage, setHasSelectedLanguage] = useState(false);
+  const [returnScreen, setReturnScreen] = useState(null);
 
-  // Update userName when user data is available
+  // 2. Add state and effect to listen for language changes
+  const { i18n } = useTranslation();
+  const [languageKey, setLanguageKey] = useState(0); // State to force re-renders
+
+  useEffect(() => {
+    // This function will run when the language is changed anywhere in the app
+    const onLanguageChanged = () => {
+      setLanguageKey(prev => prev + 1); // Increment the key to trigger a re-render
+    };
+
+    // Subscribe to the 'languageChanged' event
+    i18n.on('languageChanged', onLanguageChanged);
+
+    // IMPORTANT: Unsubscribe when the component unmounts to prevent memory leaks
+    return () => {
+      i18n.off('languageChanged', onLanguageChanged);
+    };
+  }, [i18n]);
+
   useEffect(() => {
     if (user) {
       setUserName(user.displayName?.split(' ')[0] || 'Friend');
     } else {
-      // Reset to welcome screen if user signs out
       setCurrentScreen('welcome');
       setUserName('');
       setSelectedGoal(null);
@@ -55,41 +73,39 @@ const MainApp = () => {
 
   const handleGetStarted = () => {
     if (user) {
-      // Check if user has already selected a language
-      if (!hasSelectedLanguage) {
-        setCurrentScreen('languageSelector');
-      } else {
-        setCurrentScreen('goalSetting');
-      }
+      setReturnScreen('goalSetting');
+      setCurrentScreen('languageSelector');
     }
-    // If no user, the WelcomeScreen will handle the sign-in flow
   };
 
   const handleLanguageSelected = () => {
     setHasSelectedLanguage(true);
-    setCurrentScreen('goalSetting');
+    setCurrentScreen(returnScreen || 'goalSetting');
+  };
+
+  const handleNavigateToChangeLanguage = () => {
+    setReturnScreen('mainApp');
+    setActiveTab('profile');
+    setCurrentScreen('languageSelector');
   };
 
   const handleGoalComplete = (goal, amount) => {
     setSelectedGoal(goal);
     setGoalAmount(amount);
-    // Navigate to main app (home screen) after goal is set
     setCurrentScreen('mainApp');
     setActiveTab('home');
-    console.log('Goal set:', goal, 'Amount:', amount);
   };
 
   const handleTabPress = tabId => {
     setActiveTab(tabId);
   };
 
-  const handleStartLesson = (lessonId) => {
+  const handleStartLesson = lessonId => {
     setCurrentLesson(lessonId);
     setCurrentScreen('lessonDetail');
   };
 
   const handleCompleteLesson = () => {
-    console.log('Lesson completed:', currentLesson);
     setCurrentLesson(null);
     setCurrentScreen('mainApp');
     setActiveTab('learn');
@@ -101,7 +117,6 @@ const MainApp = () => {
     setActiveTab('learn');
   };
 
-  // Sample data for the home screen - in a real app this would come from your state management/API
   const homeScreenProps = {
     userName: userName,
     goalName:
@@ -110,11 +125,10 @@ const MainApp = () => {
         ?.replace('Build an ', '')
         ?.replace('Start My ', '')
         ?.replace('Create a Custom Goal...', 'Custom Goal') || 'Car Fund',
-    currentAmount: 5450, // This would be dynamic based on user's progress
+    currentAmount: 5450,
     goalAmount: parseInt(goalAmount?.replace(/[^\d]/g, '')) || 80000,
-    simulatedNetWorth: 15200, // This would come from your simulation engine
-    sparklineData: [12800, 13200, 13800, 14100, 14600, 15000, 15200], // Last 7 days of simulation data
-    // You could add more props here for lesson progress, next steps, etc.
+    simulatedNetWorth: 15200,
+    sparklineData: [12800, 13200, 13800, 14100, 14600, 15000, 15200],
   };
 
   const renderMainAppContent = () => {
@@ -123,14 +137,8 @@ const MainApp = () => {
         return (
           <HomeScreen
             {...homeScreenProps}
-            onContinueLesson={() => {
-              console.log('Continue lesson tapped');
-              handleStartLesson('The Magic of Compounding');
-            }}
-            onViewSimulation={() => {
-              console.log('View simulation tapped');
-              setActiveTab('simulate');
-            }}
+            onContinueLesson={() => handleStartLesson('The Magic of Compounding')}
+            onViewSimulation={() => setActiveTab('simulate')}
           />
         );
       case 'learn':
@@ -138,19 +146,13 @@ const MainApp = () => {
       case 'simulate':
         return <SimulateScreen />;
       case 'profile':
-        return <ProfileScreen />;
+        return <ProfileScreen onChangeLanguage={handleNavigateToChangeLanguage} />;
       default:
         return (
           <HomeScreen
             {...homeScreenProps}
-            onContinueLesson={() => {
-              console.log('Continue lesson tapped');
-              handleStartLesson('The Magic of Compounding');
-            }}
-            onViewSimulation={() => {
-              console.log('View simulation tapped');
-              setActiveTab('simulate');
-            }}
+            onContinueLesson={() => handleStartLesson('The Magic of Compounding')}
+            onViewSimulation={() => setActiveTab('simulate')}
           />
         );
     }
@@ -160,9 +162,7 @@ const MainApp = () => {
     return (
       <SafeAreaProvider>
         <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          {/* You can create a custom loading screen component here */}
-        </View>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}></View>
       </SafeAreaProvider>
     );
   }
@@ -185,16 +185,18 @@ const MainApp = () => {
 
       {currentScreen === 'lessonDetail' && user && (
         <LessonDetailScreen
-          key={currentLesson || 'none'}                    
-          lessonTitle={'The Magic of Compounding'}        
-          route={{ params: { lessonId: currentLesson } }}  
+          key={currentLesson || 'none'}
+          lessonTitle={'The Magic of Compounding'}
+          route={{ params: { lessonId: currentLesson } }}
           onComplete={handleCompleteLesson}
           onBack={handleBackFromLesson}
         />
       )}
 
       {currentScreen === 'mainApp' && user && (
-        <View style={{ flex: 1 }}>
+        // 3. Apply the languageKey to the main view
+        // This ensures the entire content area is recreated when the language changes
+        <View style={{ flex: 1 }} key={languageKey}>
           {renderMainAppContent()}
           <BottomNavigation activeTab={activeTab} onTabPress={handleTabPress} />
         </View>
@@ -203,7 +205,6 @@ const MainApp = () => {
   );
 };
 
-// Root App Component with AuthProvider
 const App = () => {
   return (
     <AuthProvider>

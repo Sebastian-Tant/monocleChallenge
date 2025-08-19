@@ -18,13 +18,13 @@ const languages = [
   { code: 'ts', name: 'Xitsonga' },
 ];
 
-// 1. Accept `onLanguageSelected` as a prop
 const LanguageSelectorScreen = ({ onLanguageSelected }) => {
   const { t, i18n } = useTranslation();
 
-  const changeLanguage = (langCode) => {
-    i18n.changeLanguage(langCode);
-    // 2. Call the function to notify App.js to navigate away
+  // Make the function async
+  const changeLanguage = async (langCode) => {
+    // await the language change
+    await i18n.changeLanguage(langCode); 
     if (onLanguageSelected) {
       onLanguageSelected();
     }
@@ -32,7 +32,7 @@ const LanguageSelectorScreen = ({ onLanguageSelected }) => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>{t('selectLanguage')}</Text>
+      <Text style={styles.title}>{t('selectLanguage', 'Select Your Language')}</Text>
       <View style={styles.buttonContainer}>
         {languages.map((lang) => (
           <View key={lang.code} style={styles.buttonWrapper}>
@@ -48,6 +48,7 @@ const LanguageSelectorScreen = ({ onLanguageSelected }) => {
   );
 };
 
+// ... styles remain the same
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
@@ -69,5 +70,6 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
 });
+
 
 export default LanguageSelectorScreen;

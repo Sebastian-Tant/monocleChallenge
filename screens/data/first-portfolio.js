@@ -1,50 +1,58 @@
 // screens/data/first-portfolio.js
-export default {
+import { t } from 'i18next';
+
+const getFirstPortfolioData = () => ({
   id: 'first-portfolio',
-  title: 'Building Your First Portfolio',
-  description:
-    'Create a diversified investment portfolio that matches your goals and risk tolerance.',
-  duration: '10 min',
-  difficulty: 'Intermediate',
+  title: t('firstPortfolio.title'),
+  description: t('firstPortfolio.description'),
+  duration: t('firstPortfolio.duration'),
+  difficulty: t('firstPortfolio.difficulty'),
   completed: false,
   progress: 0,
   pages: [
     {
       id: 'goals',
       type: 'story',
-      title: 'Start With Goals',
-      content:
-        'Timeline + purpose = allocation. Short-term goals → safer assets. Long-term goals → more growth assets.',
+      title: t('firstPortfolio.pages.goals.title'),
+      content: t('firstPortfolio.pages.goals.content'),
       graphic: '🎯',
       backgroundColor: '#f0f9ff',
     },
     {
       id: 'diversify',
       type: 'story',
-      title: 'Diversification',
-      content:
-        'Mix asset classes (stocks, bonds, cash) and geographies so one loser doesn’t sink the whole ship.',
+      title: t('firstPortfolio.pages.diversify.title'),
+      content: t('firstPortfolio.pages.diversify.content'),
       graphic: '🧩',
       backgroundColor: '#fefce8',
     },
     {
       id: 'interactive',
       type: 'interactive',
-      title: 'Try an Allocation',
-      content:
-        'Move sliders for stocks/bonds/cash. See simulated volatility and long-term return change in real time.',
+      title: t('firstPortfolio.pages.interactive.title'),
+      content: t('firstPortfolio.pages.interactive.content'),
       backgroundColor: '#f0fdf4',
     },
     {
       id: 'quiz',
       type: 'quiz',
-      title: 'Quick Check',
-      question: 'What’s the main benefit of diversification?',
+      title: t('firstPortfolio.pages.quiz.title'),
+      question: t('firstPortfolio.pages.quiz.question'),
       options: [
-        { id: 'A', text: 'Maximizes short-term gains', correct: false },
-        { id: 'B', text: 'Reduces risk from any single investment', correct: true },
+        { 
+          id: 'A', 
+          text: t('firstPortfolio.pages.quiz.options.maximizeGains'), 
+          correct: false 
+        },
+        { 
+          id: 'B', 
+          text: t('firstPortfolio.pages.quiz.options.reduceRisk'), 
+          correct: true 
+        },
       ],
       backgroundColor: '#fdf2f8',
     },
   ],
-};
+});
+
+export default getFirstPortfolioData;

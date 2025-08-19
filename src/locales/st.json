@@ -111,5 +111,195 @@
     "scenarioProjection": "Mohlala ona oa {{scenarioName}} o bonts'a moputso oa selemo oa {{returnRate}}% o kopaneng khoeli le khoeli. Ka lintlha tsa hau tsa hona joale ka holimo ho {{years}} {{yearUnit}}, kakaretso ea hau e hlalosang e tla ba {{total}} e leng {{growth}} ntšetso-pele e kopaneng.",
     "scenarioImplication": "Se se bolelang: Mokhoa oa {{scenarioName}} o lebisitse ho ka bang {{returnRate}}% ka selemo ka kakaretso ka linako tse telele, o amohela phetoho ea {{volatility}}.",
     "scenarioDisclaimer": "Meputso ea 'nete e fapane; sena ha se tiisetso. E sebelise ho utloisisa kamoo sekhahla le nako li fetolang liphello."
+  },"compounding": {
+    "title": "Boselamose ba Kgolo ya Chelete",
+    "description": "Ithute kamoo chelete ya hao e ka holang ka tsela e potlakileng ka nako ka matla a tswala e kopantsweng.",
+    "duration": "5 metsotso",
+    "difficulty": "Mothomedi",
+    "pages": {
+      "concept": {
+        "title": "Mohopolo",
+        "content": "Nahana hore o na le sefate sa chelete. Tswala e kopantsweng e tshwana le ho tjhala dipeu tse welang sefateng sa hao, hore di hole di be difate tse ntjha tsa chelete."
+      },
+      "coreIdea": {
+        "title": "Mohopolo wa Mantlha",
+        "content": "O fumana tswala cheleteng ya hao. Ebe o fumana *tswala ho tswala ya hao*. Hoo ke boselamose."
+      },
+      "interactive": {
+        "title": "E Bone e Sebetsa",
+        "content": "Ha re e bone e sebetsa. Hula se lahlegwang ho bona kamoo matsete a R10,000 a holang ka teng ka 8% tswala."
+      },
+      "quiz": {
+        "title": "Potso e Potlakileng",
+        "question": "Ke eng se nang le matla a maholo bakeng sa kgolo ya chelete?",
+        "options": {
+          "highAmount": "Chelete e ngata ya qaleho",
+          "startEarly": "Ho qala kapele"
+        }
+      }
+    }
+  },"emergencyFund": {
+    "title": "Chelete ya Maemo a Mathateng e Hlalositswe",
+    "description": "Lebaka leo o hlokang chelete ya maemo a mathateng le hore na o lokela ho boloka bokae pele o ka peeletsa.",
+    "duration": "6 metsotso",
+    "difficulty": "Mothomedi",
+    "pages": {
+      "why": {
+        "title": "Hobaneng o Inahane?",
+        "content": "Bophelo bo a etsahala—ho lahlehelwa ke mosebetsi, ho lokiswa ha dikoloi, ditefiso tsa bongaka. Chelete ya maemo a mathateng e thibela hore o kene mekolotong (kapa ho rekisa matsete ka nako e mpe)."
+      },
+      "howMuch": {
+        "title": "Ke Bokae?",
+        "content": "Molao o tloaelehileng: dikgwedi tse 3–6 tsa ditshenyehelo tsa bohlokwa. Qala ka sepheo se senyane (R5,000–R10,000), ebe o haha."
+      },
+      "interactive": {
+        "title": "Sepheo sa Hao",
+        "content": "Hula ho beha dilo tsa bohlokwa tsa kgwedi (rente, dijo, dipalangwa). Re tla o bontsisa sepheo sa maemo a mathateng sa dikgwedi tse 3–6."
+      },
+      "quiz": {
+        "title": "Tlhahlobo e Potlakileng",
+        "question": "Chelete ya maemo a mathateng e lokela ho bolokelwa hokae?",
+        "options": {
+          "volatileStock": "Ho ETF ya masheya a fetohang",
+          "safeAccount": "Ho akhaonte e sireletsehileng, e bonolo ho e fihla"
+        }
+      }
+    }
+  },"firstPortfolio": {
+    "title": "Ho Haha Pothifolio ya Hao ya Pele",
+    "description": "Etsa pothifolio ya matsete e fapaneng e lumellanang le sepheo sa hao le ho amohela kotsi.",
+    "duration": "10 metsotso",
+    "difficulty": "Bohareng",
+    "pages": {
+      "goals": {
+        "title": "Qala ka Sepheo",
+        "content": "Nako + sepheo = kabo. Sepheo sa nako e khutshwane → thepa e sireletsehileng. Sepheo sa nako e telele → thepa ya kgolo e ngata."
+      },
+      "diversify": {
+        "title": "Ho Fapanya",
+        "content": "Tswakanya mefuta ya thepa (masheya, dipanka, chelete) le libaka hore e le nngwe e lahlehelwang e se ke ya ntsha sekepe kaofela."
+      },
+      "interactive": {
+        "title": "Leka Kabo",
+        "content": "Sisinyetsa di-slider tsa masheya/dipanka/chelete. Bona phetoho e etsisang le poelo ya nako e telele li fetoga ka nako ya nnete."
+      },
+      "quiz": {
+        "title": "Tlhahlobo e Potlakileng",
+        "question": "Ke molemo ofe o moholo wa ho fapanya?",
+        "options": {
+          "maximizeGains": "Ho eketsa dipoelo tsa nako e khutshwane",
+          "reduceRisk": "Ho fokotsa kotsi ho tswa matsetseng a le mong"
+        }
+      }
+    }
+  },"riskReturn": {
+    "title": "Ho Utloisisa Kotsi le Chelete e Khutlang",
+    "description": "Fumana kamano pakeng tsa kotsi le menyetla ya chelete e khutlang ho peeletso.",
+    "duration": "7 min",
+    "difficulty": "Moqalehi",
+    "pages": {
+      "intro": {
+        "title": "Kotsi ke Eng?",
+        "content": "Kotsi ke hore peeletso ya hao e ka nyoloha hakae kapa e we. Kotsi e phahameng e ka bolela phaello e phahameng — empa hape le ho wa ho hoholo."
+      },
+      "tradeoff": {
+        "title": "Phapano",
+        "content": "Thepa e sireletsehileng (joalo ka chelete) e na le chelete e khutlang e tlase. Thepa e kotsing (joalo ka di-stock) e ka hola ho feta ka nako empa e sisinyeha ho feta."
+      },
+      "interactive": {
+        "title": "Khetha Tsela ya Hao",
+        "content": "Tsamaisa selaedara pakeng tsa \"ho sireletseha\" le \"kotsi\" ho bona hore ho fetoha le chelete e khutlang ya nako e telele ho ka fetohang joang."
+      },
+      "quiz": {
+        "title": "Hlahloba ka Potlako",
+        "question": "Ke polelo efe e nepahetseng?",
+        "options": {
+          "A": "Chelete e khutlang e phahameng kamehla e bolela kotsi e tlase",
+          "B": "Chelete e khutlang e phahameng e ka bang teng hangata e tla le kotsi e phahameng"
+        }
+      }
+    }
+  },"taxEfficient": {
+    "title": "Ho Peeletsa ka Mokgwa o Sebetsang ka Methelo",
+    "description": "Ithute ka di-account tse se nang methelo / tse nang mehola ya methelo le ho beha ka bohlale ho boloka ho fetisa tse khutlang ho uena.",
+    "duration": "8 min",
+    "difficulty": "Bohareng",
+    "pages": {
+      "wrappers": {
+        "title": "Sebedisa Sekoahelo",
+        "content": "Di-account tse nang mehola ya methelo tse kang RA, di sireletsa kgolo/dipoelo ho methelo tse ding."
+      },
+      "placement": {
+        "title": "Sebaka sa Thepa",
+        "content": "Beha thepa e sa sebetseng hantle ka methelo (mohlala, di-bond funds, batefelo ba dipoelo tse phahameng) di-accounteng tse sireletsehileng methelweng pele."
+      },
+      "interactive": {
+        "title": "Ho Beha ka Bohlale",
+        "content": "Hula di-funds ho \"Tse nang Methelo\" kapa \"Tse nang Mehola ya Methelo\" dipokete. Bona kamoo tekanyo ya ka mora methelo e ntlafatsang."
+      },
+      "quiz": {
+        "title": "Hlahloba Kapele",
+        "question": "Ke kgato efe eo ka tlwaelo e SEBETSANG HAHOLOANYANE ka methelo?",
+        "options": {
+          "A": "Ho tshwara di-bond funds accounteng e nang mehola ya methelo",
+          "B": "Ho tshwara di-bond funds accounteng ya brokerage e nang methelo"
+        }
+      }
+    }
+  },"learnScreen": {
+    "sections": {
+      "availableLessons": "Dithuto tse teng",
+      "achievements": "Diphihlello",
+      "learningTips": "Malebela a ho Ithuta"
+    },
+    "lesson": {
+      "completed": "✓ Ho Qetilwe",
+      "complete": "qedela",
+      "startLesson": "Qala Thuto"
+    },
+    "achievements": {
+      "firstLesson": {
+        "title": "Thuto ya Pele",
+        "description": "Qedela thuto ya hao ya pele"
+      },
+      "quizMaster": {
+        "title": "Setsebi sa Lipotso",
+        "description": "Qedela dipotso tsa bohareng"
+      },
+      "knowledgeSeeker": {
+        "title": "Mofuputsi wa Tsebo",
+        "description": "Qedela dithuto tse 5"
+      }
+    },
+    "reward": {
+      "collectReward": "Nka Moputso",
+      "collected": "Moputso o Nkuwe",
+      "collectedMessage": "O hapile data ya 500MB! E natefele!",
+      "alreadyCollected": "Moputso o se o Nkuwe",
+      "alreadyCollectedMessage": "O se o nkile moputso wa hao wa 500MB!",
+      "notEligible": "Ha o Tshoanelehe",
+      "notEligibleMessage": "Qedela diphihlello tsohle ho nka moputso wa hao!"
+    },
+    "tips": {
+      "takeYourTime": {
+        "title": "Nka Nako",
+        "description": "O se ke wa potlakela dithuto. Nka nako ho utlwisisa mohopolo o mong le o mong."
+      },
+      "practiceMakesPerfect": {
+        "title": "Boitlhwariso bo tlisa Phetheho",
+        "description": "Boela dithutong mme o leke dikarolo tse sebedisanang makgetlo a mangata."
+      },
+      "learnDaily": {
+        "title": "Ithute Letsatsi le Letsatsi",
+        "description": "Sebedisa metsotso e 5-10 feela letsatsi le letsatsi ho aha tsebo ya hao ya ditjhelete."
+      }
+    },
+    "errors": {
+      "error": "Phoso",
+      "noUserSignedIn": "Ha ho na mosebedisi ya keneng",
+      "userDocumentNotFound": "Tokomane ya mosebedisi ha e fumanwe",
+      "failedToUpdateProgress": "Ho hlolehile ho ntjhafatsa tswelopele",
+      "failedToCollectReward": "Ho hlolehile ho nka moputso"
+    }
   }
 }

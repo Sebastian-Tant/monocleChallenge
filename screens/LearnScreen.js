@@ -1,3 +1,4 @@
+// screens/LearnScreen.js
 import React, { useState, useEffect } from 'react';
 import {
   View,
@@ -8,23 +9,44 @@ import {
   SafeAreaView,
   Alert,
 } from 'react-native';
-import { lessons } from './data/index';
+import { useTranslation } from 'react-i18next';
+import { getLessons } from './data/index'; 
 import { db } from '../firebase';
 import auth from '@react-native-firebase/auth';
 
 const LearnScreen = ({ onStartLesson }) => {
+  const { t } = useTranslation();
+
+
+  const lessons = getLessons();
+
   const [achievements, setAchievements] = useState([
-    { id: 1, title: 'First Lesson', description: 'Complete your first lesson', unlocked: false },
-    { id: 2, title: 'Quiz Master', description: 'Complete an intermediate quiz', unlocked: false },
-    { id: 3, title: 'Knowledge Seeker', description: 'Complete 5 lessons', unlocked: false },
+    { 
+      id: 1, 
+      title: t('learnScreen.achievements.firstLesson.title'), 
+      description: t('learnScreen.achievements.firstLesson.description'), 
+      unlocked: false 
+    },
+    { 
+      id: 2, 
+      title: t('learnScreen.achievements.quizMaster.title'), 
+      description: t('learnScreen.achievements.quizMaster.description'), 
+      unlocked: false 
+    },
+    { 
+      id: 3, 
+      title: t('learnScreen.achievements.knowledgeSeeker.title'), 
+      description: t('learnScreen.achievements.knowledgeSeeker.description'), 
+      unlocked: false 
+    },
   ]);
-  const [rewardCollected, setRewardCollected] = useState(false); // New state to track reward status
+  const [rewardCollected, setRewardCollected] = useState(false);
 
   const handleLessonCompletion = async (lessonId, difficulty) => {
     try {
       const user = auth().currentUser;
       if (!user) {
-        Alert.alert('Error', 'No user signed in');
+        Alert.alert(t('learnScreen.errors.error'), t('learnScreen.errors.noUserSignedIn'));
         return;
       }
       const userId = user.uid;
@@ -52,18 +74,33 @@ const LearnScreen = ({ onStartLesson }) => {
 
         setAchievements((prevAchievements) =>
           prevAchievements.map((achievement) => {
-            if (achievement.id === 1) return { ...achievement, unlocked: completedLessons.length >= 1 };
-            if (achievement.id === 2) return { ...achievement, unlocked: completedDifficulties.Intermediate };
-            if (achievement.id === 3) return { ...achievement, unlocked: completedLessons.length >= 5 };
+            if (achievement.id === 1) return { 
+              ...achievement, 
+              title: t('learnScreen.achievements.firstLesson.title'),
+              description: t('learnScreen.achievements.firstLesson.description'),
+              unlocked: completedLessons.length >= 1 
+            };
+            if (achievement.id === 2) return { 
+              ...achievement, 
+              title: t('learnScreen.achievements.quizMaster.title'),
+              description: t('learnScreen.achievements.quizMaster.description'),
+              unlocked: completedDifficulties.Intermediate 
+            };
+            if (achievement.id === 3) return { 
+              ...achievement, 
+              title: t('learnScreen.achievements.knowledgeSeeker.title'),
+              description: t('learnScreen.achievements.knowledgeSeeker.description'),
+              unlocked: completedLessons.length >= 5 
+            };
             return achievement;
           })
         );
       } else {
-        Alert.alert('Error', 'User document not found');
+        Alert.alert(t('learnScreen.errors.error'), t('learnScreen.errors.userDocumentNotFound'));
       }
     } catch (error) {
       console.log('Error updating lesson completion:', error);
-      Alert.alert('Error', 'Failed to update progress');
+      Alert.alert(t('learnScreen.errors.error'), t('learnScreen.errors.failedToUpdateProgress'));
     }
   };
 
@@ -83,17 +120,32 @@ const LearnScreen = ({ onStartLesson }) => {
           const data = userDoc.data();
           const completedLessons = data.lessonsCompleted || [];
           const completedDifficulties = data.completedDifficulties || { Beginner: false, Intermediate: false };
-          const rewardStatus = data.reward?.collected || false; // Fetch reward status
+          const rewardStatus = data.reward?.collected || false;
 
           setAchievements((prevAchievements) =>
             prevAchievements.map((achievement) => {
-              if (achievement.id === 1) return { ...achievement, unlocked: completedLessons.length >= 1 };
-              if (achievement.id === 2) return { ...achievement, unlocked: completedDifficulties.Intermediate };
-              if (achievement.id === 3) return { ...achievement, unlocked: completedLessons.length >= 5 };
+              if (achievement.id === 1) return { 
+                ...achievement, 
+                title: t('learnScreen.achievements.firstLesson.title'),
+                description: t('learnScreen.achievements.firstLesson.description'),
+                unlocked: completedLessons.length >= 1 
+              };
+              if (achievement.id === 2) return { 
+                ...achievement, 
+                title: t('learnScreen.achievements.quizMaster.title'),
+                description: t('learnScreen.achievements.quizMaster.description'),
+                unlocked: completedDifficulties.Intermediate 
+              };
+              if (achievement.id === 3) return { 
+                ...achievement, 
+                title: t('learnScreen.achievements.knowledgeSeeker.title'),
+                description: t('learnScreen.achievements.knowledgeSeeker.description'),
+                unlocked: completedLessons.length >= 5 
+              };
               return achievement;
             })
           );
-          setRewardCollected(rewardStatus); // Update reward state
+          setRewardCollected(rewardStatus);
         } else {
           console.log('No user document found');
         }
@@ -103,13 +155,13 @@ const LearnScreen = ({ onStartLesson }) => {
     };
 
     fetchUserProgress();
-  }, []);
+  }, [t]);
 
   const handleCollectReward = async () => {
     try {
       const user = auth().currentUser;
       if (!user) {
-        Alert.alert('Error', 'No user signed in');
+        Alert.alert(t('learnScreen.errors.error'), t('learnScreen.errors.noUserSignedIn'));
         return;
       }
       const userId = user.uid;
@@ -127,16 +179,16 @@ const LearnScreen = ({ onStartLesson }) => {
             'reward.collected': true,
           });
           setRewardCollected(true);
-          Alert.alert('Reward Collected', 'You’ve earned 500MB of data! Enjoy!');
+          Alert.alert(t('learnScreen.reward.collected'), t('learnScreen.reward.collectedMessage'));
         } else if (isCollected) {
-          Alert.alert('Reward Already Collected', 'You’ve already claimed your 500MB reward!');
+          Alert.alert(t('learnScreen.reward.alreadyCollected'), t('learnScreen.reward.alreadyCollectedMessage'));
         } else {
-          Alert.alert('Not Eligible', 'Complete all achievements to collect your reward!');
+          Alert.alert(t('learnScreen.reward.notEligible'), t('learnScreen.reward.notEligibleMessage'));
         }
       }
     } catch (error) {
       console.log('Error collecting reward:', error);
-      Alert.alert('Error', 'Failed to collect reward');
+      Alert.alert(t('learnScreen.errors.error'), t('learnScreen.errors.failedToCollectReward'));
     }
   };
 
@@ -148,7 +200,7 @@ const LearnScreen = ({ onStartLesson }) => {
       >
         {/* Lessons Section */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Available Lessons</Text>
+          <Text style={styles.sectionTitle}>{t('learnScreen.sections.availableLessons')}</Text>
           <View style={styles.lessonsContainer}>
             {lessons.map((lesson) => (
               <TouchableOpacity
@@ -165,7 +217,7 @@ const LearnScreen = ({ onStartLesson }) => {
                 <View style={styles.lessonHeader}>
                   <View style={styles.lessonTitleContainer}>
                     <Text style={styles.lessonTitle}>{lesson.title}</Text>
-                    {lesson.completed && <Text style={styles.completedBadge}>✓ Completed</Text>}
+                    {lesson.completed && <Text style={styles.completedBadge}>{t('learnScreen.lesson.completed')}</Text>}
                   </View>
                   <View style={styles.lessonMeta}>
                     <Text style={styles.duration}>{lesson.duration}</Text>
@@ -192,7 +244,7 @@ const LearnScreen = ({ onStartLesson }) => {
                     <View style={styles.progressBar}>
                       <View style={[styles.progressFill, { width: `${lesson.progress}%` }]} />
                     </View>
-                    <Text style={styles.progressText}>{lesson.progress}% complete</Text>
+                    <Text style={styles.progressText}>{lesson.progress}% {t('learnScreen.lesson.complete')}</Text>
                   </View>
                 ) : (
                   <TouchableOpacity
@@ -204,7 +256,7 @@ const LearnScreen = ({ onStartLesson }) => {
                       }
                     }}
                   >
-                    <Text style={styles.startButtonText}>Start Lesson</Text>
+                    <Text style={styles.startButtonText}>{t('learnScreen.lesson.startLesson')}</Text>
                   </TouchableOpacity>
                 )}
               </TouchableOpacity>
@@ -214,7 +266,7 @@ const LearnScreen = ({ onStartLesson }) => {
 
         {/* Achievements Section */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Achievements</Text>
+          <Text style={styles.sectionTitle}>{t('learnScreen.sections.achievements')}</Text>
           <View style={styles.achievementsContainer}>
             {achievements.map((achievement) => (
               <View
@@ -255,20 +307,20 @@ const LearnScreen = ({ onStartLesson }) => {
             onPress={handleCollectReward}
             disabled={!achievements.every((achievement) => achievement.unlocked) || rewardCollected}
           >
-            <Text style={styles.rewardButtonText}>Collect Reward</Text>
+            <Text style={styles.rewardButtonText}>{t('learnScreen.reward.collectReward')}</Text>
           </TouchableOpacity>
         </View>
 
         {/* Tips Section */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Learning Tips</Text>
+          <Text style={styles.sectionTitle}>{t('learnScreen.sections.learningTips')}</Text>
           <View style={styles.tipsContainer}>
             <View style={styles.tipCard}>
               <Text style={styles.tipEmoji}>💡</Text>
               <View style={styles.tipContent}>
-                <Text style={styles.tipTitle}>Take Your Time</Text>
+                <Text style={styles.tipTitle}>{t('learnScreen.tips.takeYourTime.title')}</Text>
                 <Text style={styles.tipDescription}>
-                  Don't rush through lessons. Take time to understand each concept.
+                  {t('learnScreen.tips.takeYourTime.description')}
                 </Text>
               </View>
             </View>
@@ -276,9 +328,9 @@ const LearnScreen = ({ onStartLesson }) => {
             <View style={styles.tipCard}>
               <Text style={styles.tipEmoji}>🔄</Text>
               <View style={styles.tipContent}>
-                <Text style={styles.tipTitle}>Practice Makes Perfect</Text>
+                <Text style={styles.tipTitle}>{t('learnScreen.tips.practiceMakesPerfect.title')}</Text>
                 <Text style={styles.tipDescription}>
-                  Revisit lessons and try the interactive elements multiple times.
+                  {t('learnScreen.tips.practiceMakesPerfect.description')}
                 </Text>
               </View>
             </View>
@@ -286,9 +338,9 @@ const LearnScreen = ({ onStartLesson }) => {
             <View style={styles.tipCard}>
               <Text style={styles.tipEmoji}>📱</Text>
               <View style={styles.tipContent}>
-                <Text style={styles.tipTitle}>Learn Daily</Text>
+                <Text style={styles.tipTitle}>{t('learnScreen.tips.learnDaily.title')}</Text>
                 <Text style={styles.tipDescription}>
-                  Spend just 5-10 minutes daily to build your financial knowledge.
+                  {t('learnScreen.tips.learnDaily.description')}
                 </Text>
               </View>
             </View>
@@ -299,6 +351,7 @@ const LearnScreen = ({ onStartLesson }) => {
   );
 };
 
+// Styles remain the same
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#f8fafc', paddingTop: 50 },
   scrollContent: { paddingBottom: 32 },

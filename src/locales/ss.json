@@ -111,5 +111,195 @@
     "scenarioProjection": "Leli linganiso le-{{scenarioName}} libonisa imbuyiso yemnyaka ye-{{returnRate}}% lehlanganisiwe ngenyanga. Ngekufaka kwakho kwamanje ngaphezu kweminyaka le-{{years}} {{yearUnit}}, inani lakho lelilinganiselwe lingaba ngu-{{total}} okungu-{{growth}} kukhula lokuhlanganisiwe.",
     "scenarioImplication": "Lokushoko: Indlela ye-{{scenarioName}} ivame kuhlosela cishe ku-{{returnRate}}% ngemnyaka ngekulinganisa esikhatsini leside, ngemvume yekushintjashintja kwe-{{volatility}}.",
     "scenarioDisclaimer": "Imbuyiso yangempela iyahluka; lokhu akuyona isiqiniseko. Yisebenzise ukuze uzwe kutsi izinga nesikhatsi kushintja kanjani imiphumela."
+  },"compounding": {
+    "title": "Bumlingo Bekukhula Kwemali",
+    "description": "Fundza kutsi imali yakho ingakhula kanjani ngesikhatsi ngamandla enhlahlo lephindaphindiwe.",
+    "duration": "5 emaminithi",
+    "difficulty": "Lwekucala",
+    "pages": {
+      "concept": {
+        "title": "Lwemcondvo",
+        "content": "Cabanga kutsi unesihlahla semali. Inhlahlo lephindaphindiwe ifana nekutjala timbewu letiwela esihlahleni sakho, kutsi tikhule tibe tihlahla temali letintjha."
+      },
+      "coreIdea": {
+        "title": "Lwemcondvo Lomkhulu",
+        "content": "Utfola inhlahlo emalini yakho. Bese utfola *inhlahlo enhlahloeni yakho*. Loyo ngumlingo."
+      },
+      "interactive": {
+        "title": "Kubona Ekusebenteni",
+        "content": "Ake sikubone ekusebenteni. Hudza loku-slide kutsi ubone kutsi imali letfutshelwe ye-R10,000 ikhula kanjani ku-8% inhlahlo."
+      },
+      "quiz": {
+        "title": "Umbutvo Loshesha",
+        "question": "Yini lenamandla lamakhulu ekukhuleni kwemali?",
+        "options": {
+          "highAmount": "Imali leningi yekucala",
+          "startEarly": "Kucala kusenjongo"
+        }
+      }
+    }
+  },"emergencyFund": {
+    "title": "Imali Yetingoti Ichazulwe",
+    "description": "Kutsi kungani udinga imali yetingoti nekutsi kumalini lokumele uwulondvoloze ngaphambi kwekutfutsa.",
+    "duration": "6 emaminithi",
+    "difficulty": "Lwekucala",
+    "pages": {
+      "why": {
+        "title": "Kungani Uzikhatsatse?",
+        "content": "Kuphila kuyenteka—kulahleka kwemsebenzi, kulungiswa kwetimoto, tikweleti tekwelapha. Imali yetingoti ikuvimbela kutsi ungene etikweletini (noma uthengise timali letifutshelwe ngesikhathi lesibucayi)."
+      },
+      "howMuch": {
+        "title": "Kumalini?",
+        "content": "Umtsetfo lojwayelekile: tinyanga leti-3–6 teletindleko letibucayi. Cala ngenhloso lencane (R5,000–R10,000), bese wakha."
+      },
+      "interactive": {
+        "title": "Inhloso Yakho",
+        "content": "Hudza kubeka tintfo letibucayi tenyanga (irente, kudla, kuphasasa). Sitakukombisa inhloso yetingoti tenyanga leti-3–6."
+      },
+      "quiz": {
+        "title": "Kuhlola Ngekushesha",
+        "question": "Imali yetingoti kumele igcinwe kuphi?",
+        "options": {
+          "volatileStock": "Ku-ETF yetisheya letiguculako",
+          "safeAccount": "Ku-akhawunti lephephile, lelula kuyifikelela"
+        }
+      }
+    }
+  },"firstPortfolio": {
+    "title": "Kwakha Iphothifoliyo Yakho Yekucala",
+    "description": "Kha iphothifoliyo yetimali letifutshelwe lehlukahlukene levumelana nentfulo zakho nekwemukela ingoti.",
+    "duration": "10 emaminithi",
+    "difficulty": "Phakathi",
+    "pages": {
+      "goals": {
+        "title": "Cala Ngentfulo",
+        "content": "Sikhathi + inhloso = kusaba. Tintfulo tesikhathi lesifushane → tintfo letiphephile. Tintfulo tesikhathi leliside → tintfo tekukhula lokwengeta."
+      },
+      "diversify": {
+        "title": "Kwehlukanisa",
+        "content": "Hlanganisa tinhlobo tetintfo (tisheya, tibondi, imali) netindvawo kutsi loya munye longaphumeleli angacwilisi umkhumbi wonkhe."
+      },
+      "interactive": {
+        "title": "Zama Kusaba",
+        "content": "Nyakaza ema-slider etisheya/tibondi/imali. Bona kucinca lokufanekisiwe nembuyiselo yesikhathi leliside kucintja ngesikhathi sangempela."
+      },
+      "quiz": {
+        "title": "Kuhlola Ngekushesha",
+        "question": "Yini inzuzo lenkhulu yekwehlukanisa?",
+        "options": {
+          "maximizeGains": "Kuyakha inzuzo yesikhathi lesifushane",
+          "reduceRisk": "Kwehlisa ingoti yetimali letifutshelwe letilodwa"
+        }
+      }
+    }
+  },"riskReturn": {
+    "title": "Kucondza Libungoti Nekubuya",
+    "description": "Tfola kubambana kwelibungoti nekutsi kungabuya njengelinisela ekutsaleni mali.",
+    "duration": "7 min",
+    "difficulty": "Sekucala",
+    "pages": {
+      "intro": {
+        "title": "Libungoti Yini?",
+        "content": "Libungoti kutsi kutsi kutsale mali kwakho kungakhula kangakanani noma kuwe. Libungoti leliphakeme lingasho inzuzo lephakeme — kodvwa futsi nefali lelikhulu."
+      },
+      "tradeoff": {
+        "title": "Kushintshana",
+        "content": "Tintfo letiphephile (njengecash) tinengeniso lephansi. Tintfo letinebungoti (njengama-stock) tingakhula kakhulu ngekuhamba kwesikhati kodvwa tinyakanyaka kakhulu."
+      },
+      "interactive": {
+        "title": "Khetsa Indlela Yakho",
+        "content": "Nyakanyisa isilaydara phakathi kwe\"kuphephile\" ne\"bungoti\" kubona kutsi kushintsha negeniso yesikhati leside kungashintja kanjani."
+      },
+      "quiz": {
+        "title": "Hlola Ngekushesha",
+        "question": "Yiliphi lifundziso lelifanele?",
+        "options": {
+          "A": "Inzuzo lephakeme ngaso sonkhe sikhatsi lisho libungoti lelincane",
+          "B": "Inzuzo lephakeme lelingaba khona ngalelinye likhatsi liza ngebungoti lebukulu"
+        }
+      }
+    }
+  }, "taxEfficient": {
+    "title": "Kubhadalela Ngendlela Lesebenta Ngemithelo",
+    "description": "Fundza ngema-akhawunti langenamithelo / lanenkonzo yemithelo nekubeka ngekuhlakaniphe kugcina lokuningi lekufika kwakho.",
+    "duration": "8 min",
+    "difficulty": "Phakathi",
+    "pages": {
+      "wrappers": {
+        "title": "Sebentisa Sigubho",
+        "content": "Ema-akhawunti lanenkonzo yemithelo njenge-RA, avikela lokukhula/tizabelo emithelweni lethile."
+      },
+      "placement": {
+        "title": "Indvwo Yetimpahla",
+        "content": "Beka tintfo letingasebenti kahle ngemithelo (njengema-bond funds, labakhokheli betizabelo letikulu) ema-akhawuntini lachunyiwe emithelweni kuqala."
+      },
+      "interactive": {
+        "title": "Kubeka Ngekuhlakaniphe",
+        "content": "Hudza ema-funds ku-\"Lanemithelo\" vs \"Lanenkonzo Yemithelo\" timbakede. Bona indlela lesilinganiso sangemumva kwemithelo siphucuka ngayo."
+      },
+      "quiz": {
+        "title": "Kuhlola Ngekushesha",
+        "question": "Yiliphi lihambelo lelitjatsiswa LISEBENTA KAKHULU ngemithelo?",
+        "options": {
+          "A": "Kubamba ema-bond funds ku-akhawunti lonenkonzo yemithelo",
+          "B": "Kubamba ema-bond funds ku-akhawunti ye-brokerage lenemithelo"
+        }
+      }
+    }
+  },"learnScreen": {
+    "sections": {
+      "availableLessons": "Tifundvo Letitfolakalako",
+      "achievements": "Lokufeziwe",
+      "learningTips": "Emacebo Ekufundza"
+    },
+    "lesson": {
+      "completed": "✓ Kucedziwe",
+      "complete": "cedza",
+      "startLesson": "Cala Sifundvo"
+    },
+    "achievements": {
+      "firstLesson": {
+        "title": "Sifundvo Sekucala",
+        "description": "Cedza sifundvo sakho sekucala"
+      },
+      "quizMaster": {
+        "title": "Licwephesha Lemibuto",
+        "description": "Cedza umbuto losezingeni leliphakathi"
+      },
+      "knowledgeSeeker": {
+        "title": "Umfuni Welwati",
+        "description": "Cedza tifundvo lezi-5"
+      }
+    },
+    "reward": {
+      "collectReward": "Tsatsa Umvuzo",
+      "collected": "Umvuzo Utsatsiwe",
+      "collectedMessage": "Uzuze idatha lengu-500MB! Yijabulele!",
+      "alreadyCollected": "Umvuzo Sewutsatsiwe",
+      "alreadyCollectedMessage": "Sewuvele uwutsatsile umvuzo wakho wema-500MB!",
+      "notEligible": "Awukafaneli",
+      "notEligibleMessage": "Cedza konkhe lokufanele ufeze kute utsatse umvuzo wakho!"
+    },
+    "tips": {
+      "takeYourTime": {
+        "title": "Ungajahi",
+        "description": "Ungajahi ngetifundvo. Titsatsele sikhatsi kute ucondzisise umcondvo ngamunye."
+      },
+      "practiceMakesPerfect": {
+        "title": "Kutilolonga Kwenta Uphelele",
+        "description": "Buyela etifundvweni uphindze uzame tincenye letisebentisanako tikhatsi letinyenti."
+      },
+      "learnDaily": {
+        "title": "Fundza Malanga Onkhe",
+        "description": "Sebentisa imizuzu nje le-5-10 onkhe malanga kute wakhe lwazi lwakho lwetetimali."
+      }
+    },
+    "errors": {
+      "error": "Liphutsa",
+      "noUserSignedIn": "Kute umsebentisi longene",
+      "userDocumentNotFound": "Idokhumenti yemsebentisi ayitfolakali",
+      "failedToUpdateProgress": "Kwehlulekile kuvuselela inchubekelembili",
+      "failedToCollectReward": "Kwehlulekile kutsatsa umvuzo"
+    }
   }
 }

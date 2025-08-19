@@ -1,50 +1,58 @@
+// screens/data/risk-return.js
+import { t } from 'i18next';
 
-export default {
+const getRiskReturnData = () => ({
   id: 'risk-return',
-  title: 'Understanding Risk and Return',
-  description:
-    'Discover the relationship between risk and potential rewards in investing.',
-  duration: '7 min',
-  difficulty: 'Beginner',
+  title: t('riskReturn.title'),
+  description: t('riskReturn.description'),
+  duration: t('riskReturn.duration'),
+  difficulty: t('riskReturn.difficulty'),
   completed: false,
   progress: 0,
   pages: [
     {
       id: 'intro',
       type: 'story',
-      title: 'What is Risk?',
-      content:
-        'Risk is how much your investment can go up or down. Higher risk can mean higher gains — but also bigger drops.',
+      title: t('riskReturn.pages.intro.title'),
+      content: t('riskReturn.pages.intro.content'),
       graphic: '🎢',
       backgroundColor: '#f0f9ff',
     },
     {
       id: 'tradeoff',
       type: 'story',
-      title: 'The Trade-off',
-      content:
-        'Safer assets (like cash) have lower returns. Riskier assets (like stocks) can grow more over time but swing more.',
+      title: t('riskReturn.pages.tradeoff.title'),
+      content: t('riskReturn.pages.tradeoff.content'),
       graphic: '⚖️',
       backgroundColor: '#fefce8',
     },
     {
       id: 'interactive',
       type: 'interactive',
-      title: 'Pick Your Path',
-      content:
-        'Move the slider between “safe” and “risky” to see how volatility and long-term return might change.',
+      title: t('riskReturn.pages.interactive.title'),
+      content: t('riskReturn.pages.interactive.content'),
       backgroundColor: '#f0fdf4',
     },
     {
       id: 'quiz',
       type: 'quiz',
-      title: 'Quick Check',
-      question: 'Which statement is most accurate?',
+      title: t('riskReturn.pages.quiz.title'),
+      question: t('riskReturn.pages.quiz.question'),
       options: [
-        { id: 'A', text: 'Higher returns always mean less risk', correct: false },
-        { id: 'B', text: 'Higher potential returns usually come with higher risk', correct: true },
+        { 
+          id: 'A', 
+          text: t('riskReturn.pages.quiz.options.A'), 
+          correct: false 
+        },
+        { 
+          id: 'B', 
+          text: t('riskReturn.pages.quiz.options.B'), 
+          correct: true 
+        },
       ],
       backgroundColor: '#fdf2f8',
     },
   ],
-};
+});
+
+export default getRiskReturnData;
