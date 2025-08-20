@@ -191,7 +191,7 @@ const HomeScreen = ({
           >
             <Text style={styles.nextStepActionTitle}>Continue Lesson</Text>
             <Text style={styles.nextStepActionSubtitle}>
-              The Power of Compounding: Part 2
+              The Power of Compounding
             </Text>
             <View style={styles.nextStepArrow}>
               <Text style={styles.arrowText}>→</Text>
@@ -282,41 +282,36 @@ const HomeScreen = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8fafc',
+    backgroundColor: '#f1f5f9', // softer slate bg
   },
   scrollView: {
     flex: 1,
   },
   scrollContent: {
-    paddingBottom: 100,
+    paddingBottom: 120,
   },
   header: {
     paddingHorizontal: 24,
     paddingTop: 20,
-    paddingBottom: 24,
+    paddingBottom: 16,
   },
   greeting: {
-    fontSize: 28,
-    fontWeight: '700',
-    color: '#1e293b',
+    fontSize: 30,
+    fontWeight: '800',
+    color: '#0f172a',
+    letterSpacing: 0.3,
   },
   goalWidget: {
     backgroundColor: 'white',
-    marginHorizontal: 24,
+    marginHorizontal: 20,
     marginBottom: 20,
-    borderRadius: 20,
+    borderRadius: 24,
     padding: 24,
-    ...Platform.select({
-      ios: {
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.1,
-        shadowRadius: 12,
-      },
-      android: {
-        elevation: 8,
-      },
-    }),
+    shadowColor: '#0f172a',
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.08,
+    shadowRadius: 12,
+    elevation: 6,
   },
   goalHeader: {
     marginBottom: 20,
@@ -324,111 +319,102 @@ const styles = StyleSheet.create({
   goalTitle: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#475569',
-    marginBottom: 8,
+    color: '#334155',
+    marginBottom: 6,
   },
   goalAmount: {
-    fontSize: 24,
-    fontWeight: '700',
-    color: '#1e293b',
+    fontSize: 26,
+    fontWeight: '800',
+    color: '#0f172a',
   },
   progressContainer: {
     alignItems: 'center',
   },
   progressTrack: {
     width: '100%',
-    height: 12,
+    height: 14,
     backgroundColor: '#e2e8f0',
-    borderRadius: 6,
+    borderRadius: 999,
     overflow: 'hidden',
-    marginBottom: 12,
+    marginBottom: 10,
   },
   progressFill: {
     height: '100%',
-    backgroundColor: '#10b981',
-    borderRadius: 6,
+    backgroundColor: '#22c55e',
+    borderRadius: 999,
   },
   progressText: {
-    fontSize: 14,
-    fontWeight: '500',
+    fontSize: 13,
+    fontWeight: '600',
     color: '#64748b',
   },
   nextStepWidget: {
     backgroundColor: 'white',
-    marginHorizontal: 24,
+    marginHorizontal: 20,
     marginBottom: 20,
-    borderRadius: 20,
+    borderRadius: 24,
     padding: 24,
-    borderLeftWidth: 4,
-    borderLeftColor: '#667eea',
-    ...Platform.select({
-      ios: {
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 8,
-      },
-      android: {
-        elevation: 4,
-      },
-    }),
+    borderLeftWidth: 5,
+    borderLeftColor: '#6366f1',
+    shadowColor: '#0f172a',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.06,
+    shadowRadius: 10,
+    elevation: 4,
   },
   nextStepHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 16,
+    marginBottom: 14,
   },
   nextStepTitle: {
-    fontSize: 16,
+    fontSize: 17,
     fontWeight: '600',
-    color: '#475569',
+    color: '#334155',
   },
   nextStepEmoji: {
-    fontSize: 24,
+    fontSize: 26,
   },
   nextStepAction: {
     position: 'relative',
+    backgroundColor: '#eef2ff',
+    borderRadius: 16,
+    padding: 16,
   },
   nextStepActionTitle: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#667eea',
+    color: '#4f46e5',
     marginBottom: 4,
   },
   nextStepActionSubtitle: {
     fontSize: 14,
-    color: '#64748b',
+    color: '#475569',
     lineHeight: 20,
   },
   nextStepArrow: {
     position: 'absolute',
-    right: 0,
+    right: 16,
     top: '50%',
     transform: [{ translateY: -12 }],
   },
   arrowText: {
     fontSize: 24,
-    color: '#667eea',
-    fontWeight: 'bold',
+    color: '#4f46e5',
+    fontWeight: '800',
   },
   simulationWidget: {
     backgroundColor: 'white',
-    marginHorizontal: 24,
+    marginHorizontal: 20,
     marginBottom: 20,
-    borderRadius: 16,
+    borderRadius: 20,
     padding: 20,
-    ...Platform.select({
-      ios: {
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.05,
-        shadowRadius: 8,
-      },
-      android: {
-        elevation: 2,
-      },
-    }),
+    shadowColor: '#0f172a',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    elevation: 2,
   },
   simulationHeader: {
     flexDirection: 'row',
@@ -437,15 +423,15 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   simulationTitle: {
-    fontSize: 14,
-    fontWeight: '500',
-    color: '#64748b',
+    fontSize: 15,
+    fontWeight: '600',
+    color: '#475569',
     marginBottom: 4,
   },
   simulationAmount: {
-    fontSize: 20,
-    fontWeight: '700',
-    color: '#10b981',
+    fontSize: 22,
+    fontWeight: '800',
+    color: '#16a34a',
   },
   simulationSubtext: {
     fontSize: 12,
@@ -458,39 +444,33 @@ const styles = StyleSheet.create({
   },
   sparklineBar: {
     width: 3,
-    borderRadius: 1.5,
+    borderRadius: 999,
   },
   dailyBiteSection: {
     marginTop: 8,
   },
   dailyBiteTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#1e293b',
+    fontSize: 20,
+    fontWeight: '700',
+    color: '#0f172a',
     marginBottom: 16,
-    paddingHorizontal: 24,
+    paddingHorizontal: 20,
   },
   dailyBiteContainer: {
-    paddingLeft: 24,
-    paddingRight: 24,
+    paddingLeft: 20,
+    paddingRight: 20,
   },
   dailyBiteCard: {
     backgroundColor: 'white',
-    width: width * 0.8,
-    borderRadius: 16,
+    width: width * 0.78,
+    borderRadius: 20,
     padding: 20,
-    marginRight: 12,
-    ...Platform.select({
-      ios: {
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.05,
-        shadowRadius: 8,
-      },
-      android: {
-        elevation: 2,
-      },
-    }),
+    marginRight: 14,
+    shadowColor: '#0f172a',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 6,
+    elevation: 2,
   },
   dailyBiteHeader: {
     flexDirection: 'row',
@@ -500,8 +480,8 @@ const styles = StyleSheet.create({
   },
   dailyBiteDate: {
     fontSize: 12,
-    fontWeight: '500',
-    color: '#667eea',
+    fontWeight: '600',
+    color: '#4f46e5',
     textTransform: 'uppercase',
     letterSpacing: 0.5,
   },
@@ -509,14 +489,15 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   dailyBiteText: {
-    fontSize: 14,
-    color: '#475569',
-    lineHeight: 20,
+    fontSize: 15,
+    color: '#334155',
+    lineHeight: 21,
   },
   termHighlight: {
-    fontWeight: '600',
-    color: '#1e293b',
+    fontWeight: '700',
+    color: '#0f172a',
   },
 });
+
 
 export default HomeScreen;

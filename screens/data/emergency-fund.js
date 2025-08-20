@@ -27,13 +27,6 @@ const getEmergencyFundData = () => ({
       backgroundColor: '#fefce8',
     },
     {
-      id: 'interactive',
-      type: 'interactive',
-      title: t('emergencyFund.pages.interactive.title'),
-      content: t('emergencyFund.pages.interactive.content'),
-      backgroundColor: '#f0fdf4',
-    },
-    {
       id: 'quiz',
       type: 'quiz',
       title: t('emergencyFund.pages.quiz.title'),
