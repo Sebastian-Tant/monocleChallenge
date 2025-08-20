@@ -279,7 +279,26 @@
       "alreadyCollectedMessage": "O setse o tsere moputso wa gago wa 500MB!",
       "notEligible": "Ga o a Tshwanela",
       "notEligibleMessage": "Fedisa diphitlhelelo tsotlhe go tsaya moputso wa gago!"
-    },
+    },"navigation": {
+    "home": "Legae",
+    "learn": "Ithute",
+    "simulate": "Leka",
+    "profile": "Profaele"
+  },"profile": {
+    "title": "Profaele",
+    "subtitle": "First Rand Bank",
+    "name": "Leina",
+    "email": "Imeile",
+    "defaultName": "Moithuti wa Madi",
+    "noEmail": "Ga go na imeile",
+    "changeLanguage": "Fetola Puo",
+    "signOut": "TSWA",
+    "error": "Phoso",
+    "signOutError": "Go paletse go tswa"
+  },
+  "languageSelector": {
+    "subtitle": "Tlhopha puo e o e batlang go ithuta"
+  },
     "tips": {
       "takeYourTime": {
         "title": "Tseya Nako",

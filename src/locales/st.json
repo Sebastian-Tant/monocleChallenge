@@ -279,7 +279,12 @@
       "alreadyCollectedMessage": "O se o nkile moputso wa hao wa 500MB!",
       "notEligible": "Ha o Tshoanelehe",
       "notEligibleMessage": "Qedela diphihlello tsohle ho nka moputso wa hao!"
-    },
+    },"navigation": {
+    "home": "Lapeng",
+    "learn": "Ithute",
+    "simulate": "Etsa mohlala",
+    "profile": "Profaele"
+  },
     "tips": {
       "takeYourTime": {
         "title": "Nka Nako",
@@ -293,7 +298,21 @@
         "title": "Ithute Letsatsi le Letsatsi",
         "description": "Sebedisa metsotso e 5-10 feela letsatsi le letsatsi ho aha tsebo ya hao ya ditjhelete."
       }
-    },
+    },"profile": {
+    "title": "Profaele",
+    "subtitle": "First Rand Bank",
+    "name": "Lebitso",
+    "email": "Imeile",
+    "defaultName": "Moithuti wa Lichelete",
+    "noEmail": "Ha ho imeile",
+    "changeLanguage": "Fetola Puo",
+    "signOut": "TSWA",
+    "error": "Phoso",
+    "signOutError": "Ho hloleha ho tswa"
+  },
+  "languageSelector": {
+    "subtitle": "Khetha puo eo u e ratang ho ithuta"
+  },
     "errors": {
       "error": "Phoso",
       "noUserSignedIn": "Ha ho na mosebedisi ya keneng",

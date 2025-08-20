@@ -279,7 +279,26 @@
       "alreadyCollectedMessage": "Sewuvele uwutsatsile umvuzo wakho wema-500MB!",
       "notEligible": "Awukafaneli",
       "notEligibleMessage": "Cedza konkhe lokufanele ufeze kute utsatse umvuzo wakho!"
-    },
+    },"navigation": {
+    "home": "Ekhaya",
+    "learn": "Fundza",
+    "simulate": "Linganisa",
+    "profile": "Liphrofayili"
+  },"profile": {
+    "title": "Liphrofayili",
+    "subtitle": "First Rand Bank",
+    "name": "Ligama",
+    "email": "Li-imeyili",
+    "defaultName": "Umfundzi Wetemali",
+    "noEmail": "Akukho li-imeyili",
+    "changeLanguage": "Shintja Lulwimi",
+    "signOut": "PHUMA",
+    "error": "Liphutsa",
+    "signOutError": "Kuhlulekile kuphuma"
+  },
+  "languageSelector": {
+    "subtitle": "Khetsa lulwimi lolukhandiyo kulandza"
+  },
     "tips": {
       "takeYourTime": {
         "title": "Ungajahi",

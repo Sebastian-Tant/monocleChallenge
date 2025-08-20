@@ -279,7 +279,26 @@
       "alreadyCollectedMessage": "Sele uwubangile umvuzo wakho we-500MB!",
       "notEligible": "Awufaneleki",
       "notEligibleMessage": "Gqibezela zonke iimpumelelo ukuqokelela umvuzo wakho!"
-    },
+    },"navigation": {
+    "home": "Ikhaya",
+    "learn": "Funda",
+    "simulate": "Linganisa",
+    "profile": "Iprofayile"
+  },"profile": {
+    "title": "Iprofayile",
+    "subtitle": "First Rand Bank",
+    "name": "Igama",
+    "email": "I-imeyili",
+    "defaultName": "Umfundi Wezemali",
+    "noEmail": "Akukho imeyili",
+    "changeLanguage": "Tshintsha Ulwimi",
+    "signOut": "PHUMA",
+    "error": "Impazamo",
+    "signOutError": "Ayikwazanga ukuphuma"
+  },
+  "languageSelector": {
+    "subtitle": "Khetha ulwimi olukhandiyo lokufunda"
+  },
     "tips": {
       "takeYourTime": {
         "title": "Thatha ixesha lakho",

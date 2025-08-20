@@ -293,7 +293,26 @@
         "title": "Funda Nsuku Zonke",
         "description": "Chitha imizuzu nje engu-5-10 nsuku zonke ukwakha ulwazi lwakho lwezimali."
       }
-    },
+    },  "navigation": {
+    "home": "Ikhaya",
+    "learn": "Funda",
+    "simulate": "Linganisa",
+    "profile": "Iphrofayela"
+  },"profile": {
+    "title": "Iphrofayela",
+    "subtitle": "First Rand Bank",
+    "name": "Igama",
+    "email": "I-imeyili",
+    "defaultName": "Umfundi Wezezimali",
+    "noEmail": "Ayikho i-imeyili",
+    "changeLanguage": "Shintsha Ulimi",
+    "signOut": "PHUMA",
+    "error": "Iphutha",
+    "signOutError": "Yehlulekile ukuphuma"
+  },
+  "languageSelector": {
+    "subtitle": "Khetha ulimi olukhandiyo ukufunda"
+  },
     "errors": {
       "error": "Iphutha",
       "noUserSignedIn": "Akukho msebenzisi ongene ngemvume",

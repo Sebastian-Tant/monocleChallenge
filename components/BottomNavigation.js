@@ -8,30 +8,32 @@ import {
   Platform,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useTranslation } from 'react-i18next';
 
 const BottomNavigation = ({ activeTab, onTabPress }) => {
   const insets = useSafeAreaInsets();
+  const { t } = useTranslation();
 
   const tabs = [
     {
       id: 'home',
       icon: '🏠',
-      label: 'Home',
+      label: t('navigation.home', 'Home'),
     },
     {
       id: 'learn',
       icon: '📚',
-      label: 'Learn',
+      label: t('navigation.learn', 'Learn'),
     },
     {
       id: 'simulate',
       icon: '📈',
-      label: 'Simulate',
+      label: t('navigation.simulate', 'Simulate'),
     },
     {
       id: 'profile',
       icon: '👤',
-      label: 'Profile',
+      label: t('navigation.profile', 'Profile'),
     },
   ];
 

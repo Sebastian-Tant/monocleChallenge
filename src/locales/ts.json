@@ -22,6 +22,20 @@
     "retirement": "Sungula Xitirho xa Mina xa Kuya Emapensionini",
     "retirementAmount": "R 1,000,000",
     "custom": "Hlanganisa Xikongomelo xa Wena..."
+  },"profile": {
+    "title": "Profayili",
+    "subtitle": "First Rand Bank",
+    "name": "Vito",
+    "email": "Imeyli",
+    "defaultName": "Mudzidzisi wa Mali",
+    "noEmail": "Ku hava imeyli",
+    "changeLanguage": "Cinca Ririmi",
+    "signOut": "HUMA",
+    "error": "Xihoxo",
+    "signOutError": "Swi herile ku huma"
+  },
+  "languageSelector": {
+    "subtitle": "Hlawula ririmi leri u ri tsakelaka ku dyondza"
   },
   "goalSet": {
     "title": "Xikongomelo xi Hlanganisiwe! 🎉",
@@ -279,7 +293,12 @@
       "alreadyCollectedMessage": "U teke hakelo ya wena ya 500MB khale!",
       "notEligible": "A wu faneleki",
       "notEligibleMessage": "Hetisa hinkwaswo leswi u swi fikeleleke ku teka hakelo ya wena!"
-    },
+    },"navigation": {
+    "home": "Kaya",
+    "learn": "Dyondza",
+    "simulate": "Ringanyeta",
+    "profile": "Profayili"
+  },
     "tips": {
       "takeYourTime": {
         "title": "Teka Nkarhi",

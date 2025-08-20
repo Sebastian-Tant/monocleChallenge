@@ -1,6 +1,11 @@
 {
   "common": {
     "next": "Volgende"
+  },"navigation": {
+    "home": "Tuis",
+    "learn": "Leer",
+    "simulate": "Simuleer",
+    "profile": "Profiel"
   },
   "goalSetting": {
     "title": "Stel Jou Eerste Doelwit",
@@ -9,6 +14,20 @@
     "amountLabel": "Hoeveel moet jy spaar?",
     "customPlaceholder": "Voer jou doelwitbedrag in",
     "defaultPlaceholder": "R 50,000"
+  },"profile": {
+    "title": "Profiel",
+    "subtitle": "First Rand Bank",
+    "name": "Naam",
+    "email": "E-pos",
+    "defaultName": "Finansiële Leerder",
+    "noEmail": "Geen e-pos",
+    "changeLanguage": "Verander Taal",
+    "signOut": "TEKEN UIT",
+    "error": "Fout",
+    "signOutError": "Kon nie uitteken nie"
+  },
+  "languageSelector": {
+    "subtitle": "Kies jou voorkeur taal vir leer"
   },
   "goals": {
     "car": "Spaar vir 'n Motor",

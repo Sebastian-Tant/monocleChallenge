@@ -279,7 +279,26 @@
       "alreadyCollectedMessage": "No no dzhia phfufho yaṋu ya 500MB!",
       "notEligible": "A ni Tanganedzei",
       "notEligibleMessage": "Fhedzani zwoṱhe zwe zwa swikelelwa u itela u dzhia phfufho yaṋu!"
-    },
+    }, "navigation": {
+    "home": "Hayani",
+    "learn": "Guda",
+    "simulate": "Linganisa",
+    "profile": "Profaele"
+  },"profile": {
+    "title": "Profaele",
+    "subtitle": "First Rand Bank",
+    "name": "Dzina",
+    "email": "Imeile",
+    "defaultName": "Mugudiswa wa Mbadelo",
+    "noEmail": "A huna imeile",
+    "changeLanguage": "Shandukisa Luambo",
+    "signOut": "BVA",
+    "error": "Vhutshilo",
+    "signOutError": "Zwo kondelela u bva"
+  },
+  "languageSelector": {
+    "subtitle": "Nangani luambo lune na lu toda u guda"
+  },
     "tips": {
       "takeYourTime": {
         "title": "Ḓiṋeeni Tshifhinga",

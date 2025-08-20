@@ -279,7 +279,26 @@
       "alreadyCollectedMessage": "Sewuwuthathile umvuzo wakho we-500MB!",
       "notEligible": "Awukafaneli",
       "notEligibleMessage": "Qedela yoke impumelelo bona uthathe umvuzo wakho!"
-    },
+    },"navigation": {
+    "home": "Ikhaya",
+    "learn": "Funda",
+    "simulate": "Linganisa",
+    "profile": "Iphrofayili"
+  },"profile": {
+    "title": "Iphrofayili",
+    "subtitle": "First Rand Bank",
+    "name": "Ibizo",
+    "email": "I-imeyili",
+    "defaultName": "Umfundisi Wezomnotho",
+    "noEmail": "Akukho i-imeyili",
+    "changeLanguage": "Shintjha Ulimi",
+    "signOut": "PHUMA",
+    "error": "Iphutjha",
+    "signOutError": "Yehlulekile ukuphuma"
+  },
+  "languageSelector": {
+    "subtitle": "Khetha ulimi olukhandiyo ukufundza"
+  },
     "tips": {
       "takeYourTime": {
         "title": "Zinike isikhathi",

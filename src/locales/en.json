@@ -295,7 +295,26 @@
         "title": "Learn Daily",
         "description": "Spend just 5-10 minutes daily to build your financial knowledge."
       }
-    },
+    },"navigation": {
+    "home": "Home",
+    "learn": "Learn",
+    "simulate": "Simulate",
+    "profile": "Profile"
+  },"profile": {
+    "title": "Profile",
+    "subtitle": "First Rand Bank",
+    "name": "Name",
+    "email": "Email",
+    "defaultName": "Financial Learner",
+    "noEmail": "No email",
+    "changeLanguage": "Change Language",
+    "signOut": "SIGN OUT",
+    "error": "Error",
+    "signOutError": "Failed to sign out"
+  },
+  "languageSelector": {
+    "subtitle": "Choose your preferred language for learning"
+  },
     "errors": {
       "error": "Error",
       "noUserSignedIn": "No user signed in",
