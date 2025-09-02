@@ -1,12 +1,20 @@
 // screens/LessonDetailScreen.js
 import React, { useState, useRef, useEffect } from 'react';
 import {
-  View, Text, StyleSheet, Dimensions, TouchableOpacity, Animated, Platform,
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+  Animated,
+  Platform,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import LessonPage from '../components/LessonPage';
 import ProgressIndicator from '../components/ProgressIndicator';
-import { getLessonById } from './data/index'; // <-- NEW
+import { getLessonById } from './data/index';
+import { db } from '../firebase';
+import auth from '@react-native-firebase/auth';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -18,7 +26,7 @@ const LessonDetailScreen = ({
 }) => {
   const insets = useSafeAreaInsets();
 
-  // resolve lesson
+  // Resolve lesson
   const lessonId = route?.params?.lessonId;
   const lesson = getLessonById(lessonId);
   const lessonPages = lesson?.pages || [];
@@ -31,7 +39,7 @@ const LessonDetailScreen = ({
   const scrollX = useRef(new Animated.Value(0)).current;
   const flatListRef = useRef(null);
 
-  // reset when lesson changes
+  // Reset when lesson changes
   useEffect(() => {
     setCurrentPage(0);
     setQuizAnswer(null);
@@ -46,14 +54,49 @@ const LessonDetailScreen = ({
     }
   };
 
-  const handleNext = () => {
+  // Persist completion to Firestore
+  const persistCompletion = async () => {
+    try {
+      const user = auth().currentUser;
+      if (!user) return;
+
+      const userDocRef = db.collection('users').doc(user.uid);
+      const snap = await userDocRef.get();
+      const data = snap.exists ? snap.data() : {};
+
+      const updatedLessonsCompleted = Array.from(
+        new Set([...(data.lessonsCompleted || []), lessonId]),
+      );
+
+      const updatedDifficulties = {
+        ...(data.completedDifficulties || {
+          Beginner: false,
+          Intermediate: false,
+          Advanced: false,
+        }),
+        [lesson?.difficulty || 'Beginner']: true,
+      };
+
+      await userDocRef.update({
+        lessonsCompleted: updatedLessonsCompleted,
+        completedDifficulties: updatedDifficulties,
+        [`lessonsProgress.${lessonId}`]: 100,
+      });
+    } catch (e) {
+      console.log('persistCompletion error:', e);
+    }
+  };
+
+  const handleNext = async () => {
     if (currentPage < lessonPages.length - 1) {
       const nextPage = currentPage + 1;
       setCurrentPage(nextPage);
       flatListRef.current?.scrollToIndex({ index: nextPage, animated: true });
       handlePageChange(nextPage);
     } else if (lessonCompleted) {
-      onComplete?.(lessonId || title);
+      // Final step: persist + notify parent
+      await persistCompletion();
+      onComplete?.(lessonId);
     }
   };
 
@@ -67,9 +110,6 @@ const LessonDetailScreen = ({
 
   const handleQuizAnswer = (answerId) => {
     setQuizAnswer(answerId);
-    // correctness if you need it:
-    // const page = lessonPages[currentPage];
-    // const isCorrect = page?.options?.find(o => o.id === answerId)?.correct;
 
     setTimeout(() => {
       if (currentPage === lessonPages.length - 1) setLessonCompleted(true);
@@ -90,14 +130,16 @@ const LessonDetailScreen = ({
     {
       useNativeDriver: false,
       listener: (e) => {
-        const pageIndex = Math.round(e.nativeEvent.contentOffset.x / screenWidth);
+        const pageIndex = Math.round(
+          e.nativeEvent.contentOffset.x / screenWidth,
+        );
         if (pageIndex !== currentPage) {
           setCurrentPage(pageIndex);
           handlePageChange(pageIndex);
           setQuizAnswer(null);
         }
       },
-    }
+    },
   );
 
   const canProceed = () => {
@@ -107,7 +149,16 @@ const LessonDetailScreen = ({
 
   if (!lesson && lessonId) {
     return (
-      <View style={[styles.container, { paddingTop: insets.top, alignItems: 'center', justifyContent: 'center' }]}>
+      <View
+        style={[
+          styles.container,
+          {
+            paddingTop: insets.top,
+            alignItems: 'center',
+            justifyContent: 'center',
+          },
+        ]}
+      >
         <Text>Lesson not found for id: {String(lessonId)}</Text>
         <TouchableOpacity onPress={onBack} style={{ marginTop: 12 }}>
           <Text style={{ color: '#667eea', fontWeight: '600' }}>← Back</Text>
@@ -120,7 +171,11 @@ const LessonDetailScreen = ({
     <View style={[styles.container, { paddingTop: insets.top }]}>
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton} onPress={onBack} activeOpacity={0.7}>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={onBack}
+          activeOpacity={0.7}
+        >
           <Text style={styles.backButtonText}>← Back</Text>
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Lesson: {title}</Text>
@@ -128,7 +183,11 @@ const LessonDetailScreen = ({
       </View>
 
       {/* Progress Indicator */}
-      <ProgressIndicator currentPage={currentPage} totalPages={lessonPages.length} scrollX={scrollX} />
+      <ProgressIndicator
+        currentPage={currentPage}
+        totalPages={lessonPages.length}
+        scrollX={scrollX}
+      />
 
       {/* Lesson Content */}
       <Animated.FlatList
@@ -141,18 +200,28 @@ const LessonDetailScreen = ({
         showsHorizontalScrollIndicator={false}
         onScroll={handleScroll}
         scrollEventThrottle={16}
-        getItemLayout={(_, index) => ({ length: screenWidth, offset: screenWidth * index, index })}
+        getItemLayout={(_, index) => ({
+          length: screenWidth,
+          offset: screenWidth * index,
+          index,
+        })}
       />
 
       {/* Navigation Controls */}
-      <View style={[styles.navigationControls, { paddingBottom: insets.bottom + 16 }]}>
+      <View
+        style={[styles.navigationControls, { paddingBottom: insets.bottom + 16 }]}
+      >
         <TouchableOpacity
           style={[styles.navButton, currentPage === 0 && styles.disabledButton]}
           onPress={handlePrevious}
           disabled={currentPage === 0}
           activeOpacity={0.7}
         >
-          <Text style={[styles.navButtonText, currentPage === 0 && styles.disabledText]}>Previous</Text>
+          <Text
+            style={[styles.navButtonText, currentPage === 0 && styles.disabledText]}
+          >
+            Previous
+          </Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -166,7 +235,11 @@ const LessonDetailScreen = ({
           activeOpacity={0.8}
         >
           <Text style={[styles.nextButtonText, !canProceed() && styles.disabledText]}>
-            {currentPage === lessonPages.length - 1 ? (lessonCompleted ? 'Complete Lesson' : 'Finish') : 'Next'}
+            {currentPage === lessonPages.length - 1
+              ? lessonCompleted
+                ? 'Complete Lesson'
+                : 'Finish'
+              : 'Next'}
           </Text>
         </TouchableOpacity>
       </View>

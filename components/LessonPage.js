@@ -76,70 +76,85 @@ const LessonPage = ({ page, isActive, onQuizAnswer, quizAnswer }) => {
     </Animated.View>
   );
 
-  const renderQuizPage = () => (
-    <Animated.View style={[
-      styles.pageContent,
-      { backgroundColor: page.backgroundColor },
-      {
-        opacity: fadeAnim,
-        transform: [{ translateY: slideAnim }],
-      },
-    ]}>
-      <View style={styles.textContainer}>
-        <Text style={styles.pageTitle}>{page.title}</Text>
-        <Text style={styles.pageText}>{page.question}</Text>
-      </View>
-      
-      <View style={styles.quizContainer}>
-        {page.options.map((option) => (
-          <TouchableOpacity
-            key={option.id}
-            style={[
-              styles.quizOption,
-              quizAnswer === option.id && styles.selectedOption,
-              quizAnswer && option.correct && styles.correctOption,
-              quizAnswer && quizAnswer === option.id && !option.correct && styles.incorrectOption,
-            ]}
-            onPress={() => onQuizAnswer(option.id)}
-            disabled={quizAnswer !== null}
-            activeOpacity={0.8}
-          >
-            <View style={styles.optionContent}>
-              <Text style={[
-                styles.optionText,
-                quizAnswer === option.id && styles.selectedOptionText,
-              ]}>
-                {option.text}
-              </Text>
-              {quizAnswer && option.correct && (
-                <Text style={styles.correctIcon}>✓</Text>
-              )}
-              {quizAnswer && quizAnswer === option.id && !option.correct && (
-                <Text style={styles.incorrectIcon}>✗</Text>
-              )}
-            </View>
-            {quizAnswer && option.correct && quizAnswer !== option.id && (
-              <Text style={styles.correctLabel}>Correct Answer</Text>
-            )}
-          </TouchableOpacity>
-        ))}
+  const renderQuizPage = () => {
+    const selected = page.options.find(opt => opt.id === quizAnswer);
+
+    return (
+      <Animated.View style={[
+        styles.pageContent,
+        { backgroundColor: page.backgroundColor },
+        {
+          opacity: fadeAnim,
+          transform: [{ translateY: slideAnim }],
+        },
+      ]}>
+        <View style={styles.textContainer}>
+          <Text style={styles.pageTitle}>{page.title}</Text>
+          <Text style={styles.pageText}>{page.question}</Text>
+        </View>
         
-        {quizAnswer && (
-          <Animated.View style={styles.quizFeedback}>
-            {page.options.find(opt => opt.id === quizAnswer)?.correct ? (
-              <Text style={styles.correctFeedback}>
-                🎉 Correct! Starting early gives compound interest more time to work its magic.
+        <View style={styles.quizContainer}>
+          {page.options.map((option) => {
+            const isSelected = quizAnswer === option.id;
+            const showCorrect = !!quizAnswer && option.correct; // always highlight correct after answering
+            const showIncorrect = !!quizAnswer && isSelected && !option.correct;
+
+            return (
+              <TouchableOpacity
+                key={option.id}
+                style={[
+                  styles.quizOption,
+                  isSelected && styles.selectedOption,
+                  showCorrect && styles.correctOption,
+                  showIncorrect && styles.incorrectOption,
+                ]}
+                onPress={() => onQuizAnswer(option.id)}
+                disabled={quizAnswer !== null}
+                activeOpacity={0.8}
+              >
+                <View style={styles.optionContent}>
+                  <Text style={[
+                    styles.optionText,
+                    isSelected && styles.selectedOptionText,
+                  ]}>
+                    {option.text}
+                  </Text>
+                  {showCorrect && <Text style={styles.correctIcon}>✓</Text>}
+                  {showIncorrect && <Text style={styles.incorrectIcon}>✗</Text>}
+                </View>
+
+                {/* Label the correct answer if the user chose a different one */}
+                {quizAnswer && option.correct && quizAnswer !== option.id && (
+                  <Text style={styles.correctLabel}>Correct Answer</Text>
+                )}
+              </TouchableOpacity>
+            );
+          })}
+
+          {/* Feedback card: uses the SELECTED option's rationale */}
+          {quizAnswer && selected && (
+            <Animated.View
+              style={[
+                styles.quizFeedback,
+                selected.correct ? styles.quizFeedbackCorrect : styles.quizFeedbackIncorrect,
+              ]}
+            >
+              <Text style={selected.correct ? styles.correctFeedback : styles.incorrectFeedback}>
+                {selected.correct ? '🎉 Correct!' : 'Not quite.'}
               </Text>
-            ) : (
-              <Text style={styles.incorrectFeedback}>
-                Not quite. Starting early gives compound interest more time to work its magic, making it more powerful than just a high starting amount.
+              <Text style={[styles.feedbackBody, { marginTop: 6 }]}>
+                {selected.rationale
+                  ? selected.rationale
+                  : (selected.correct
+                      ? 'Great job!'
+                      : 'Here’s why this isn’t quite right.')}
               </Text>
-            )}
-          </Animated.View>
-        )}
-      </View>
-    </Animated.View>
-  );
+            </Animated.View>
+          )}
+        </View>
+      </Animated.View>
+    );
+  };
 
   const renderPageContent = () => {
     switch (page.type) {
@@ -259,7 +274,6 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   quizFeedback: {
-    backgroundColor: 'white',
     borderRadius: 12,
     padding: 20,
     marginTop: 8,
@@ -269,15 +283,29 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 2,
   },
+  quizFeedbackCorrect: {
+    backgroundColor: '#ecfdf5', // soft green tint
+  },
+  quizFeedbackIncorrect: {
+    backgroundColor: '#fef2f2', // soft red tint
+  },
   correctFeedback: {
     fontSize: 16,
     color: '#059669',
     textAlign: 'center',
     lineHeight: 22,
+    fontWeight: '700',
   },
   incorrectFeedback: {
     fontSize: 16,
     color: '#dc2626',
+    textAlign: 'center',
+    lineHeight: 22,
+    fontWeight: '700',
+  },
+  feedbackBody: {
+    fontSize: 16,
+    color: '#374151',
     textAlign: 'center',
     lineHeight: 22,
   },
