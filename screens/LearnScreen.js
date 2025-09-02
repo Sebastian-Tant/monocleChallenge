@@ -8,17 +8,35 @@ import {
   TouchableOpacity,
   SafeAreaView,
   Alert,
-  AppState, // ← use this instead of useIsFocused
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { getLessons, getLessonById, getTracks } from './data/index';
 import { db } from '../firebase';
 import auth from '@react-native-firebase/auth';
 
+// ------- Rewards Catalog (data bundles in MB; tweak anytime) -------
+const REWARD_CATALOG = {
+  'track-budgeting':   { dataMB: 500,  label: 'Budgeting & Cash Flow' },             // easier
+  'track-tax-retire':  { dataMB: 700,  label: 'Taxes & Retirement Basics' },         // medium
+  'track-credit':      { dataMB: 800,  label: 'Credit & Borrowing' },                // medium+
+  'track-investing':   { dataMB: 1000, label: 'Investing & Wealth Building (SA)' },  // harder (≈1GB)
+  GRAND_REWARD_MB: 3000, // big grand reward (≈3GB)
+};
+
+// Pretty print MB/GB (SI-ish: 1000 MB = 1 GB)
+const formatData = (mb) => {
+  if (mb >= 1000) {
+    const gb = mb / 1000;
+    const str = Number.isInteger(gb) ? String(gb) : gb.toFixed(1);
+    return `${str} GB`;
+  }
+  return `${mb} MB`;
+};
+
 const LearnScreen = ({ onStartLesson }) => {
   const { t } = useTranslation();
 
-  // tracks (booklets) and raw lessons map for quick lookup
+  // Tracks (booklets) and raw lessons map
   const tracks = useMemo(() => getTracks(), []);
   const lessonsArray = useMemo(() => getLessons(), []);
   const lessonsById = useMemo(
@@ -26,45 +44,69 @@ const LearnScreen = ({ onStartLesson }) => {
     [lessonsArray],
   );
 
-  // Achievements (+ booklet-completion badge)
-  const [achievements, setAchievements] = useState([
-    {
-      id: 1,
-      title: t('learnScreen.achievements.firstLesson.title'),
-      description: t('learnScreen.achievements.firstLesson.description'),
-      unlocked: false,
-    },
-    {
-      id: 2,
-      title: t('learnScreen.achievements.quizMaster.title'),
-      description: t('learnScreen.achievements.quizMaster.description'),
-      unlocked: false,
-    },
-    {
-      id: 3,
-      title: t('learnScreen.achievements.knowledgeSeeker.title'),
-      description: t('learnScreen.achievements.knowledgeSeeker.description'),
-      unlocked: false,
-    },
-    {
-      id: 4,
-      title: 'Taxes & Retirement — Booklet Complete',
-      description: 'Finish all lessons in the Taxes & Retirement Basics booklet.',
-      unlocked: false,
-    },
-  ]);
-  const [rewardCollected, setRewardCollected] = useState(false);
+  // ------- Helpers -------
+  const isTrackComplete = (trackId, completedIds) => {
+    const track = tracks.find(tr => tr.id === trackId);
+    if (!track) return false;
+    return track.lessonIds.every(id => completedIds.includes(id));
+  };
 
-  // track expand/collapse UI
-  const [expandedTrackIds, setExpandedTrackIds] = useState(
-    () => new Set(tracks.length ? [tracks[0].id] : []), // expand first booklet by default
+  // Build base + dynamic achievements (unlocked is set later)
+  const baseAchievementDefs = useMemo(() => {
+    const base = [
+      {
+        id: 'ach:first-lesson',
+        title: t('learnScreen.achievements.firstLesson.title'),
+        description: t('learnScreen.achievements.firstLesson.description'),
+      },
+      {
+        id: 'ach:quiz-master',
+        title: t('learnScreen.achievements.quizMaster.title'),
+        description: t('learnScreen.achievements.quizMaster.description'),
+      },
+      {
+        id: 'ach:knowledge-seeker',
+        title: t('learnScreen.achievements.knowledgeSeeker.title'),
+        description: t('learnScreen.achievements.knowledgeSeeker.description'),
+      },
+    ];
+
+    const booklet = tracks.map(tr => ({
+      id: `track:${tr.id}`,
+      title: `${tr.title} — Booklet Complete`,
+      description: `Finish all lessons in the "${tr.title}" booklet.`,
+    }));
+
+    const grand = [
+      {
+        id: 'ach:grand',
+        title: 'Core Curriculum — All Achievements Complete',
+        description: 'Unlock all achievements (base + every booklet).',
+      },
+    ];
+
+    return [...base, ...booklet, ...grand];
+  }, [tracks, t]);
+
+  // State: achievements with unlocked flags
+  const [achievements, setAchievements] = useState(
+    baseAchievementDefs.map(a => ({ ...a, unlocked: false })),
   );
 
-  // user progress state used for locking & progress bars
-  const [completedLessons, setCompletedLessons] = useState([]); // ['compounding-basics', ...]
-  const [lessonsProgressMap, setLessonsProgressMap] = useState({}); // { [id]: 0..100 }
+  // Rewards state
+  const [rewardsBooklets, setRewardsBooklets] = useState({}); // { [trackId]: true }
+  const [rewardGrandCollected, setRewardGrandCollected] = useState(false);
 
-  // ------- Booklet helpers -------
+  // Track UI expand/collapse
+  const [expandedTrackIds, setExpandedTrackIds] = useState(
+    () => new Set(tracks.length ? [tracks[0].id] : []),
+  );
+
+  // Progress state
+  const [completedLessons, setCompletedLessons] = useState([]);
+  const [lessonsProgressMap, setLessonsProgressMap] = useState({});
+
+  // ------- Locking helpers -------
   const isLessonCompleted = lessonId => completedLessons.includes(lessonId);
   const lessonProgress = lessonId =>
     typeof lessonsProgressMap[lessonId] === 'number'
@@ -73,255 +115,13 @@ const LearnScreen = ({ onStartLesson }) => {
       ? 100
       : 0;
 
-  // unlock rule: in a track, lesson N unlocks only if all previous are completed
   const isLessonUnlockedInTrack = (track, lessonId) => {
     const order = track.lessonIds;
     const idx = order.indexOf(lessonId);
-    if (idx < 0) return true; // not found; default allow
-    if (idx === 0) return true; // first lesson always unlocked
+    if (idx < 0) return true;
+    if (idx === 0) return true;
     const required = order.slice(0, idx);
     return required.every(id => isLessonCompleted(id));
-  };
-
-  // Is a whole track complete?
-  const isTrackComplete = (trackId, completedIds) => {
-    const track = tracks.find(t => t.id === trackId);
-    if (!track) return false;
-    return track.lessonIds.every(id => completedIds.includes(id));
-  };
-
-  // Keep your completion writer (call it from LessonDetailScreen via onComplete if you want)
-  const handleLessonCompletion = async (lessonId, difficulty, _result) => {
-    try {
-      const user = auth().currentUser;
-      if (!user) {
-        Alert.alert(
-          t('learnScreen.errors.error'),
-          t('learnScreen.errors.noUserSignedIn'),
-        );
-        return;
-      }
-      const userId = user.uid;
-
-      const userDocRef = db.collection('users').doc(userId);
-      const userDoc = await userDocRef.get();
-
-      if (!userDoc.exists) {
-        Alert.alert(
-          t('learnScreen.errors.error'),
-          t('learnScreen.errors.userDocumentNotFound'),
-        );
-        return;
-      }
-
-      const data = userDoc.data();
-      const updatedLessonsCompleted = Array.from(
-        new Set([...(data.lessonsCompleted || []), lessonId]),
-      );
-      const updatedDifficulties = {
-        ...(data.completedDifficulties || { Beginner: false, Intermediate: false }),
-        [difficulty]: true,
-      };
-
-      // compute which tracks (booklets) are now complete
-      const newlyCompletedTrackIds = tracks
-        .filter(tr => tr.lessonIds.every(id => updatedLessonsCompleted.includes(id)))
-        .map(tr => tr.id);
-
-      // Merge with any existing tracksCompleted map
-      const prevTracksCompleted = data.tracksCompleted || {};
-      const mergedTracksCompleted = { ...prevTracksCompleted };
-      let anyNewTrack = false;
-      for (const tid of newlyCompletedTrackIds) {
-        if (!mergedTracksCompleted[tid]) {
-          mergedTracksCompleted[tid] = true;
-          anyNewTrack = true;
-        }
-      }
-
-      // Build update payload
-      const updatePayload = {
-        lessonsCompleted: updatedLessonsCompleted,
-        completedDifficulties: updatedDifficulties,
-        [`lessonsProgress.${lessonId}`]: 100, // mark lesson as fully completed visually
-      };
-      if (anyNewTrack) {
-        updatePayload.tracksCompleted = mergedTracksCompleted; // persist booklet completion
-      }
-
-      await userDocRef.update(updatePayload);
-
-      // local sync
-      setCompletedLessons(updatedLessonsCompleted);
-      setLessonsProgressMap(prev => ({ ...prev, [lessonId]: 100 }));
-
-      // achievements refresh (use persisted OR computed status)
-      const taxTrackDoneNow =
-        mergedTracksCompleted['track-tax-retire'] ||
-        isTrackComplete('track-tax-retire', updatedLessonsCompleted);
-
-      setAchievements(prevAchievements =>
-        prevAchievements.map(achievement => {
-          if (achievement.id === 1)
-            return {
-              ...achievement,
-              title: t('learnScreen.achievements.firstLesson.title'),
-              description: t('learnScreen.achievements.firstLesson.description'),
-              unlocked: updatedLessonsCompleted.length >= 1,
-            };
-          if (achievement.id === 2)
-            return {
-              ...achievement,
-              title: t('learnScreen.achievements.quizMaster.title'),
-              description: t('learnScreen.achievements.quizMaster.description'),
-              unlocked: updatedDifficulties.Intermediate,
-            };
-          if (achievement.id === 3)
-            return {
-              ...achievement,
-              title: t('learnScreen.achievements.knowledgeSeeker.title'),
-              description: t('learnScreen.achievements.knowledgeSeeker.description'),
-              unlocked: updatedLessonsCompleted.length >= 5,
-            };
-          if (achievement.id === 4)
-            return { ...achievement, unlocked: !!taxTrackDoneNow };
-          return achievement;
-        }),
-      );
-
-      // Optional: celebrate first-time completion of the Taxes & Retirement booklet
-      if (anyNewTrack && mergedTracksCompleted['track-tax-retire']) {
-        Alert.alert('Congrats!', 'You completed Taxes & Retirement Basics 🎉');
-      }
-    } catch (error) {
-      console.log('Error updating lesson completion:', error);
-      Alert.alert(
-        t('learnScreen.errors.error'),
-        t('learnScreen.errors.failedToUpdateProgress'),
-      );
-    }
-  };
-
-  // ----- Fetch progress & achievements (refetch on foreground) -----
-  const fetchUserProgress = async () => {
-    try {
-      const user = auth().currentUser;
-      if (!user) return;
-      const userId = user.uid;
-
-      const userDoc = await db.collection('users').doc(userId).get();
-      if (!userDoc.exists) return;
-
-      const data = userDoc.data();
-      const completed = data.lessonsCompleted || [];
-      const completedDifficulties = data.completedDifficulties || {
-        Beginner: false,
-        Intermediate: false,
-      };
-      const rewardStatus = data.reward?.collected || false;
-      const lp = data.lessonsProgress || {};
-      const tracksCompleted = data.tracksCompleted || {};
-
-      setCompletedLessons(completed);
-      setLessonsProgressMap(lp);
-
-      // Prefer persisted flag; fall back to computed
-      const taxTrackDone =
-        tracksCompleted['track-tax-retire'] ||
-        isTrackComplete('track-tax-retire', completed);
-
-      setAchievements(prev =>
-        prev.map(achievement => {
-          if (achievement.id === 1)
-            return {
-              ...achievement,
-              title: t('learnScreen.achievements.firstLesson.title'),
-              description: t('learnScreen.achievements.firstLesson.description'),
-              unlocked: completed.length >= 1,
-            };
-          if (achievement.id === 2)
-            return {
-              ...achievement,
-              title: t('learnScreen.achievements.quizMaster.title'),
-              description: t('learnScreen.achievements.quizMaster.description'),
-              unlocked: completedDifficulties.Intermediate,
-            };
-          if (achievement.id === 3)
-            return {
-              ...achievement,
-              title: t('learnScreen.achievements.knowledgeSeeker.title'),
-              description: t('learnScreen.achievements.knowledgeSeeker.description'),
-              unlocked: completed.length >= 5,
-            };
-          if (achievement.id === 4)
-            return { ...achievement, unlocked: !!taxTrackDone };
-          return achievement;
-        }),
-      );
-
-      setRewardCollected(rewardStatus);
-    } catch (error) {
-      console.log('Error fetching user data:', error);
-    }
-  };
-
-  // run once on mount / when locale changes
-  useEffect(() => { fetchUserProgress(); }, [t]);
-
-  // ALSO refetch whenever the app returns to foreground
-  useEffect(() => {
-    const sub = AppState.addEventListener('change', (state) => {
-      if (state === 'active') fetchUserProgress();
-    });
-    return () => sub.remove();
-  }, []);
-
-  const handleCollectReward = async () => {
-    try {
-      const user = auth().currentUser;
-      if (!user) {
-        Alert.alert(
-          t('learnScreen.errors.error'),
-          t('learnScreen.errors.noUserSignedIn'),
-        );
-        return;
-      }
-      const userId = user.uid;
-
-      const userDocRef = db.collection('users').doc(userId);
-      const userDoc = await userDocRef.get();
-
-      if (userDoc.exists) {
-        const data = userDoc.data();
-        const isAllAchieved = achievements.every(achievement => achievement.unlocked);
-        const isCollected = data.reward?.collected || false;
-
-        if (isAllAchieved && !isCollected) {
-          await userDocRef.update({ 'reward.collected': true });
-          setRewardCollected(true);
-          Alert.alert(
-            t('learnScreen.reward.collected'),
-            t('learnScreen.reward.collectedMessage'),
-          );
-        } else if (isCollected) {
-          Alert.alert(
-            t('learnScreen.reward.alreadyCollected'),
-            t('learnScreen.reward.alreadyCollectedMessage'),
-          );
-        } else {
-          Alert.alert(
-            t('learnScreen.reward.notEligible'),
-            t('learnScreen.reward.notEligibleMessage'),
-          );
-        }
-      }
-    } catch (error) {
-      console.log('Error collecting reward:', error);
-      Alert.alert(
-        t('learnScreen.errors.error'),
-        t('learnScreen.errors.failedToCollectReward'),
-      );
-    }
   };
 
   const toggleTrack = trackId => {
@@ -339,9 +139,146 @@ const LearnScreen = ({ onStartLesson }) => {
       Alert.alert('Locked', 'Complete the previous lesson to unlock this one.');
       return;
     }
-    if (onStartLesson) onStartLesson(lessonId); // do NOT mark completion here
+    if (onStartLesson) onStartLesson(lessonId);
   };
 
+  // ------- Compute & fetch user progress -------
+  const recomputeAchievements = (completed, completedDifficulties, tracksCompletedObj = {}) => {
+    const trackDoneSet = new Set(
+      tracks
+        .filter(tr => tracksCompletedObj[tr.id] || isTrackComplete(tr.id, completed))
+        .map(tr => tr.id),
+    );
+
+    const firstLesson = completed.length >= 1;
+    const quizMaster = !!completedDifficulties?.Intermediate;
+    const knowledgeSeeker = completed.length >= 5;
+
+    const unlockedById = new Map();
+    unlockedById.set('ach:first-lesson', firstLesson);
+    unlockedById.set('ach:quiz-master', quizMaster);
+    unlockedById.set('ach:knowledge-seeker', knowledgeSeeker);
+    tracks.forEach(tr => unlockedById.set(`track:${tr.id}`, trackDoneSet.has(tr.id)));
+
+    const allOthersUnlocked = baseAchievementDefs
+      .filter(a => a.id !== 'ach:grand')
+      .every(a => unlockedById.get(a.id));
+    unlockedById.set('ach:grand', allOthersUnlocked);
+
+    const next = baseAchievementDefs.map(a => ({
+      ...a,
+      unlocked: !!unlockedById.get(a.id),
+    }));
+    setAchievements(next);
+  };
+
+  useEffect(() => {
+    const fetchUserProgress = async () => {
+      try {
+        const user = auth().currentUser;
+        if (!user) return;
+        const userDoc = await db.collection('users').doc(user.uid).get();
+        if (!userDoc.exists) return;
+
+        const data = userDoc.data();
+        const completed = data.lessonsCompleted || [];
+        const completedDifficulties =
+          data.completedDifficulties || { Beginner: false, Intermediate: false };
+        const lp = data.lessonsProgress || {};
+        const rewards = data.rewards || {};
+        const tracksCompleted = data.tracksCompleted || {};
+
+        setCompletedLessons(completed);
+        setLessonsProgressMap(lp);
+        setRewardsBooklets(rewards.booklets || {});
+        setRewardGrandCollected(!!(rewards.grand || data?.reward?.collected));
+
+        recomputeAchievements(completed, completedDifficulties, tracksCompleted);
+      } catch (e) {
+        console.log('Error fetching user data:', e);
+      }
+    };
+    fetchUserProgress();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [t]);
+
+  // ------- Collect Rewards (now grants data bundles) -------
+  const handleCollectTrackReward = async (trackId) => {
+    try {
+      const user = auth().currentUser;
+      if (!user) {
+        Alert.alert(t('learnScreen.errors.error'), t('learnScreen.errors.noUserSignedIn'));
+        return;
+      }
+
+      const eligible = isTrackComplete(trackId, completedLessons);
+      if (!eligible) {
+        Alert.alert('Not yet!', 'Finish all lessons in this booklet to collect the reward.');
+        return;
+      }
+      if (rewardsBooklets?.[trackId]) {
+        Alert.alert('Already collected', 'You have already claimed this reward.');
+        return;
+      }
+
+      const userDocRef = db.collection('users').doc(user.uid);
+      const snap = await userDocRef.get();
+      const data = snap.exists ? snap.data() : {};
+      const rewardMB = REWARD_CATALOG[trackId]?.dataMB ?? 500; // default 500MB
+
+      await userDocRef.update({
+        [`rewards.booklets.${trackId}`]: true,
+        dataBalanceMB: (data?.dataBalanceMB || 0) + rewardMB,
+      });
+
+      setRewardsBooklets(prev => ({ ...prev, [trackId]: true }));
+      Alert.alert('Reward collected 🎉', `${formatData(rewardMB)} added to your data balance.`);
+    } catch (e) {
+      console.log('handleCollectTrackReward error:', e);
+      Alert.alert(t('learnScreen.errors.error'), t('learnScreen.errors.failedToCollectReward'));
+    }
+  };
+
+  const handleCollectGrandReward = async () => {
+    try {
+      const user = auth().currentUser;
+      if (!user) {
+        Alert.alert(t('learnScreen.errors.error'), t('learnScreen.errors.noUserSignedIn'));
+        return;
+      }
+
+      const allUnlocked = achievements
+        .filter(a => a.id !== 'ach:grand')
+        .every(a => a.unlocked);
+      if (!allUnlocked) {
+        Alert.alert('Not yet!', 'Unlock every achievement before claiming this reward.');
+        return;
+      }
+      if (rewardGrandCollected) {
+        Alert.alert('Already collected', 'You have already claimed this reward.');
+        return;
+      }
+
+      const userDocRef = db.collection('users').doc(user.uid);
+      const snap = await userDocRef.get();
+      const data = snap.exists ? snap.data() : {};
+      const bonusMB = REWARD_CATALOG.GRAND_REWARD_MB;
+
+      await userDocRef.update({
+        'rewards.grand': true,
+        'reward.collected': true, // legacy compat
+        dataBalanceMB: (data?.dataBalanceMB || 0) + bonusMB,
+      });
+
+      setRewardGrandCollected(true);
+      Alert.alert('Grand reward collected 🏅', `${formatData(bonusMB)} added to your data balance.`);
+    } catch (e) {
+      console.log('handleCollectGrandReward error:', e);
+      Alert.alert(t('learnScreen.errors.error'), t('learnScreen.errors.failedToCollectReward'));
+    }
+  };
+
+  // ------- Rendering -------
   const renderLessonCard = (track, lessonId) => {
     const lesson = lessonsById[lessonId] || getLessonById(lessonId);
     if (!lesson) return null;
@@ -416,6 +353,9 @@ const LearnScreen = ({ onStartLesson }) => {
     const completedCount = track.lessonIds.filter(id => isLessonCompleted(id)).length;
     const total = track.lessonIds.length;
     const expanded = expandedTrackIds.has(track.id);
+    const trackComplete = completedCount === total && total > 0;
+    const trackRewardCollected = !!rewardsBooklets[track.id];
+    const rewardMB = REWARD_CATALOG[track.id]?.dataMB ?? 0;
 
     return (
       <View key={track.id} style={styles.trackCard}>
@@ -436,11 +376,29 @@ const LearnScreen = ({ onStartLesson }) => {
             <View
               style={[
                 styles.progressFill,
-                { width: `${(completedCount / total) * 100}%` },
+                { width: `${total ? (completedCount / total) * 100 : 0}%` },
               ]}
             />
           </View>
         </TouchableOpacity>
+
+        {/* Reward row with neutral styling */}
+        <View style={styles.trackRewardRow}>
+          <Text style={styles.rewardHint}>Reward: +{formatData(rewardMB)}</Text>
+          <TouchableOpacity
+            style={[
+              styles.trackRewardButton,
+              (!trackComplete || trackRewardCollected) && styles.disabledButton,
+            ]}
+            disabled={!trackComplete || trackRewardCollected}
+            onPress={() => handleCollectTrackReward(track.id)}
+            activeOpacity={0.8}
+          >
+            <Text style={styles.trackRewardButtonText}>
+              {trackRewardCollected ? 'Reward Collected' : 'Collect Reward'}
+            </Text>
+          </TouchableOpacity>
+        </View>
 
         {expanded && (
           <View style={styles.lessonsContainer}>
@@ -450,6 +408,10 @@ const LearnScreen = ({ onStartLesson }) => {
       </View>
     );
   };
+
+  const allNonGrandUnlocked = achievements
+    .filter(a => a.id !== 'ach:grand')
+    .every(a => a.unlocked);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -463,7 +425,7 @@ const LearnScreen = ({ onStartLesson }) => {
           {tracks.map(tr => renderTrackCard(tr))}
         </View>
 
-        {/* Achievements Section */}
+        {/* Achievements */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>
             {t('learnScreen.sections.achievements')}
@@ -503,28 +465,41 @@ const LearnScreen = ({ onStartLesson }) => {
               </View>
             ))}
           </View>
-
-          {/* Collect Reward Button */}
-          <TouchableOpacity
-            style={[
-              styles.rewardButton,
-              (!achievements.every(achievement => achievement.unlocked) ||
-                rewardCollected) &&
-                styles.disabledButton,
-            ]}
-            onPress={handleCollectReward}
-            disabled={
-              !achievements.every(achievement => achievement.unlocked) ||
-              rewardCollected
-            }
-          >
-            <Text style={styles.rewardButtonText}>
-              {t('learnScreen.reward.collectReward')}
-            </Text>
-          </TouchableOpacity>
         </View>
 
-        {/* Tips Section */}
+        {/* Rewards */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Rewards</Text>
+
+          {/* Grand reward (neutral button) */}
+          <View style={[styles.rewardCard, !allNonGrandUnlocked && styles.lockedAchievement]}>
+            <View style={styles.achievementIcon}>
+              <Text style={styles.achievementEmoji}>
+                {rewardGrandCollected ? '🌟' : '🏅'}
+              </Text>
+            </View>
+            <View style={styles.rewardContent}>
+              <Text style={styles.achievementTitle}>Grand Reward</Text>
+              <Text style={styles.achievementDescription}>
+                Claim once all achievements are unlocked. Reward: +{formatData(REWARD_CATALOG.GRAND_REWARD_MB)}
+              </Text>
+              <TouchableOpacity
+                style={[
+                  styles.rewardButton,
+                  (!allNonGrandUnlocked || rewardGrandCollected) && styles.disabledButton,
+                ]}
+                onPress={handleCollectGrandReward}
+                disabled={!allNonGrandUnlocked || rewardGrandCollected}
+              >
+                <Text style={styles.rewardButtonText}>
+                  {rewardGrandCollected ? 'Grand Reward Collected' : 'Collect Reward'}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+
+        {/* Tips */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>
             {t('learnScreen.sections.learningTips')}
@@ -611,6 +586,20 @@ const styles = StyleSheet.create({
   expandIcon: { fontSize: 18, color: '#334155' },
 
   lessonsContainer: { paddingTop: 12, gap: 16 },
+
+  // Reward row (per-track)
+  trackRewardRow: {
+    marginTop: 12,
+    alignItems: 'flex-start',
+  },
+  rewardHint: { fontSize: 12, color: '#475569', marginBottom: 8 },
+  trackRewardButton: {
+    backgroundColor: '#64748b', // neutral slate
+    borderRadius: 8,
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+  },
+  trackRewardButtonText: { color: 'white', fontSize: 14, fontWeight: '600' },
 
   // Lesson card
   lessonCard: {
@@ -722,6 +711,40 @@ const styles = StyleSheet.create({
   achievementDescription: { fontSize: 14, color: '#64748b' },
   lockedText: { color: '#94a3b8' },
 
+  // Rewards (grand)
+  rewardCard: {
+    backgroundColor: 'white',
+    marginHorizontal: 24,
+    borderRadius: 12,
+    padding: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
+    elevation: 1,
+  },
+  rewardContent: { flex: 1 },
+  rewardButton: {
+    backgroundColor: '#64748b', // neutral slate
+    borderRadius: 8,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    alignSelf: 'flex-start',
+    marginTop: 12,
+  },
+  disabledButton: {
+    backgroundColor: '#cbd5e1',
+    opacity: 0.6,
+  },
+  rewardButtonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+
   // Tips
   tipsContainer: { paddingHorizontal: 24, gap: 12 },
   tipCard: {
@@ -745,25 +768,6 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   tipDescription: { fontSize: 14, color: '#64748b', lineHeight: 20 },
-
-  // Reward button
-  rewardButton: {
-    backgroundColor: '#10b981',
-    borderRadius: 8,
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    alignSelf: 'center',
-    marginTop: 16,
-  },
-  disabledButton: {
-    backgroundColor: '#a3bffa',
-    opacity: 0.6,
-  },
-  rewardButtonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: '600',
-  },
 });
 
 export default LearnScreen;
