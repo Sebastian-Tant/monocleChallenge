@@ -1,5 +1,5 @@
 // screens/HomeScreen.js
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import {
   View,
   Text,
@@ -18,93 +18,125 @@ import LinearGradient from 'react-native-linear-gradient';
 
 const { width } = Dimensions.get('window');
 
+// lightweight pseudo account number based on goal name (stable across renders)
+const makeAcctNumber = (seed = 'Savings') => {
+  let h = 0 >>> 0;
+  for (let i = 0; i < seed.length; i++) h = (h * 31 + seed.charCodeAt(i)) >>> 0;
+  const digits = String(h).padStart(10, '0').slice(-10); // 10 digits
+  return `SA ${digits.slice(0, 4)} ${digits.slice(4, 8)} ${digits.slice(8)}`;
+};
+
+const defaultSources = [
+  { id: 'cheque',   name: 'Cheque Account',   number: '••12 3456', emoji: '💳', balance: 12500 },
+  { id: 'everyday', name: 'Everyday Account', number: '••98 7654', emoji: '👜', balance: 2400  },
+  { id: 'salary',   name: 'Salary Account',   number: '••00 1122', emoji: '💼', balance: 30300 },
+];
+
 const HomeScreen = ({
   userName = 'Alex',
   goalName = 'Car Fund',
-  currentAmount = 5450,        // incoming prop (not shown initially; we start from 0)
   goalAmount = 80000,
+  institutionName = 'Monocle Bank',
   simulatedNetWorth = 15200,
   sparklineData = [12800, 13200, 13800, 14100, 14600, 15000, 15200],
   onContinueLesson,
   onViewSimulation,
-  onMakeContribution,          // optional callback(amountNumber)
+  // data callbacks (optional)
+  onDeposit,              // new: (amount, sourceAccountObj)
+  onMakeContribution,     // legacy: (amount)
+  // optional: pass your own source accounts list
+  sourceAccounts = defaultSources,
 }) => {
   const insets = useSafeAreaInsets();
 
   // Greeting
   const [greeting, setGreeting] = useState('');
 
-  // --- Contribution UI state (always start display at 0) ---
-  const [displayContribution, setDisplayContribution] = useState(0); // what we show
-  const amountAnim = useRef(new Animated.Value(0)).current;          // animates number shown
-  const progressAnim = useRef(new Animated.Value(0)).current;        // animates 0..1
-  const [animatedContribution, setAnimatedContribution] = useState(0);
+  // --- Savings Account state (starts at 0 visually) ---
+  const [savingsBalance, setSavingsBalance] = useState(0); // shown balance
+  const [transactions, setTransactions] = useState([]);    // {id, type:'deposit', amount, date, sourceId}
 
-  // --- Animations (intro, net worth) ---
+  // Animations
   const fadeInAnimation = useRef(new Animated.Value(0)).current;
   const slideUpAnimation = useRef(new Animated.Value(30)).current;
+
+  const balAnim = useRef(new Animated.Value(0)).current;      // number counter
+  const progressAnim = useRef(new Animated.Value(0)).current;  // 0..1 progress
+  const [animatedBalance, setAnimatedBalance] = useState(0);
+
   const netWorthAnimation = useRef(new Animated.Value(0)).current;
   const [animatedNetWorth, setAnimatedNetWorth] = useState(0);
 
-  // --- Contribution sheet state ---
+  // Deposit sheet (single entry point)
   const [showSheet, setShowSheet] = useState(false);
-  const [contribInput, setContribInput] = useState(''); // digits only
-
+  const [depositInput, setDepositInput] = useState('');
   const sanitizeDigits = (s) => (s || '').replace(/[^\d]/g, '');
-  const setInputSafe = (s) => setContribInput(sanitizeDigits(s));
-
+  const setDepositSafe = (s) => setDepositInput(sanitizeDigits(s));
   const QUICK_PICKS = ['100', '200', '500', '1000'];
 
-  // Greeting + intro anims
+  // Source account selection
+  const [selectedSourceId, setSelectedSourceId] = useState(
+    sourceAccounts?.[0]?.id || null
+  );
+  const selectedSource = useMemo(
+    () => sourceAccounts.find(a => a.id === selectedSourceId) || null,
+    [selectedSourceId, sourceAccounts]
+  );
+
+  // Stable account number from goal
+  const accountNumber = useMemo(() => makeAcctNumber(goalName), [goalName]);
+
   useEffect(() => {
+    // Greeting
     const hour = new Date().getHours();
     if (hour < 12) setGreeting('Good morning');
     else if (hour < 17) setGreeting('Good afternoon');
     else setGreeting('Good evening');
 
+    // Entrance anims
     Animated.parallel([
       Animated.timing(fadeInAnimation, { toValue: 1, duration: 800, useNativeDriver: true }),
       Animated.timing(slideUpAnimation, { toValue: 0, duration: 800, useNativeDriver: true }),
     ]).start();
 
-    // Animate net worth counter
+    // Net worth counter
     setTimeout(() => {
       Animated.timing(netWorthAnimation, {
         toValue: simulatedNetWorth,
         duration: 2000,
         useNativeDriver: false,
       }).start();
-    }, 500);
+    }, 400);
 
-    const listenerNW = netWorthAnimation.addListener(({ value }) => {
+    const nwListener = netWorthAnimation.addListener(({ value }) => {
       setAnimatedNetWorth(Math.floor(value));
     });
 
-    const listenerAmt = amountAnim.addListener(({ value }) => {
-      setAnimatedContribution(Math.floor(value));
+    const balListener = balAnim.addListener(({ value }) => {
+      setAnimatedBalance(Math.floor(value));
     });
 
     return () => {
-      netWorthAnimation.removeListener(listenerNW);
-      amountAnim.removeListener(listenerAmt);
+      netWorthAnimation.removeListener(nwListener);
+      balAnim.removeListener(balListener);
     };
   }, []);
 
-  // Whenever displayContribution changes, animate number & progress
+  // Animate balance counter & progress whenever savingsBalance changes
   useEffect(() => {
-    Animated.timing(amountAnim, {
-      toValue: displayContribution,
+    Animated.timing(balAnim, {
+      toValue: savingsBalance,
       duration: 800,
       useNativeDriver: false,
     }).start();
 
-    const target = goalAmount > 0 ? displayContribution / goalAmount : 0;
+    const target = goalAmount > 0 ? Math.min(savingsBalance / goalAmount, 1) : 0;
     Animated.timing(progressAnim, {
       toValue: target,
       duration: 800,
       useNativeDriver: false,
     }).start();
-  }, [displayContribution, goalAmount]);
+  }, [savingsBalance, goalAmount]);
 
   const formatCurrency = (amount) => `R ${Number(amount).toLocaleString()}`;
 
@@ -112,11 +144,6 @@ const HomeScreen = ({
     inputRange: [0, 1],
     outputRange: ['0%', '100%'],
     extrapolate: 'clamp',
-  });
-
-  const progressPercentLabel = progressAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: [0, 100],
   });
 
   const renderSparkline = () => {
@@ -145,26 +172,38 @@ const HomeScreen = ({
     );
   };
 
-  // --- Contribution sheet actions ---
-  const openContributionSheet = () => {
-    setContribInput('');
+  // Deposit sheet (single entry point)
+  const openDepositSheet = () => {
+    setDepositInput('');
+    if (!selectedSourceId && sourceAccounts.length) {
+      setSelectedSourceId(sourceAccounts[0].id);
+    }
     setShowSheet(true);
   };
+  const closeDepositSheet = () => setShowSheet(false);
 
-  const closeContributionSheet = () => {
-    setShowSheet(false);
-  };
-
-  const confirmContribution = () => {
-    const amt = parseInt(contribInput || '0', 10);
-    if (!amt || amt <= 0) {
-      closeContributionSheet();
+  const confirmDeposit = () => {
+    const amt = parseInt(depositInput || '0', 10);
+    if (!amt || amt <= 0 || !selectedSource) {
+      closeDepositSheet();
       return;
     }
-    const newTotal = displayContribution + amt;
-    setDisplayContribution(newTotal); // triggers animations
-    closeContributionSheet();
-    if (typeof onMakeContribution === 'function') onMakeContribution(amt);
+    // update local balance & transactions
+    setSavingsBalance((b) => b + amt);
+    setTransactions((tx) => [
+      {
+        id: String(Date.now()),
+        type: 'deposit',
+        amount: amt,
+        date: new Date().toISOString(),
+        sourceId: selectedSource.id,
+      },
+      ...tx,
+    ]);
+    closeDepositSheet();
+    // callbacks
+    if (typeof onDeposit === 'function') onDeposit(amt, selectedSource);
+    if (typeof onMakeContribution === 'function') onMakeContribution(amt); // backward compat
   };
 
   return (
@@ -186,48 +225,83 @@ const HomeScreen = ({
           </Text>
         </Animated.View>
 
-        {/* Main Goal Widget (tap to contribute) */}
+        {/* Savings Account Card (only one deposit entry: Add money pill) */}
         <Animated.View
           style={[
-            styles.goalWidget,
+            styles.accountCard,
             { opacity: fadeInAnimation, transform: [{ translateY: slideUpAnimation }] },
           ]}
         >
-          <TouchableOpacity
-            activeOpacity={0.9}
-            onPress={openContributionSheet}
-            style={{ borderRadius: 24, overflow: 'hidden' }}
+          <LinearGradient
+            colors={['#0ea5e9', '#22c55e']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={styles.accountGradient}
           >
-            <LinearGradient
-              colors={['#f8fafc', '#ffffff']}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 1 }}
-              style={{ borderRadius: 24, padding: 24 }}
-            >
-              <View style={styles.goalHeader}>
-                <Text style={styles.goalTitle}>My {goalName}</Text>
-                <Text style={styles.goalAmount}>
-                  {formatCurrency(animatedContribution)} / {formatCurrency(goalAmount)}
-                </Text>
-              </View>
+            <View style={styles.accountHeaderRow}>
+              <Text style={styles.bankName}>{institutionName}</Text>
+              <TouchableOpacity onPress={openDepositSheet} activeOpacity={0.9} style={styles.addMoneyPill}>
+                <Text style={styles.addMoneyText}>Add money</Text>
+                <Text style={styles.addMoneyArrow}>➕</Text>
+              </TouchableOpacity>
+            </View>
 
-              <View style={styles.progressContainer}>
-                <View style={styles.progressTrack}>
-                  <Animated.View style={[styles.progressFill, { width: progressWidth }]} />
-                </View>
-                <View style={styles.progressRow}>
-                  <Animated.Text style={styles.progressText}>
-                    {progressPercentLabel.interpolate({
-                      inputRange: [0, 100],
-                      outputRange: ['0', '100'],
-                    })}
-                    % complete
-                  </Animated.Text>
-                  <Text style={styles.tapHint}>Tap to contribute</Text>
-                </View>
+            <Text style={styles.accountLabel}>Savings Account</Text>
+            <Text style={styles.accountNumber}>{accountNumber}</Text>
+
+            <View style={styles.balanceRow}>
+              <Text style={styles.balanceLabel}>Balance</Text>
+              <Text style={styles.balanceValue}>{formatCurrency(animatedBalance)}</Text>
+            </View>
+
+            {/* Progress vs. goal */}
+            <View style={styles.progressWrap}>
+              <View style={styles.progressTrack}>
+                <Animated.View style={[styles.progressFill, { width: progressWidth }]} />
               </View>
-            </LinearGradient>
-          </TouchableOpacity>
+              <View style={styles.goalRow}>
+                <Text style={styles.goalNameText}>{goalName}</Text>
+                <Text style={styles.goalTargetText}>Target {formatCurrency(goalAmount)}</Text>
+              </View>
+            </View>
+          </LinearGradient>
+        </Animated.View>
+
+        {/* Recent Activity */}
+        <Animated.View
+          style={[
+            styles.activityCard,
+            { opacity: fadeInAnimation, transform: [{ translateY: slideUpAnimation }] },
+          ]}
+        >
+          <Text style={styles.activityTitle}>Recent activity</Text>
+          {transactions.length === 0 ? (
+            <View style={styles.activityEmpty}>
+              <Text style={styles.activityEmptyText}>
+                No transactions yet. Tap “Add money” to make your first deposit.
+              </Text>
+            </View>
+          ) : (
+            transactions.slice(0, 6).map((tx) => {
+              const src = sourceAccounts.find(s => s.id === tx.sourceId);
+              return (
+                <View key={tx.id} style={styles.txRow}>
+                  <View style={styles.txLeft}>
+                    <Text style={styles.txEmoji}>{src?.emoji || '⬆️'}</Text>
+                    <View>
+                      <Text style={styles.txTitle}>
+                        Deposit {src ? `from ${src.name}` : ''}
+                      </Text>
+                      <Text style={styles.txSub}>
+                        {new Date(tx.date).toLocaleString()}
+                      </Text>
+                    </View>
+                  </View>
+                  <Text style={styles.txAmountPositive}>+ {formatCurrency(tx.amount)}</Text>
+                </View>
+              );
+            })
+          )}
         </Animated.View>
 
         {/* Next Step Widget */}
@@ -312,21 +386,51 @@ const HomeScreen = ({
         </Animated.View>
       </ScrollView>
 
-      {/* Contribution Bottom Sheet */}
-      <Modal visible={showSheet} animationType="fade" transparent onRequestClose={closeContributionSheet}>
-        <Pressable style={styles.sheetBackdrop} onPress={closeContributionSheet}>
+      {/* Deposit Bottom Sheet (single entry point) */}
+      <Modal visible={showSheet} animationType="fade" transparent onRequestClose={closeDepositSheet}>
+        <Pressable style={styles.sheetBackdrop} onPress={closeDepositSheet}>
           <Pressable style={[styles.sheetContainer, { paddingBottom: insets.bottom + 16 }]} onPress={() => {}}>
             <View style={styles.sheetHandle} />
+            <Text style={styles.sheetTitle}>Deposit to Savings</Text>
+            <Text style={styles.sheetSubtitle}>
+              {institutionName} • {accountNumber}
+            </Text>
 
-            <Text style={styles.sheetTitle}>Add a contribution</Text>
-            <Text style={styles.sheetSubtitle}>Boost your {goalName.toLowerCase()} today</Text>
+            {/* Source account selector */}
+            <Text style={styles.sectionLabel}>From</Text>
+            <View style={styles.sourcesWrap}>
+              {sourceAccounts.map((acc) => {
+                const selected = acc.id === selectedSourceId;
+                return (
+                  <TouchableOpacity
+                    key={acc.id}
+                    style={[styles.sourceRow, selected && styles.sourceRowSelected]}
+                    activeOpacity={0.85}
+                    onPress={() => setSelectedSourceId(acc.id)}
+                  >
+                    <Text style={styles.sourceEmoji}>{acc.emoji}</Text>
+                    <View style={{ flex: 1 }}>
+                      <Text style={styles.sourceName}>{acc.name}</Text>
+                      <Text style={styles.sourceSub}>
+                        {acc.number} • Bal {formatCurrency(acc.balance)}
+                      </Text>
+                    </View>
+                    <View style={[styles.radioOuter, selected && styles.radioOuterSelected]}>
+                      {selected && <View style={styles.radioInner} />}
+                    </View>
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
 
+            {/* Quick picks */}
+            <Text style={[styles.sectionLabel, { marginTop: 10 }]}>Amount</Text>
             <View style={styles.chipsRow}>
               {QUICK_PICKS.map((v) => (
                 <TouchableOpacity
                   key={v}
                   style={styles.chip}
-                  onPress={() => setInputSafe(v)}
+                  onPress={() => setDepositSafe(v)}
                   activeOpacity={0.85}
                 >
                   <Text style={styles.chipText}>{`R ${Number(v).toLocaleString()}`}</Text>
@@ -334,30 +438,37 @@ const HomeScreen = ({
               ))}
             </View>
 
+            {/* Amount input */}
             <View style={styles.inputRow}>
               <Text style={styles.inputCurrency}>R</Text>
               <TextInput
                 style={styles.inputField}
-                value={contribInput}
-                onChangeText={setInputSafe}
+                value={depositInput}
+                onChangeText={setDepositSafe}
                 placeholder="0"
                 keyboardType="number-pad"
                 returnKeyType="done"
               />
             </View>
 
+            {/* Confirm */}
             <TouchableOpacity
-              style={[styles.sheetCta, (!contribInput || parseInt(contribInput || '0', 10) <= 0) && styles.sheetCtaDisabled]}
+              style={[
+                styles.sheetCta,
+                (!depositInput || parseInt(depositInput || '0', 10) <= 0 || !selectedSourceId) && styles.sheetCtaDisabled,
+              ]}
               activeOpacity={0.9}
-              disabled={!contribInput || parseInt(contribInput || '0', 10) <= 0}
-              onPress={confirmContribution}
+              disabled={!depositInput || parseInt(depositInput || '0', 10) <= 0 || !selectedSourceId}
+              onPress={confirmDeposit}
             >
               <LinearGradient
-                colors={contribInput ? ['#22c55e', '#16a34a'] : ['#cbd5e1', '#94a3b8']}
+                colors={depositInput ? ['#22c55e', '#16a34a'] : ['#cbd5e1', '#94a3b8']}
                 style={styles.sheetCtaGrad}
               >
                 <Text style={styles.sheetCtaText}>
-                  {contribInput ? `Contribute R ${Number(contribInput).toLocaleString()}` : 'Enter an amount'}
+                  {depositInput
+                    ? `Deposit R ${Number(depositInput).toLocaleString()}`
+                    : 'Enter an amount'}
                 </Text>
               </LinearGradient>
             </TouchableOpacity>
@@ -376,43 +487,75 @@ const styles = StyleSheet.create({
   header: { paddingHorizontal: 24, paddingTop: 20, paddingBottom: 16 },
   greeting: { fontSize: 30, fontWeight: '800', color: '#0f172a', letterSpacing: 0.3 },
 
-  goalWidget: {
+  // Savings account card
+  accountCard: {
+    marginHorizontal: 20,
+    marginBottom: 16,
+    borderRadius: 24,
+    overflow: 'hidden',
+    ...Platform.select({
+      ios: {
+        shadowColor: '#0f172a',
+        shadowOffset: { width: 0, height: 8 },
+        shadowOpacity: 0.12,
+        shadowRadius: 16,
+      },
+      android: { elevation: 6 },
+    }),
+  },
+  accountGradient: { padding: 20 },
+  accountHeaderRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+  bankName: { color: 'white', fontWeight: '800', fontSize: 14, letterSpacing: 0.5 },
+  addMoneyPill: {
+    backgroundColor: 'rgba(255,255,255,0.2)',
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 999,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  addMoneyText: { color: 'white', fontWeight: '700' },
+  addMoneyArrow: { color: 'white', fontWeight: '900' },
+
+  accountLabel: { marginTop: 10, color: 'rgba(255,255,255,0.9)', fontWeight: '600' },
+  accountNumber: { color: 'white', fontSize: 18, fontWeight: '800', marginTop: 2, letterSpacing: 0.5 },
+
+  balanceRow: { marginTop: 16, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end' },
+  balanceLabel: { color: 'rgba(255,255,255,0.9)' },
+  balanceValue: { color: 'white', fontSize: 28, fontWeight: '900' },
+
+  progressWrap: { marginTop: 14 },
+  progressTrack: { width: '100%', height: 12, backgroundColor: 'rgba(255,255,255,0.3)', borderRadius: 999, overflow: 'hidden' },
+  progressFill: { height: '100%', backgroundColor: 'white' },
+  goalRow: { marginTop: 8, flexDirection: 'row', justifyContent: 'space-between' },
+  goalNameText: { color: 'white', fontWeight: '700' },
+  goalTargetText: { color: 'rgba(255,255,255,0.9)' },
+
+  // Activity
+  activityCard: {
     backgroundColor: 'white',
     marginHorizontal: 20,
     marginBottom: 20,
-    borderRadius: 24,
-    padding: 0,
+    borderRadius: 20,
+    padding: 16,
     shadowColor: '#0f172a',
-    shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.08,
-    shadowRadius: 12,
-    elevation: 6,
-    overflow: 'hidden',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    elevation: 2,
   },
-  goalHeader: { marginBottom: 20 },
-  goalTitle: { fontSize: 18, fontWeight: '600', color: '#334155', marginBottom: 6 },
-  goalAmount: { fontSize: 26, fontWeight: '800', color: '#0f172a' },
+  activityTitle: { fontSize: 16, fontWeight: '800', color: '#0f172a', marginBottom: 8 },
+  activityEmpty: { paddingVertical: 12 },
+  activityEmptyText: { color: '#64748b' },
+  txRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 10 },
+  txLeft: { flexDirection: 'row', alignItems: 'center', gap: 10 },
+  txEmoji: { fontSize: 18 },
+  txTitle: { fontWeight: '700', color: '#0f172a' },
+  txSub: { color: '#64748b', fontSize: 12, marginTop: 2 },
+  txAmountPositive: { color: '#16a34a', fontWeight: '800' },
 
-  progressContainer: { alignItems: 'center' },
-  progressTrack: {
-    width: '100%',
-    height: 14,
-    backgroundColor: '#e2e8f0',
-    borderRadius: 999,
-    overflow: 'hidden',
-    marginBottom: 8,
-  },
-  progressFill: { height: '100%', backgroundColor: '#22c55e', borderRadius: 999 },
-  progressRow: {
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 4,
-    alignItems: 'center',
-  },
-  progressText: { fontSize: 13, fontWeight: '600', color: '#64748b' },
-  tapHint: { fontSize: 12, color: '#4f46e5', fontWeight: '700' },
-
+  // Next step
   nextStepWidget: {
     backgroundColor: 'white',
     marginHorizontal: 20,
@@ -441,6 +584,7 @@ const styles = StyleSheet.create({
   nextStepArrow: { position: 'absolute', right: 16, top: '50%', transform: [{ translateY: -12 }] },
   arrowText: { fontSize: 24, color: '#4f46e5', fontWeight: '800' },
 
+  // Simulation
   simulationWidget: {
     backgroundColor: 'white',
     marginHorizontal: 20,
@@ -453,18 +597,14 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 2,
   },
-  simulationHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 8,
-  },
+  simulationHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 },
   simulationTitle: { fontSize: 15, fontWeight: '600', color: '#475569', marginBottom: 4 },
   simulationAmount: { fontSize: 22, fontWeight: '800', color: '#16a34a' },
   simulationSubtext: { fontSize: 12, color: '#94a3b8' },
   sparklineContainer: { flexDirection: 'row', alignItems: 'flex-end', gap: 2 },
   sparklineBar: { width: 3, borderRadius: 999 },
 
+  // Daily bite
   dailyBiteSection: { marginTop: 8 },
   dailyBiteTitle: { fontSize: 20, fontWeight: '700', color: '#0f172a', marginBottom: 16, paddingHorizontal: 20 },
   dailyBiteContainer: { paddingLeft: 20, paddingRight: 20 },
@@ -480,24 +620,13 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     elevation: 2,
   },
-  dailyBiteHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 12,
-  },
-  dailyBiteDate: {
-    fontSize: 12,
-    fontWeight: '600',
-    color: '#4f46e5',
-    textTransform: 'uppercase',
-    letterSpacing: 0.5,
-  },
+  dailyBiteHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 },
+  dailyBiteDate: { fontSize: 12, fontWeight: '600', color: '#4f46e5', textTransform: 'uppercase', letterSpacing: 0.5 },
   dailyBiteEmoji: { fontSize: 18 },
   dailyBiteText: { fontSize: 15, color: '#334155', lineHeight: 21 },
   termHighlight: { fontWeight: '700', color: '#0f172a' },
 
-  // Bottom sheet
+  // Bottom sheet (deposit)
   sheetBackdrop: {
     flex: 1,
     backgroundColor: 'rgba(15, 23, 42, 0.5)',
@@ -521,13 +650,43 @@ const styles = StyleSheet.create({
   sheetTitle: { fontSize: 18, fontWeight: '800', color: '#0f172a' },
   sheetSubtitle: { fontSize: 13, color: '#64748b', marginTop: 2, marginBottom: 12 },
 
-  chipsRow: { flexDirection: 'row', gap: 8, marginBottom: 12 },
-  chip: {
-    backgroundColor: '#eef2ff',
-    borderRadius: 999,
+  sectionLabel: { fontSize: 12, color: '#64748b', marginBottom: 6, letterSpacing: 0.3, textTransform: 'uppercase' },
+
+  sourcesWrap: { marginBottom: 10 },
+  sourceRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    paddingVertical: 12,
     paddingHorizontal: 12,
-    paddingVertical: 8,
+    borderRadius: 12,
+    borderWidth: 1.5,
+    borderColor: '#e2e8f0',
+    backgroundColor: '#f8fafc',
+    marginBottom: 8,
   },
+  sourceRowSelected: {
+    borderColor: '#6366f1',
+    backgroundColor: '#eef2ff',
+  },
+  sourceEmoji: { fontSize: 18 },
+  sourceName: { fontWeight: '700', color: '#0f172a' },
+  sourceSub: { fontSize: 12, color: '#64748b', marginTop: 2 },
+
+  radioOuter: {
+    width: 18,
+    height: 18,
+    borderRadius: 999,
+    borderWidth: 2,
+    borderColor: '#94a3b8',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  radioOuterSelected: { borderColor: '#4f46e5', backgroundColor: '#e0e7ff' },
+  radioInner: { width: 8, height: 8, borderRadius: 999, backgroundColor: '#4f46e5' },
+
+  chipsRow: { flexDirection: 'row', gap: 8, marginBottom: 12, marginTop: 4 },
+  chip: { backgroundColor: '#eef2ff', borderRadius: 999, paddingHorizontal: 12, paddingVertical: 8 },
   chipText: { color: '#4f46e5', fontWeight: '700' },
 
   inputRow: {
