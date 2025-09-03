@@ -13,13 +13,14 @@ import { useTranslation } from 'react-i18next';
 import { getLessons, getLessonById, getTracks } from './data/index';
 import { db } from '../firebase';
 import auth from '@react-native-firebase/auth';
+import i18n from '../i18n';
 
 // ------- Rewards Catalog (data bundles in MB; tweak anytime) -------
 const REWARD_CATALOG = {
-  'track-budgeting':   { dataMB: 500,  label: 'Budgeting & Cash Flow' },             // easier
-  'track-tax-retire':  { dataMB: 700,  label: 'Taxes & Retirement Basics' },         // medium
-  'track-credit':      { dataMB: 800,  label: 'Credit & Borrowing' },                // medium+
-  'track-investing':   { dataMB: 1000, label: 'Investing & Wealth Building (SA)' },  // harder (≈1GB)
+  'track-budgeting':   { dataMB: 500,  label: 'Budgeting & Cash Flow' },
+  'track-tax-retire':  { dataMB: 700,  label: 'Taxes & Retirement Basics' },
+  'track-credit':      { dataMB: 800,  label: 'Credit & Borrowing' },
+  'track-investing':   { dataMB: 1000, label: 'Investing & Wealth Building (SA)' },
   GRAND_REWARD_MB: 3000, // big grand reward (≈3GB)
 };
 
@@ -37,8 +38,8 @@ const LearnScreen = ({ onStartLesson }) => {
   const { t } = useTranslation();
 
   // Tracks (booklets) and raw lessons map
-  const tracks = useMemo(() => getTracks(), []);
-  const lessonsArray = useMemo(() => getLessons(), []);
+  const lessonsArray = useMemo(() => getLessons(), [i18n.language]);
+const tracks = useMemo(() => getTracks(), [i18n.language]);
   const lessonsById = useMemo(
     () => Object.fromEntries(lessonsArray.map(l => [l.id, l])),
     [lessonsArray],
@@ -73,15 +74,15 @@ const LearnScreen = ({ onStartLesson }) => {
 
     const booklet = tracks.map(tr => ({
       id: `track:${tr.id}`,
-      title: `${tr.title} — Booklet Complete`,
-      description: `Finish all lessons in the "${tr.title}" booklet.`,
+      title: t('learnScreen.achievements.bookletCompleteTitle', { title: tr.title }),
+      description: t('learnScreen.achievements.bookletCompleteDescription', { title: tr.title }),
     }));
 
     const grand = [
       {
         id: 'ach:grand',
-        title: 'Core Curriculum — All Achievements Complete',
-        description: 'Unlock all achievements (base + every booklet).',
+        title: t('learnScreen.achievements.grand.title'),
+        description: t('learnScreen.achievements.grand.description'),
       },
     ];
 
@@ -136,7 +137,10 @@ const LearnScreen = ({ onStartLesson }) => {
   const onPressLessonCard = (track, lessonId) => {
     const unlocked = isLessonUnlockedInTrack(track, lessonId);
     if (!unlocked) {
-      Alert.alert('Locked', 'Complete the previous lesson to unlock this one.');
+      Alert.alert(
+        t('learnScreen.labels.locked'),
+        t('learnScreen.lockedHint'),
+      );
       return;
     }
     if (onStartLesson) onStartLesson(lessonId);
@@ -202,7 +206,7 @@ const LearnScreen = ({ onStartLesson }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [t]);
 
-  // ------- Collect Rewards (now grants data bundles) -------
+  // ------- Collect Rewards (data bundles) -------
   const handleCollectTrackReward = async (trackId) => {
     try {
       const user = auth().currentUser;
@@ -213,18 +217,24 @@ const LearnScreen = ({ onStartLesson }) => {
 
       const eligible = isTrackComplete(trackId, completedLessons);
       if (!eligible) {
-        Alert.alert('Not yet!', 'Finish all lessons in this booklet to collect the reward.');
+        Alert.alert(
+          t('learnScreen.rewards.notYet.title'),
+          t('learnScreen.rewards.notYet.booklet'),
+        );
         return;
       }
       if (rewardsBooklets?.[trackId]) {
-        Alert.alert('Already collected', 'You have already claimed this reward.');
+        Alert.alert(
+          t('learnScreen.rewards.alreadyCollected.title'),
+          t('learnScreen.rewards.alreadyCollected.message'),
+        );
         return;
       }
 
       const userDocRef = db.collection('users').doc(user.uid);
       const snap = await userDocRef.get();
       const data = snap.exists ? snap.data() : {};
-      const rewardMB = REWARD_CATALOG[trackId]?.dataMB ?? 500; // default 500MB
+      const rewardMB = REWARD_CATALOG[trackId]?.dataMB ?? 500;
 
       await userDocRef.update({
         [`rewards.booklets.${trackId}`]: true,
@@ -232,7 +242,10 @@ const LearnScreen = ({ onStartLesson }) => {
       });
 
       setRewardsBooklets(prev => ({ ...prev, [trackId]: true }));
-      Alert.alert('Reward collected 🎉', `${formatData(rewardMB)} added to your data balance.`);
+      Alert.alert(
+        t('learnScreen.rewards.collectedToast.title'),
+        t('learnScreen.rewards.collectedToast.message', { amount: formatData(rewardMB) }),
+      );
     } catch (e) {
       console.log('handleCollectTrackReward error:', e);
       Alert.alert(t('learnScreen.errors.error'), t('learnScreen.errors.failedToCollectReward'));
@@ -251,11 +264,17 @@ const LearnScreen = ({ onStartLesson }) => {
         .filter(a => a.id !== 'ach:grand')
         .every(a => a.unlocked);
       if (!allUnlocked) {
-        Alert.alert('Not yet!', 'Unlock every achievement before claiming this reward.');
+        Alert.alert(
+          t('learnScreen.rewards.notYet.title'),
+          t('learnScreen.rewards.notYet.grand'),
+        );
         return;
       }
       if (rewardGrandCollected) {
-        Alert.alert('Already collected', 'You have already claimed this reward.');
+        Alert.alert(
+          t('learnScreen.rewards.alreadyCollected.title'),
+          t('learnScreen.rewards.alreadyCollected.message'),
+        );
         return;
       }
 
@@ -271,7 +290,10 @@ const LearnScreen = ({ onStartLesson }) => {
       });
 
       setRewardGrandCollected(true);
-      Alert.alert('Grand reward collected 🏅', `${formatData(bonusMB)} added to your data balance.`);
+      Alert.alert(
+        t('learnScreen.rewards.grand.collectedTitle'),
+        t('learnScreen.rewards.collectedToast.message', { amount: formatData(bonusMB) }),
+      );
     } catch (e) {
       console.log('handleCollectGrandReward error:', e);
       Alert.alert(t('learnScreen.errors.error'), t('learnScreen.errors.failedToCollectReward'));
@@ -303,7 +325,7 @@ const LearnScreen = ({ onStartLesson }) => {
                 {t('learnScreen.lesson.completed')}
               </Text>
             )}
-            {!unlocked && <Text style={styles.lockedBadge}>🔒 Locked</Text>}
+            {!unlocked && <Text style={styles.lockedBadge}>🔒 {t('learnScreen.labels.locked')}</Text>}
           </View>
           <View style={styles.lessonMeta}>
             <Text style={styles.duration}>{lesson.duration}</Text>
@@ -342,7 +364,7 @@ const LearnScreen = ({ onStartLesson }) => {
 
         {!unlocked && (
           <Text style={styles.lockedHint}>
-            Finish the previous lesson to unlock this one.
+            {t('learnScreen.lockedHint')}
           </Text>
         )}
       </TouchableOpacity>
@@ -370,7 +392,7 @@ const LearnScreen = ({ onStartLesson }) => {
           </View>
           <Text style={styles.trackDescription}>{track.description}</Text>
           <Text style={styles.trackProgressLabel}>
-            {completedCount}/{total} completed
+            {t('learnScreen.tracks.progressLabel', { completed: completedCount, total })}
           </Text>
           <View style={styles.progressBar}>
             <View
@@ -384,7 +406,9 @@ const LearnScreen = ({ onStartLesson }) => {
 
         {/* Reward row with neutral styling */}
         <View style={styles.trackRewardRow}>
-          <Text style={styles.rewardHint}>Reward: +{formatData(rewardMB)}</Text>
+          <Text style={styles.rewardHint}>
+            {t('learnScreen.rewards.rewardHint', { amount: formatData(rewardMB) })}
+          </Text>
           <TouchableOpacity
             style={[
               styles.trackRewardButton,
@@ -395,7 +419,9 @@ const LearnScreen = ({ onStartLesson }) => {
             activeOpacity={0.8}
           >
             <Text style={styles.trackRewardButtonText}>
-              {trackRewardCollected ? 'Reward Collected' : 'Collect Reward'}
+              {trackRewardCollected
+                ? t('learnScreen.rewards.collected')
+                : t('learnScreen.rewards.collect')}
             </Text>
           </TouchableOpacity>
         </View>
@@ -421,7 +447,7 @@ const LearnScreen = ({ onStartLesson }) => {
       >
         {/* Booklets / Tracks */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Courses & Booklets</Text>
+          <Text style={styles.sectionTitle}>{t('learnScreen.sections.courses')}</Text>
           {tracks.map(tr => renderTrackCard(tr))}
         </View>
 
@@ -469,7 +495,7 @@ const LearnScreen = ({ onStartLesson }) => {
 
         {/* Rewards */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Rewards</Text>
+          <Text style={styles.sectionTitle}>{t('learnScreen.sections.rewards')}</Text>
 
           {/* Grand reward (neutral button) */}
           <View style={[styles.rewardCard, !allNonGrandUnlocked && styles.lockedAchievement]}>
@@ -479,9 +505,11 @@ const LearnScreen = ({ onStartLesson }) => {
               </Text>
             </View>
             <View style={styles.rewardContent}>
-              <Text style={styles.achievementTitle}>Grand Reward</Text>
+              <Text style={styles.achievementTitle}>{t('learnScreen.rewards.grandTitle')}</Text>
               <Text style={styles.achievementDescription}>
-                Claim once all achievements are unlocked. Reward: +{formatData(REWARD_CATALOG.GRAND_REWARD_MB)}
+                {t('learnScreen.rewards.grandDescription', {
+                  amount: formatData(REWARD_CATALOG.GRAND_REWARD_MB),
+                })}
               </Text>
               <TouchableOpacity
                 style={[
@@ -492,7 +520,9 @@ const LearnScreen = ({ onStartLesson }) => {
                 disabled={!allNonGrandUnlocked || rewardGrandCollected}
               >
                 <Text style={styles.rewardButtonText}>
-                  {rewardGrandCollected ? 'Grand Reward Collected' : 'Collect Reward'}
+                  {rewardGrandCollected
+                    ? t('learnScreen.rewards.collected')
+                    : t('learnScreen.rewards.collect')}
                 </Text>
               </TouchableOpacity>
             </View>

@@ -322,5 +322,332 @@
       "failedToUpdateProgress": "Failed to update progress",
       "failedToCollectReward": "Failed to collect reward"
     }
+  },
+  "learnScreen": {
+    "sections": {
+      "courses": "Courses & Booklets",
+      "achievements": "Achievements",
+      "learningTips": "Learning Tips"
+    },
+    "labels": {
+      "locked": "Locked"
+    },
+    "lockedHint": "Finish the previous lesson to unlock this one.",
+    "tracks": {
+      "progressLabel": "{{completed}}/{{total}} completed"
+    },
+    "lesson": {
+      "completed": "✓ Completed",
+      "complete": "complete",
+      "startLesson": "Start Lesson"
+    },
+    "achievements": {
+      "firstLesson": {
+        "title": "First Lesson",
+        "description": "Complete your first lesson"
+      },
+      "quizMaster": {
+        "title": "Quiz Master",
+        "description": "Complete an intermediate quiz"
+      },
+      "knowledgeSeeker": {
+        "title": "Knowledge Seeker",
+        "description": "Complete 5 lessons"
+      },
+      "bookletCompleteTitle": "{{title}} — Booklet Complete",
+      "bookletCompleteDescription": "Finish all lessons in the \"{{title}}\" booklet.",
+      "grand": {
+        "title": "Core Curriculum — All Achievements Complete",
+        "description": "Unlock all achievements (base + every booklet)."
+      }
+    },
+    "rewards": {
+      "rewardHint": "Reward: +{{amount}}",
+      "collect": "Collect Reward",
+      "collected": "Reward Collected",
+      "alreadyCollected": {
+        "title": "Already collected",
+        "message": "You’ve already claimed this reward."
+      },
+      "notYet": {
+        "title": "Not yet!",
+        "booklet": "Finish all lessons in this booklet to collect the reward.",
+        "grand": "Unlock every achievement before claiming this reward."
+      },
+      "collectedToast": {
+        "title": "Reward collected 🎉",
+        "message": "{{amount}} added to your data balance."
+      },
+      "grandTitle": "Grand Reward",
+      "grandDescription": "Claim once all achievements are unlocked. Reward: +{{amount}}",
+      "grand": {
+        "collectedTitle": "Grand reward collected 🏅"
+      }
+    }
+  },
+
+  "tracks": {
+    "track-compounding": {
+      "title": "Compounding — Basics",
+      "description": "From basics to advanced: master compounding step by step."
+    },
+    "track-tax-retire": {
+      "title": "Taxes & Retirement — Basics",
+      "description": "Understand brackets, pre-tax vs after-tax saving, and plan for retirement."
+    },
+    "track-budgeting": {
+      "title": "Budgeting & Cash Flow",
+      "description": "Plan spending, build a buffer, and reduce stress around money."
+    },
+    "track-credit": {
+      "title": "Credit & Borrowing",
+      "description": "Use credit wisely, compare costs, and avoid debt traps."
+    },
+    "track-investing": {
+      "title": "Investing & Wealth Building",
+      "description": "Diversify, keep costs low, and stay invested for the long run."
+    }
+  },
+
+  "lessons": {
+    "compoundingBasics": {
+      "title": "Compounding Basics: Start Early",
+      "description": "A quick primer on what compound interest is, why it beats simple interest, and why starting early matters.",
+      "duration": "6–8 min",
+      "difficulty": "Beginner",
+      "pages": {
+        "intro": {
+          "title": "What is Compound Interest?",
+          "content": "Compound interest means you earn interest on your original money AND on the interest that money already earned — interest on interest. Over time this snowballs."
+        },
+        "simpleVsCompound": {
+          "title": "Simple vs Compound",
+          "content": "Simple interest: interest is only on the original amount (principal). Compound interest: interest is on principal + accumulated interest. Example: R100 at 12% simple = R112 after 1 year. At 12% compounded annually = also R112 after 1 year — but keep compounding and compound wins big."
+        },
+        "frequencyMatters": {
+          "title": "Compounding Frequency",
+          "content": "More frequent compounding grows faster. R100 at 12% compounded monthly ≈ R112.68 after 1 year, versus R112 with annual compounding. Same nominal rate, slightly better growth because interest is added more often."
+        },
+        "quiz1": {
+          "title": "Quick Check 1",
+          "question": "Which statement best describes compound interest?",
+          "options": {
+            "A": {
+              "text": "Interest only on the original amount.",
+              "rationale": "That describes simple interest. Compound interest also earns on past interest, not just the original principal."
+            },
+            "B": {
+              "text": "Interest on the original amount and on past interest.",
+              "rationale": "Correct. With compounding, previous interest is added to the balance and itself earns interest."
+            },
+            "C": {
+              "text": "Interest rate that never changes.",
+              "rationale": "Whether a rate changes or not is separate. Compounding is about earning on principal plus accumulated interest."
+            },
+            "D": {
+              "text": "Interest that banks charge only on loans.",
+              "rationale": "Compounding applies to savings and investments too — not just loans."
+            }
+          }
+        },
+        "quiz2": {
+          "title": "Quick Check 2",
+          "question": "Two friends each save R200/month at 8% per year. Thabo starts today for 10 years. Naledi waits 5 years, then saves for 5 years. Who ends with more?",
+          "options": {
+            "A": {
+              "text": "Thabo (starts earlier, more compounding time).",
+              "rationale": "Correct. Money invested earlier compounds for longer, which typically beats starting late even with the same monthly amount."
+            },
+            "B": {
+              "text": "Naledi (same monthly amount).",
+              "rationale": "Same monthly amount isn’t enough — Naledi has fewer years of growth. Time in the market matters a lot."
+            },
+            "C": {
+              "text": "They end with the same amount.",
+              "rationale": "They won’t match — Thabo’s money grows for more years due to an earlier start."
+            },
+            "D": {
+              "text": "Impossible to know.",
+              "rationale": "Given equal rates and contributions, starting earlier generally wins because of extra compounding time."
+            }
+          }
+        },
+        "quiz3": {
+          "title": "Quick Check 3",
+          "question": "All else equal, which grows savings faster over time?",
+          "options": {
+            "A": {
+              "text": "12% compounded annually.",
+              "rationale": "Annual compounding adds interest once per year, which is slower than monthly at the same nominal rate."
+            },
+            "B": {
+              "text": "12% compounded monthly.",
+              "rationale": "Correct. More frequent compounding (monthly) adds interest sooner, so it compounds slightly faster than annual."
+            },
+            "C": {
+              "text": "10% compounded monthly.",
+              "rationale": "12% annually vs 10% monthly — the higher rate (12%) generally wins despite frequency."
+            },
+            "D": {
+              "text": "Both A and B are identical.",
+              "rationale": "Frequency matters. At the same nominal rate, monthly compounding grows a bit more than annual."
+            }
+          }
+        },
+        "quiz4": {
+          "title": "Quick Check 4",
+          "question": "True or False: With compounding, doubling the time generally more than doubles the final amount.",
+          "options": {
+            "A": {
+              "text": "True",
+              "rationale": "Correct. Compound growth is exponential — more time lets interest earn on interest, so growth accelerates."
+            },
+            "B": {
+              "text": "False",
+              "rationale": "That would be closer to simple (linear) growth. Compounding accelerates over time, so longer periods can produce more-than-linear gains."
+            }
+          }
+        }
+      }
+    },
+    "compoundingIntermediate": {
+      "title": "Compounding Intermediate: Rate, Frequency & Contributions",
+      "description": "Go beyond the basics: Effective Annual Rate (EAR), why frequency matters, how recurring contributions change growth, and how compounding works against you in debt.",
+      "duration": "8–10 min",
+      "difficulty": "Intermediate",
+      "pages": {
+        "intro": {
+          "title": "From Basics to Better Decisions",
+          "content": "You know compound interest grows “interest on interest.” Now we’ll use that to make practical choices: compare rates properly, understand compounding frequency, and weigh monthly deposits vs once-off amounts."
+        },
+        "ear": {
+          "title": "Nominal vs Effective Annual Rate (EAR)",
+          "content": "Banks often quote a nominal rate (e.g., 12% p.a.). If interest is added during the year (monthly/weekly), the actual yearly growth is higher. That “true” yearly growth is the Effective Annual Rate (EAR). Example: 12% nominal compounded monthly ≈ 12.68% EAR."
+        },
+        "frequency": {
+          "title": "Why Frequency Matters",
+          "content": "More frequent compounding means interest is added sooner and itself earns interest. For the same nominal rate, monthly compounding grows a bit faster than annual; weekly a touch faster than monthly, and so on."
+        },
+        "contributions": {
+          "title": "Recurring Contributions vs Once-Off",
+          "content": "Regular monthly deposits (e.g., a debit order) build a habit and steadily add fuel to compounding. A large once-off deposit enjoys the full time in the market. Which is “better” depends on timing, amounts, and discipline."
+        },
+        "debt": {
+          "title": "When Compounding Works Against You",
+          "content": "Compounding helps savings grow — but it also makes debt more expensive over time. Paying only the minimum on a high-interest card stretches the term and increases total interest paid significantly."
+        },
+        "quiz1": {
+          "title": "Quick Check 1",
+          "question": "What does the Effective Annual Rate (EAR) represent?",
+          "options": {
+            "A": {
+              "text": "The bank’s advertised (nominal) percentage.",
+              "rationale": "Nominal excludes the effect of intra-year compounding. EAR includes it."
+            },
+            "B": {
+              "text": "The actual yearly growth including intra-year compounding.",
+              "rationale": "Yes. EAR captures the true yearly growth once compounding frequency is considered."
+            },
+            "C": {
+              "text": "The lowest possible rate after fees.",
+              "rationale": "EAR isn’t “lowest after fees.” It’s about compounding, not fees."
+            },
+            "D": {
+              "text": "A rate that ignores compounding frequency.",
+              "rationale": "EAR is specifically about accounting for compounding frequency."
+            }
+          }
+        },
+        "quiz2": {
+          "title": "Quick Check 2",
+          "question": "Which typically yields the higher end balance (same nominal 12%)?",
+          "options": {
+            "A": {
+              "text": "12% compounded annually",
+              "rationale": "Annual is slower because interest is added only once per year."
+            },
+            "B": {
+              "text": "12% compounded monthly",
+              "rationale": "Monthly adds interest more often, so it slightly outperforms annual at the same nominal rate."
+            },
+            "C": {
+              "text": "They are always identical",
+              "rationale": "Frequency changes the growth even if the nominal rate is the same."
+            },
+            "D": {
+              "text": "Depends only on the principal, not frequency",
+              "rationale": "Frequency matters: more frequent compounding tends to grow more."
+            }
+          }
+        },
+        "quiz3": {
+          "title": "Quick Check 3",
+          "question": "You have two choices over 5 years at 8% per year: (1) deposit R500 every month, or (2) deposit R30,000 once today. Which typically ends with more?",
+          "options": {
+            "A": {
+              "text": "R500 monthly (total is the same, so results are the same).",
+              "rationale": "Totals aren’t enough — timing matters. Monthly deposits start small and build; a lump sum compounds the full time."
+            },
+            "B": {
+              "text": "R30,000 once today (it compounds for the full 5 years).",
+              "rationale": "A lump sum placed earlier enjoys compounding for longer, usually beating equal monthly totals."
+            },
+            "C": {
+              "text": "Both end equal because totals match.",
+              "rationale": "Even with equal totals, earlier money compounds longer and usually wins."
+            },
+            "D": {
+              "text": "Impossible to compare without fees.",
+              "rationale": "Fees can matter, but ignoring fees the earlier lump sum typically wins."
+            }
+          }
+        },
+        "quiz4": {
+          "title": "Quick Check 4",
+          "question": "Which statement about minimum payments on high-interest debt is most accurate?",
+          "options": {
+            "A": {
+              "text": "They reduce total interest dramatically.",
+              "rationale": "Minimums often barely cover interest; total interest can stay high or climb."
+            },
+            "B": {
+              "text": "They can extend the term and increase total interest paid.",
+              "rationale": "Correct. Minimum-only strategies lengthen payoff time and increase interest cost."
+            },
+            "C": {
+              "text": "They have no effect on total interest.",
+              "rationale": "They do — paying only minimums usually increases total interest over the life of the debt."
+            },
+            "D": {
+              "text": "They are always better than extra repayments.",
+              "rationale": "Extra repayments reduce principal faster and cut interest sooner."
+            }
+          }
+        },
+        "quiz5": {
+          "title": "Quick Check 5",
+          "question": "Using the “Rule of 72”, roughly how long to double money at 9% per year?",
+          "options": {
+            "A": {
+              "text": "About 5 years",
+              "rationale": "72 ÷ 9 ≈ 8 years, not ~5."
+            },
+            "B": {
+              "text": "About 8 years",
+              "rationale": "Correct. 72 ÷ 9 ≈ 8 — a handy mental shortcut."
+            },
+            "C": {
+              "text": "About 10 years",
+              "rationale": "Too long for 9% using the Rule of 72."
+            },
+            "D": {
+              "text": "About 12 years",
+              "rationale": "Far too long for 9% using the Rule of 72."
+            }
+          }
+        }
+      }
+    }
   }
+
 }
