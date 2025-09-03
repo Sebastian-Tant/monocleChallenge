@@ -1,8 +1,7 @@
 {
   "common": {
     "next": "Volgende"
-  },
-  "navigation": {
+  },"navigation": {
     "home": "Tuis",
     "learn": "Leer",
     "simulate": "Simuleer",
@@ -15,8 +14,7 @@
     "amountLabel": "Hoeveel moet jy spaar?",
     "customPlaceholder": "Voer jou doelwitbedrag in",
     "defaultPlaceholder": "R 50,000"
-  },
-  "profile": {
+  },"profile": {
     "title": "Profiel",
     "subtitle": "First Rand Bank",
     "name": "Naam",
@@ -134,8 +132,7 @@
     "scenarioDisclaimer": "Werklike opbrengste verskil; dit is nie 'n waarborg nie. Gebruik dit om te voel hoe koers en tyd uitkomste verander.",
     "strategyExplanation": "{{name}}:\nBasiese betaling {{basePmt}} → Nuwe betaling {{newPmt}}.\nMaande: {{months}} → {{variantMonths}} (spaar {{monthsSaved}}).\nRente gespaar: {{interestSaved}}.\n\nHoekom dit werk: deur 'n bietjie ekstra te betaal, word die kapitaal vinniger verminder en so word minder rente volgende maand gehef — die effek vermeerder.",
     "strategyExplanationError": "Voer eers 'n geldige betaling of termyn in om die strategie se uitwerking te sien."
-  },
-  "compounding": {
+  },"compounding": {
     "title": "Die Towerwerk van Saamgestelde Rente",
     "description": "Leer hoe jou geld eksponensieel kan groei oor tyd deur die krag van saamgestelde rente.",
     "duration": "5 min",
@@ -162,8 +159,7 @@
         }
       }
     }
-  },
-  "emergencyFund": {
+  }, "emergencyFund": {
     "title": "Noodfondse Verduidelik",
     "description": "Waarom jy 'n noodfonds benodig en hoeveel om te spaar voor jy belê.",
     "duration": "6 min",
@@ -190,8 +186,7 @@
         }
       }
     }
-  },
-  "firstPortfolio": {
+  },"firstPortfolio": {
     "title": "Bou Jou Eerste Portefeulje",
     "description": "Skep 'n gediversifieerde beleggingsportefeulje wat by jou doelwitte en risikotoleransie pas.",
     "duration": "10 min",
@@ -218,8 +213,7 @@
         }
       }
     }
-  },
-  "riskReturn": {
+  },"riskReturn": {
     "title": "Begrip van Risiko en Opbrengs",
     "description": "Ontdek die verhouding tussen risiko en potensiële belonings in belegging.",
     "duration": "7 min",
@@ -246,8 +240,7 @@
         }
       }
     }
-  },
-  "taxEfficient": {
+  },"taxEfficient": {
     "title": "Belasting-Doeltreffende Belegging",
     "description": "Leer oor belastingvrye / belasting-voordelige rekeninge en slim plasing om meer van jou opbrengste te behou.",
     "duration": "8 min",
@@ -274,21 +267,11 @@
         }
       }
     }
-  },
-  "learnScreen": {
+  },"learnScreen": {
     "sections": {
       "availableLessons": "Beskikbare Lesse",
       "achievements": "Prestasies",
-      "learningTips": "Leer Wenke",
-      "courses": "Kursusse & Boekies",
-      "rewards": "Belonings"
-    },
-    "labels": {
-      "locked": "Gesluit"
-    },
-    "lockedHint": "Voltooi die vorige les om hierdie een te ontsluit.",
-    "tracks": {
-      "progressLabel": "{{completed}}/{{total}} voltooi"
+      "learningTips": "Leer Wenke"
     },
     "lesson": {
       "completed": "✓ Voltooi",
@@ -307,12 +290,6 @@
       "knowledgeSeeker": {
         "title": "Kennis Soeker",
         "description": "Voltooi 5 lesse"
-      },
-      "bookletCompleteTitle": "{{title}} — Boekie Voltooi",
-      "bookletCompleteDescription": "Voltooi al die lesse in die \"{{title}}\"-boekie.",
-      "grand": {
-        "title": "Kernkurrikulum — Alle Prestasies Voltooi",
-        "description": "Ontsluit alle prestasies (basis + elke boekie)."
       }
     },
     "reward": {
@@ -323,29 +300,6 @@
       "alreadyCollectedMessage": "Jy het reeds jou 500MB beloning geëis!",
       "notEligible": "Nie Geskik Nie",
       "notEligibleMessage": "Voltooi alle prestasies om jou beloning te versamel!"
-    },
-    "rewards": {
-      "rewardHint": "Beloning: +{{amount}}",
-      "collect": "Versamel Beloning",
-      "collected": "Beloning Versamel",
-      "alreadyCollected": {
-        "title": "Reeds gevorder",
-        "message": "Jy het reeds hierdie beloning geëis."
-      },
-      "notYet": {
-        "title": "Nog nie!",
-        "booklet": "Voltooi al die lesse in hierdie boekie om die beloning te kry.",
-        "grand": "Ontsluit alle prestasies voordat jy hierdie beloning eis."
-      },
-      "collectedToast": {
-        "title": "Beloning versamel 🎉",
-        "message": "{{amount}} is by jou databalans gevoeg."
-      },
-      "grandTitle": "Groot Beloning",
-      "grandDescription": "Eis wanneer alle prestasies ontsluit is. Beloning: +{{amount}}",
-      "grand": {
-        "collectedTitle": "Groot beloning gevorder 🏅"
-      }
     },
     "tips": {
       "takeYourTime": {
@@ -368,269 +322,5 @@
       "failedToUpdateProgress": "Kon nie vordering opdateer nie",
       "failedToCollectReward": "Kon nie beloning versamel nie"
     }
-  },
-  "tracks": {
-  "track-compounding": {
-    "title": "Saamgestelde Rente — Basies",
-    "description": "Van basies tot gevorderd: bemeester saamgestelde groei stap vir stap."
-  },
-  "track-tax-retire": {
-    "title": "Belasting & Aftrede — Basies",
-    "description": "Verstaan belastingklasse, voor-belasting vs ná-belasting spaar, en beplan vir aftrede."
-  },
-  "track-budgeting": {
-    "title": "Begroting & Kontantvloei",
-    "description": "Beplan besteding, bou ’n buffer, en verminder geldstres."
-  },
-  "track-credit": {
-    "title": "Krediet & Lening",
-    "description": "Gebruik krediet verstandig, vergelyk koste, en vermy skuldvalle."
-  },
-  "track-investing": {
-    "title": "Belegging & Welvaartsbou",
-    "description": "Diversifiseer, hou koste laag, en bly belê vir die lang termyn."
   }
-},
-  "lessons": {
-    "compoundingBasics": {
-      "title": "Saamgestelde Rente: Begin Vroeg",
-      "description": "’n Vinnige inleiding tot wat saamgestelde rente is, hoekom dit eenvoudige rente klop, en hoekom vroeë begin saak maak.",
-      "duration": "6–8 min",
-      "difficulty": "Beginner",
-      "pages": {
-        "intro": {
-          "title": "Wat is Saamgestelde Rente?",
-          "content": "Saamgestelde rente beteken jy verdien rente op jou oorspronklike geld EN op die rente wat daardie geld reeds verdien het — rente op rente. Oor tyd word dit ’n sneeubal-effek."
-        },
-        "simpleVsCompound": {
-          "title": "Eenvoudig vs. Saamgesteld",
-          "content": "Eenvoudige rente: rente net op die oorspronklike bedrag (hoofsom). Saamgestelde rente: rente op hoofsom + opgehoopte rente. Voorbeeld: R100 teen 12% eenvoudig = R112 ná 1 jaar. Teen 12% jaarliks saamgestel = ook R112 ná 1 jaar — maar hou aan saamstel en saamgesteld wen groot."
-        },
-        "frequencyMatters": {
-          "title": "Saamstellingsfrekwensie",
-          "content": "Meer gereelde saamstelling groei vinniger. R100 teen 12% maandeliks saamgestel ≈ R112,68 ná 1 jaar, teenoor R112 met jaarlikse saamstelling. Selfde nominale koers, effens beter groei omdat rente meer gereeld bygevoeg word."
-        },
-        "quiz1": {
-          "title": "Vinnige Toets 1",
-          "question": "Watter stelling beskryf saamgestelde rente die beste?",
-          "options": {
-            "A": {
-              "text": "Rente net op die oorspronklike bedrag.",
-              "rationale": "Dit beskryf eenvoudige rente. Saamgestelde rente verdien ook op vorige rente, nie net die hoofsom nie."
-            },
-            "B": {
-              "text": "Rente op die oorspronklike bedrag en op vorige rente.",
-              "rationale": "Korrekt. Met saamstelling word vorige rente by die balans gevoeg en verdien dit self ook rente."
-            },
-            "C": {
-              "text": "’n Rentekoers wat nooit verander nie.",
-              "rationale": "Of ’n koers verander of nie, is ’n aparte saak. Saamstelling gaan oor rente op hoofsom plus opgehoopte rente."
-            },
-            "D": {
-              "text": "Rente wat banke net op lenings hef.",
-              "rationale": "Saamstelling geld ook vir spaargeld en beleggings — nie net lenings nie."
-            }
-          }
-        },
-        "quiz2": {
-          "title": "Vinnige Toets 2",
-          "question": "Twee vriende spaar elk R200/maand teen 8% per jaar. Thabo begin vandag vir 10 jaar. Naledi wag 5 jaar en spaar dan vir 5 jaar. Wie eindig met meer?",
-          "options": {
-            "A": {
-              "text": "Thabo (begin vroeër, meer saamstellingstyd).",
-              "rationale": "Korrekt. Geld wat vroeër belê word, stel langer saam — dit klop gewoonlik ’n laat begin teen dieselfde maandelikse bedrag."
-            },
-            "B": {
-              "text": "Naledi (dieselfde maandelikse bedrag).",
-              "rationale": "Dieselfde maandelikse bedrag is nie genoeg nie — Naledi het minder jare se groei. Tyd in die mark tel baie."
-            },
-            "C": {
-              "text": "Hulle eindig met dieselfde bedrag.",
-              "rationale": "Hulle sal nie ooreenstem nie — Thabo se geld groei langer weens ’n vroeë begin."
-            },
-            "D": {
-              "text": "Onmoontlik om te weet.",
-              "rationale": "Met gelyke koerse en bydraes wen vroeër begin gewoonlik weens ekstra saamstellingstyd."
-            }
-          }
-        },
-        "quiz3": {
-          "title": "Vinnige Toets 3",
-          "question": "Alle ander dinge gelyk, wat laat spaargeld oor tyd vinniger groei?",
-          "options": {
-            "A": {
-              "text": "12% jaarliks saamgestel.",
-              "rationale": "Jaarlikse saamstelling voeg rente net een keer per jaar by, wat stadiger is as maandeliks teen dieselfde nominale koers."
-            },
-            "B": {
-              "text": "12% maandeliks saamgestel.",
-              "rationale": "Korrekt. Meer gereelde saamstelling (maandeliks) voeg rente vroeër by, dus groei dit effens vinniger as jaarliks."
-            },
-            "C": {
-              "text": "10% maandeliks saamgestel.",
-              "rationale": "12% jaarliks vs 10% maandeliks — die hoër koers (12%) wen oor die algemeen ten spyte van frekwensie."
-            },
-            "D": {
-              "text": "Beide A en B is identies.",
-              "rationale": "Frekwensie maak saak. Teen dieselfde nominale koers groei maandeliks effens meer as jaarliks."
-            }
-          }
-        },
-        "quiz4": {
-          "title": "Vinnige Toets 4",
-          "question": "Waar of Vals: Met saamstelling beteken verdubbeling van tyd gewoonlik meer as verdubbeling van die eindbedrag.",
-          "options": {
-            "A": {
-              "text": "Waar",
-              "rationale": "Korrekt. Saamgestelde groei is eksponensieel — meer tyd laat rente op rente verdien, so groei versnel."
-            },
-            "B": {
-              "text": "Vals",
-              "rationale": "Dit lyk meer na eenvoudige (lineêre) groei. Saamstelling versnel oor tyd, dus kan langer periodes meer-as-lineêre winste lewer."
-            }
-          }
-        }
-      }
-    },
-    "compoundingIntermediate": {
-      "title": "Saamgestelde Rente Intermediêr: Koers, Frekwensie & Bydraes",
-      "description": "Gaan verder as die basiese: Effektiewe Jaarlikse Koers (EJK/EAR), hoekom frekwensie saak maak, hoe herhalende bydraes groei verander, en hoe saamstelling teen jou kan werk in skuld.",
-      "duration": "8–10 min",
-      "difficulty": "Intermediêr",
-      "pages": {
-        "intro": {
-          "title": "Van Basies na Beter Besluite",
-          "content": "Jy weet saamgestelde rente groei “rente op rente”. Nou gebruik ons dit om praktiese keuses te maak: vergelyk koerse reg, verstaan saamstellingsfrekwensie, en weeg maandelikse bydraes teenoor ’n eenslagbedrag op."
-        },
-        "ear": {
-          "title": "Nominale vs Effektiewe Jaarlikse Koers (EJK/EAR)",
-          "content": "Banke adverteer dikwels ’n nominale koers (bv. 12% p.j.). As rente binne die jaar bygevoeg word (maandeliks/ weekliks), is die werklike JAARLIKSE groei hoër. Daardie “ware” jaarlikse groei is die Effektiewe Jaarlikse Koers (EJK/EAR). Voorbeeld: 12% nominaal maandeliks saamgestel ≈ 12.68% EJK."
-        },
-        "frequency": {
-          "title": "Waarom Frekwensie Saak Maak",
-          "content": "Meer gereelde saamstelling voeg rente vroeër by en daardie rente verdien self weer rente. Met dieselfde nominale koers groei maandelikse saamstelling ’n bietjie vinniger as jaarlikse; weekliks weer ’n bietjie vinniger as maandeliks, ensovoorts."
-        },
-        "contributions": {
-          "title": "Herhalende Bydraes vs Eenmalig",
-          "content": "Gereelde maandelikse bydraes (bv. ’n debietorder) bou ’n gewoonte en voeg deurlopend brandstof by saamstelling. ’n Groot eenmalige deposito geniet die volle tyd in die mark. Watter “beter” is hang af van tydsberekening, bedrae en dissipline."
-        },
-        "debt": {
-          "title": "Wanneer Saamstelling Teen Jou Werk",
-          "content": "Saamstelling help spaargeld groei — maar dit maak skuld met tyd duurder. Om net die minimum op ’n hoë-rentekoers-kaart te betaal rek die termyn uit en verhoog die totale rente-bedrag aansienlik."
-        },
-        "quiz1": {
-          "title": "Vinnige Toets 1",
-          "question": "Wat verteenwoordig die Effektiewe Jaarlikse Koers (EJK/EAR)?",
-          "options": {
-            "A": {
-              "text": "Die bank se geadverteerde (nominale) persentasie.",
-              "rationale": "Nominaal sluit die effek van binne-jaar-saamstelling uit. EJK sluit dit in."
-            },
-            "B": {
-              "text": "Die werklike jaarlikse groei, insluitend binne-jaar-saamstelling.",
-              "rationale": "Reg. EJK vang die ware jaarlikse groei vas sodra saamstellingsfrekwensie in ag geneem word."
-            },
-            "C": {
-              "text": "Die laagste moontlike koers ná fooie.",
-              "rationale": "EJK gaan nie oor “laagste ná fooie” nie; dit gaan oor saamstelling, nie fooie nie."
-            },
-            "D": {
-              "text": "’n Koers wat saamstellingsfrekwensie ignoreer.",
-              "rationale": "Inteendeel — EJK is juis om saamstellingsfrekwensie in te reken."
-            }
-          }
-        },
-        "quiz2": {
-          "title": "Vinnige Toets 2",
-          "question": "Watter een lewer tipies die hoër eindsaldo (selfde nominaal 12%)?",
-          "options": {
-            "A": {
-              "text": "12% jaarliks saamgestel",
-              "rationale": "Jaarliks is stadiger omdat rente net een keer per jaar bygevoeg word."
-            },
-            "B": {
-              "text": "12% maandeliks saamgestel",
-              "rationale": "Maandeliks voeg rente meer gereeld by en presteer dus effens beter as jaarliks teen dieselfde nominale koers."
-            },
-            "C": {
-              "text": "Hulle is altyd identies",
-              "rationale": "Frekwensie verander die groei selfs al is die nominale koers dieselfde."
-            },
-            "D": {
-              "text": "Hang net van die hoofsom af, nie frekwensie nie",
-              "rationale": "Frekwensie maak saak: meer gereelde saamstelling groei gewoonlik meer."
-            }
-          }
-        },
-        "quiz3": {
-          "title": "Vinnige Toets 3",
-          "question": "Jy het twee keuses oor 5 jaar teen 8% per jaar: (1) betaal R500 elke maand in, of (2) betaal R30,000 eenmalig vandag. Watter een eindig tipies hoër?",
-          "options": {
-            "A": {
-              "text": "R500 per maand (die totaal is dieselfde, dus is die uitkoms dieselfde).",
-              "rationale": "Totale bedrae alleen is nie genoeg nie — tydsberekening tel. Maandelikse bedrae begin klein; ’n eenslagbedrag groei vir die volle tyd."
-            },
-            "B": {
-              "text": "R30,000 eenmalig vandag (dit groei vir die volle 5 jaar).",
-              "rationale": "’n Vroeë eenslagbedrag geniet langer saamstelling en klop gewoonlik gelyke maandelikse totale."
-            },
-            "C": {
-              "text": "Beide eindig gelyk omdat die totale pas.",
-              "rationale": "Selfs met gelyke totale groei vroeër geld langer en wen gewoonlik."
-            },
-            "D": {
-              "text": "Onmoontlik om te vergelyk sonder fooie.",
-              "rationale": "Fooie kan tel, maar as ons fooie ignoreer wen die vroeë eenslagbedrag tipies."
-            }
-          }
-        },
-        "quiz4": {
-          "title": "Vinnige Toets 4",
-          "question": "Watter stelling oor minimum betalings op hoë-rentekoers-skuld is die mees akkuraat?",
-          "options": {
-            "A": {
-              "text": "Dit verminder totale rente dramaties.",
-              "rationale": "Minimums dek dikwels skaars die rente; totale rente kan hoog bly of toeneem."
-            },
-            "B": {
-              "text": "Dit kan die termyn verleng en die totale rente betaal verhoog.",
-              "rationale": "Reg. Slegs-minimum-strategieë rek die afbetaling uit en verhoog rentekoste."
-            },
-            "C": {
-              "text": "Dit het geen effek op totale rente nie.",
-              "rationale": "Dit het — net minimums betaal verhoog gewoonlik die totale rente oor die leeftyd van die skuld."
-            },
-            "D": {
-              "text": "Dit is altyd beter as ekstra paaiemente.",
-              "rationale": "Ekstra paaiemente verlaag die kapitaal vinniger en sny rente vroeër."
-            }
-          }
-        },
-        "quiz5": {
-          "title": "Vinnige Toets 5",
-          "question": "Met die “Reël van 72”, ongeveer hoe lank om geld te verdubbel teen 9% per jaar?",
-          "options": {
-            "A": {
-              "text": "Ongeveer 5 jaar",
-              "rationale": "72 ÷ 9 ≈ 8 jaar, nie ~5 nie."
-            },
-            "B": {
-              "text": "Ongeveer 8 jaar",
-              "rationale": "Reg. 72 ÷ 9 ≈ 8 — ’n handige kop-skatting."
-            },
-            "C": {
-              "text": "Ongeveer 10 jaar",
-              "rationale": "Te lank vir 9% volgens die Reël van 72."
-            },
-            "D": {
-              "text": "Ongeveer 12 jaar",
-              "rationale": "Baie te lank vir 9% volgens die Reël van 72."
-            }
-          }
-        }
-      }
-    }
-  }
-
-
 }
