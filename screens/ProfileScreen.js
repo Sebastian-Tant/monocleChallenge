@@ -177,7 +177,7 @@ const ProfileScreen = ({ onChangeLanguage }) => {
             <Text style={styles.profileIconText}>💰</Text>
           </View>
           <Text style={styles.title}>{t('profile.title', 'Profile')}</Text>
-          <Text style={styles.subtitle}>{t('profile.subtitle', 'First Rand Bank')}</Text>
+          <Text style={styles.subtitle}>{t('profile.subtitle', 'First Principles Bank')}</Text>
         </Animated.View>
 
         {/* User Info Cards */}
